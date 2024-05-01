@@ -1,9 +1,9 @@
-export interface IChatroom {
+export interface IChatRoom {
   id: string
   name: string
 }
 
-export interface IChatroomMessage {
+export interface IChatRoomMessage {
   id: string
   chatId: string
   content: string

@@ -1,8 +1,8 @@
-import { IChatroom } from 'src/chatroom/chatroom.types'
+import { IChatRoom } from 'src/chatroom/chatroom.types'
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
-export class Chatroom implements IChatroom {
+export class ChatRoom implements IChatRoom {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
