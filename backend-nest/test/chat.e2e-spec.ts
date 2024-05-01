@@ -17,7 +17,7 @@ describe('AppController (e2e)', () => {
 
   it('/chat (GET)', async () => {
     const response = await request(app.getHttpServer()).get('/chat/any-id-here')
-    expect(response.body).toBe(
+    expect(response.body).toEqual(
       expect.objectContaining({
         // TODO change this once we start implementing real chatrooms
         name: 'GLOBAL',
