@@ -8,6 +8,7 @@ import { DatasourceModule } from 'src/datasource/datasource.module'
 import type { DataSource } from 'typeorm'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
 import { ChatRoomController } from './chat-room.controller/chat-room.controller'
+import { ChatRoomService } from './chat-room.service/chat-room.service'
 
 @Module({
   imports: [DatasourceModule],
@@ -22,6 +23,7 @@ import { ChatRoomController } from './chat-room.controller/chat-room.controller'
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(ChatRoomMessage),
     },
+    ChatRoomService,
   ],
   controllers: [ChatRoomController],
 })
