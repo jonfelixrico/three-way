@@ -9,6 +9,7 @@ import type { DataSource } from 'typeorm'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
 import { ChatRoomController } from './chat-room.controller/chat-room.controller'
 import { ChatRoomService } from './chat-room.service/chat-room.service'
+import { DATASOURCE_PROVIDER } from 'src/datasource/datasource.constants'
 
 @Module({
   imports: [DatasourceModule],
@@ -17,11 +18,13 @@ import { ChatRoomService } from './chat-room.service/chat-room.service'
       provide: CHAT_ROOM_REPOSITORY_PROVIDER,
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(ChatRoom),
+      inject: [DATASOURCE_PROVIDER],
     },
     {
       provide: CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER,
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(ChatRoomMessage),
+      inject: [DATASOURCE_PROVIDER],
     },
     ChatRoomService,
   ],
