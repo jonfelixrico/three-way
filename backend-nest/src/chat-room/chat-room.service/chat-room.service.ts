@@ -33,6 +33,7 @@ export class ChatRoomService {
       chatRoom: {
         id: chatId,
       },
+      timestamp: new Date(),
     })
   }
 

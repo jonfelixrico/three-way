@@ -7,4 +7,5 @@ export interface IChatRoomMessage {
   id: string
   chatRoomId: string
   content: string
+  timestamp: Date
 }

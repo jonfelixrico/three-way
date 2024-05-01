@@ -15,4 +15,7 @@ export class ChatRoomMessage implements IChatRoomMessage {
 
   @Column('text')
   content: string
+
+  @Column('time with time zone')
+  timestamp: Date
 }
