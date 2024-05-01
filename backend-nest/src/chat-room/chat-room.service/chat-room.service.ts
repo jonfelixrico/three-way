@@ -33,6 +33,20 @@ export class ChatRoomService {
     })
   }
 
+  async getMessages({
+    chatId,
+  }: {
+    chatId: string
+  }): Promise<IChatRoomMessage[]> {
+    return await this.messageRepo.find({
+      where: {
+        chatRoom: {
+          id: chatId,
+        },
+      },
+    })
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getChatRoomById(id: string): Promise<IChatRoom> {
     /*
