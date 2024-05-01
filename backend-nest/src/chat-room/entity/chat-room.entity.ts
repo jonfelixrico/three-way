@@ -1,9 +1,12 @@
 import { IChatRoom } from './chat-room-entity.types'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryColumn } from 'typeorm'
 
 @Entity()
 export class ChatRoom implements IChatRoom {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({
+    type: 'varchar',
+    generated: 'uuid',
+  })
   id: string
 
   @Column('varchar')

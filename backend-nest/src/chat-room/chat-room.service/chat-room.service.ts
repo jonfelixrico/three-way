@@ -62,17 +62,19 @@ export class ChatRoomService {
      * this is to keep implementation simple
      */
 
-    if ((await this.roomRepo.count()) > 0) {
-      return await this.roomRepo.findOne({
-        where: {
-          name: 'GLOBAL',
-        },
-      })
+    const room = await this.roomRepo.findOne({
+      where: {
+        id,
+      },
+    })
+    if (room) {
+      return room
     }
 
     // this should be executed only once we want to have a single chat room for the entire app
     return await this.roomRepo.save({
-      name: 'GLOBAL',
+      name: 'global',
+      id: 'global',
     })
   }
 }
