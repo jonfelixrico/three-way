@@ -7,7 +7,7 @@ export class ChatRoomMessage implements IChatRoomMessage {
   id: string
 
   @ManyToOne(() => ChatRoom)
-  private chatRoom: ChatRoom
+  chatRoom: ChatRoom
 
   get chatRoomId() {
     return this.chatRoom.id
