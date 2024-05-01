@@ -2,8 +2,6 @@ import { Provider } from '@nestjs/common'
 import { DATASOURCE_PROVIDER } from 'src/datasource/datasource.constants'
 import { DataSource } from 'typeorm'
 
-console.log(__dirname + '/../**/*.entity.ts')
-
 export const DatasourceProvider: Provider = {
   provide: DATASOURCE_PROVIDER,
   useFactory: async () => {
