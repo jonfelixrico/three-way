@@ -23,7 +23,8 @@ export class ChatRoomMessage implements IChatRoomMessage {
   @Column('text')
   content: string
 
-  @Index() // chat messages are typically presented as sorted by send timestamps, so we have to index this to keep queries fast
-  @Column('time with time zone')
+  // chat messages are typically presented as sorted by send timestamps, so we have to index this to keep queries fast
+  @Index()
+  @Column('datetime')
   timestamp: Date
 }

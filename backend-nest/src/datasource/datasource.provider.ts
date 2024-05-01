@@ -9,7 +9,7 @@ export const DatasourceProvider: Provider = {
       type: 'sqlite',
       // TODO make this configurable via env
       database: 'db',
-      entities: [__dirname + '/../**.entity.ts'],
+      entities: [__dirname + '/../**/*.entity.ts'],
       // TODO remove once we're starting to work on production-ready code
       synchronize: true,
     })
