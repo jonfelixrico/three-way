@@ -5,6 +5,6 @@ export interface IChatRoom {
 
 export interface IChatRoomMessage {
   id: string
-  chatId: string
+  chatRoomId: string
   content: string
 }
