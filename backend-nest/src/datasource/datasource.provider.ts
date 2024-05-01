@@ -7,7 +7,8 @@ export const DatasourceProvider: Provider = {
   useFactory: async () => {
     const dataSource = new DataSource({
       type: 'sqlite',
-      database: 'backend-nest',
+      // TODO make this configurable via env
+      database: 'db',
       entities: [__dirname + '/../**.entity.ts'],
       // TODO remove once we're starting to work on production-ready code
       synchronize: true,
