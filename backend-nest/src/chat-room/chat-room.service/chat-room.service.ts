@@ -48,6 +48,9 @@ export class ChatRoomService {
           id: chatId,
         },
       },
+      order: {
+        timestamp: 'DESC',
+      },
     })
   }
 
