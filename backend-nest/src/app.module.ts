@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
-import { PersistenceModule } from './persistence/persistence.module'
+import { DatasourceModule } from './datasource/datasource.module'
 
 @Module({
-  imports: [PersistenceModule],
+  imports: [DatasourceModule],
   controllers: [],
   providers: [],
 })
