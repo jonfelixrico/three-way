@@ -1,4 +1,4 @@
-import { ChatRoom } from 'src/chat-room/chat-room.entity'
+import { ChatRoom } from './chat-room.entity'
 import { IChatRoomMessage } from 'src/chat-room/chat-room.types'
 import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
