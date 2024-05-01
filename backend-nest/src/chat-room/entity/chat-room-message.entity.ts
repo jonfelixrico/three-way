@@ -1,7 +1,14 @@
 import { ChatRoom } from './chat-room.entity'
 import { IChatRoomMessage } from './chat-room-entity.types'
-import { Column, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 
+@Entity()
 export class ChatRoomMessage implements IChatRoomMessage {
   @PrimaryGeneratedColumn('uuid')
   id: string
