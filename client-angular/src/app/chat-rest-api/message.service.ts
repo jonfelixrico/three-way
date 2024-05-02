@@ -1,18 +1,10 @@
 import { Inject, Injectable } from '@angular/core'
+import { AXIOS_PROVIDER } from '../axios/axios.constants'
 import { Axios } from 'axios'
-import { AXIOS_PROVIDER } from '../../axios/axios.constants'
+import { ChatMessage } from './chat-rest-api.types'
 
-export interface ChatMessage {
-  content: string
-  chatRoomId: string
-  id: string
-  timestamp: Date
-}
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ChatHttpApiService {
+@Injectable()
+export class MessageService {
   constructor(
     @Inject(AXIOS_PROVIDER)
     private axios: Axios
