@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
+import { randomUUID } from 'crypto'
 
 describe('AppController (e2e)', () => {
   let app: INestApplication
@@ -30,16 +31,21 @@ describe('AppController (e2e)', () => {
   })
 
   test('POST /chat/:id/message', async () => {
+    const content = `Test message ${Date.now()}`
+    const senderId = randomUUID()
+
     const postResponse = await request(app.getHttpServer())
       .post('/chat/global/message')
       .send({
-        content: 'Test message',
+        content,
+        senderId,
       })
       .expect(201)
     expect(postResponse.body).toEqual(
       expect.objectContaining({
         // TODO change this once we start implementing real chatrooms
-        content: 'Test message',
+        content,
+        senderId,
       })
     )
 
@@ -50,7 +56,8 @@ describe('AppController (e2e)', () => {
     expect(getResponse.body).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          content: 'Test message',
+          content,
+          senderId,
         }),
       ])
     )
