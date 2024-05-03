@@ -6,7 +6,7 @@ export namespace ChatActions {
     static readonly type = '[Chat] Add'
     constructor(
       public chatId: string,
-      public messages: Omit<ChatMessage, 'chatRoomId'>[]
+      public messages: ChatMessage[]
     ) {}
   }
 }

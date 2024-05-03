@@ -5,7 +5,7 @@ import { ChatActions } from './chat.actions'
 import { produce } from 'immer'
 
 interface Chat {
-  messages: Omit<ChatMessage, 'chatRoomId'>[]
+  messages: ChatMessage[]
 }
 
 export interface ChatSliceModel {

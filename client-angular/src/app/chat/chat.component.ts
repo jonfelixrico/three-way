@@ -18,7 +18,7 @@ export class ChatComponent {
 
   @Select() chat$!: Observable<ChatSliceModel>
 
-  messages: Signal<Omit<ChatMessage, 'chatRoomId'>[]>
+  messages: Signal<ChatMessage[]>
 
   constructor(
     identitySvc: IdentityService,
