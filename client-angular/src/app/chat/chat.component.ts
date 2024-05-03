@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal } from '@angular/core'
+import { Component, Signal, afterNextRender } from '@angular/core'
 import { ChatMessage } from '../chat-services/chat-rest-api.types'
 import { IdentityService } from '../user/identity.service'
 import { MessageService } from '../chat-services/message.service'
@@ -13,7 +13,7 @@ import { toSignal } from '@angular/core/rxjs-interop'
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent {
   readonly userId: string
 
   @Select() chat$!: Observable<ChatSliceModel>
@@ -32,6 +32,10 @@ export class ChatComponent implements OnInit {
         initialValue: [],
       }
     )
+
+    afterNextRender(() => {
+      this.loadMessages()
+    })
   }
 
   get messages$() {
@@ -41,9 +45,5 @@ export class ChatComponent implements OnInit {
   private async loadMessages() {
     const messages = await this.messageSvc.getMessages('global')
     this.store.dispatch(new ChatActions.Add(messages))
-  }
-
-  ngOnInit(): void {
-    this.loadMessages()
   }
 }
