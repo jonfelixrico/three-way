@@ -1,8 +1,8 @@
 import { NgModule, inject } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { ChatComponent } from './chat.component'
-import { MessageService } from '../chat-rest-api/message.service'
-import { ChatRestApiModule } from '../chat-rest-api/chat-rest-api.module'
+import { MessageService } from '../chat-services/message.service'
+import { ChatServicesModule } from '../chat-services/chat-services.module'
 
 const routes: Routes = [
   {
@@ -17,7 +17,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), ChatRestApiModule],
+  imports: [RouterModule.forChild(routes), ChatServicesModule],
   exports: [RouterModule],
 })
 export class ChatRoutingModule {}

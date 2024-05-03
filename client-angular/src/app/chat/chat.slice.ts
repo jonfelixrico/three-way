@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { State } from '@ngxs/store'
-import { ChatMessage } from '../chat-rest-api/chat-rest-api.types'
+import { ChatMessage } from '../chat-services/chat-rest-api.types'
 
 export interface Chat {
   messages: ChatMessage[]
