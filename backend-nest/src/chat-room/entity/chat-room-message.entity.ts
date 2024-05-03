@@ -27,4 +27,8 @@ export class ChatRoomMessage implements IChatRoomMessage {
   @Index()
   @Column('datetime')
   timestamp: Date
+
+  @Index()
+  @Column()
+  senderId: string
 }
