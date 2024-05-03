@@ -1,8 +1,13 @@
 <div class="h-full flex flex-column grid grid-nogutter">
-  <div class="col">
-    @for (message of messages(); track message.id) {
-      <app-chat-message [message]="message" />
-    }
+  <div class="col overflow-auto">
+    <div class="flex flex-column-reverse">
+      @for (message of messages(); track message.id) {
+        <app-chat-message
+          [message]="message"
+          [isSender]="message.senderId === userId"
+        />
+      }
+    </div>
   </div>
 
   <div class="col-fixed grid">

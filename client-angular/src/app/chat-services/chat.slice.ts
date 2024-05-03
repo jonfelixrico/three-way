@@ -38,7 +38,7 @@ export class ChatSlice {
           draft.chats[chatId] = chat
         }
 
-        chat.messages.push(...messages)
+        chat.messages.unshift(...messages)
       })
     )
   }
