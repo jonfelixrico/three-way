@@ -1,1 +1,6 @@
-<p>chat-message works!</p>
+<div class="flex flex-row grid" [class.justify-content-end]="isSender">
+  <div class="col-4">
+    {{ message.senderId }}
+    {{ message.content }}
+  </div>
+</div>
