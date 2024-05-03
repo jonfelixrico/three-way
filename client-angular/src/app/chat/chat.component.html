@@ -1,6 +1,6 @@
 <div class="h-full flex flex-column grid grid-nogutter">
   <div class="col">
-    @for (message of messages; track message.id) {
+    @for (message of messages(); track message.id) {
       <app-chat-message [message]="message" />
     }
   </div>
