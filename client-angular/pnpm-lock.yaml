@@ -88,6 +88,9 @@ devDependencies:
   '@angular/compiler-cli':
     specifier: ^17.3.0
     version: 17.3.6(@angular/compiler@17.3.6)(typescript@5.4.5)
+  '@ngxs/devtools-plugin':
+    specifier: ^3.8.2
+    version: 3.8.2(@angular/core@17.3.6)(@ngxs/store@3.8.2)(rxjs@7.8.1)
   '@types/express':
     specifier: ^4.17.17
     version: 4.17.21
@@ -2491,6 +2494,19 @@ packages:
       webpack: 5.90.3(esbuild@0.20.1)
     dev: true
 
+  /@ngxs/devtools-plugin@3.8.2(@angular/core@17.3.6)(@ngxs/store@3.8.2)(rxjs@7.8.1):
+    resolution: {integrity: sha512-4FWZWJTtgrlTUsiprIBGHaQqvvFKiTesYK9+dg03NGv7z74Z5pNtPVbO1hMeuMmqaJ8r18fDZ3wIfXlXC6noNA==}
+    peerDependencies:
+      '@angular/core': '>=12.0.0 <18.0.0'
+      '@ngxs/store': ^3.8.2 || ^3.8.2-dev
+      rxjs: '>=6.5.5'
+    dependencies:
+      '@angular/core': 17.3.6(rxjs@7.8.1)(zone.js@0.14.5)
+      '@ngxs/store': 3.8.2(@angular/core@17.3.6)(rxjs@7.8.1)
+      rxjs: 7.8.1
+      tslib: 2.6.2
+    dev: true
+
   /@ngxs/store@3.8.2(@angular/core@17.3.6)(rxjs@7.8.1):
     resolution: {integrity: sha512-IovxuGQDEpB9VefmbTaV1k4hms4iZ4aS9gPVZOC+qzyfvpi7zrUEsjo+yT6FfVBmBg/RLUmPCtqArzbKU5XrLQ==}
     peerDependencies:
@@ -2500,7 +2516,6 @@ packages:
       '@angular/core': 17.3.6(rxjs@7.8.1)(zone.js@0.14.5)
       rxjs: 7.8.1
       tslib: 2.6.2
-    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
