@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { randomUUID } from 'crypto'
+import { v4 as uuidv4 } from 'uuid'
 
 const USER_ID = 'CLIENT_ID'
 
@@ -11,7 +11,7 @@ export class IdentityService {
     let userId = localStorage.getItem(USER_ID)
 
     if (!userId) {
-      userId = randomUUID()
+      userId = uuidv4()
       localStorage.setItem(USER_ID, userId)
     }
 
