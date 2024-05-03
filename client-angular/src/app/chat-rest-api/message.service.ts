@@ -1,20 +1,15 @@
-import { Inject, Injectable } from '@angular/core'
-import { AXIOS_PROVIDER } from '../axios/axios.constants'
-import { Axios } from 'axios'
+import { Injectable } from '@angular/core'
 import { ChatMessage } from './chat-rest-api.types'
+import { HttpClient } from '@angular/common/http'
+import { firstValueFrom } from 'rxjs'
 
 @Injectable()
 export class MessageService {
-  constructor(
-    @Inject(AXIOS_PROVIDER)
-    private axios: Axios
-  ) {}
+  constructor(private http: HttpClient) {}
 
   async getMessages(chatId: string) {
-    const { data } = await this.axios.get<ChatMessage[]>(
-      `/chat/${chatId}/message`
+    return await firstValueFrom(
+      this.http.get<ChatMessage[]>(`/api/chat/${chatId}/message`)
     )
-
-    return data
   }
 }
