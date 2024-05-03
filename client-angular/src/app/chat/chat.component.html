@@ -1,4 +1,3 @@
-<p>chat works!</p>
-<div>
-  {{ serialized }}
-</div>
+@for (message of messages; track message.id) {
+  <app-chat-message [message]="message" />
+}
