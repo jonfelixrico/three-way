@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { NgxsModule } from '@ngxs/store'
-import { ChatSlice } from '../chat/chat.slice'
+import { ChatSlice } from '../chat-services/chat.slice'
 
 @NgModule({
   imports: [CommonModule, NgxsModule.forRoot([ChatSlice])],
