@@ -7,6 +7,8 @@ import { ChatMessageComponent } from '../chat-message/chat-message.component'
 import { InputTextModule } from 'primeng/inputtext'
 import { ChatServicesModule } from '../chat-services/chat-services.module'
 import { UserModule } from '../user/user.module'
+import { ButtonModule } from 'primeng/button'
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [ChatComponent, ChatMessageComponent],
@@ -17,6 +19,8 @@ import { UserModule } from '../user/user.module'
     InputTextModule,
     ChatServicesModule,
     UserModule,
+    ButtonModule,
+    FormsModule,
   ],
 })
 export class ChatModule {}

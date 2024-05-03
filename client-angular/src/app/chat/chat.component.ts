@@ -20,6 +20,8 @@ export class ChatComponent {
 
   messages: Signal<ChatMessage[]>
 
+  content: string = ''
+
   constructor(
     identitySvc: IdentityService,
     private messageSvc: MessageService,
@@ -38,8 +40,17 @@ export class ChatComponent {
     })
   }
 
-  get messages$() {
-    return
+  async sendMessage() {
+    console.log(this.content)
+    if (!this.content) {
+      return
+    }
+
+    const content = this.content
+    this.content = ''
+
+    const message = await this.messageSvc.sendMessage('global', content)
+    this.store.dispatch(new ChatActions.Add('global', [message]))
   }
 
   private async loadMessages() {

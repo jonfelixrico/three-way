@@ -6,6 +6,7 @@
   </div>
 
   <div class="col-fixed grid">
-    <input type="text" pInputText class="col" />
+    <input type="text" pInputText class="col" [(ngModel)]="content" />
+    <button (click)="sendMessage()" pButton>Submit</button>
   </div>
 </div>
