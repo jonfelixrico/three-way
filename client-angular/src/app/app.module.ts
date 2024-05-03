@@ -8,11 +8,16 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideHttpClient, withFetch } from '@angular/common/http'
+import { provideLocalStorage } from './localstorage.provider'
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
-  providers: [provideClientHydration(), provideHttpClient(withFetch())],
+  providers: [
+    provideClientHydration(),
+    provideHttpClient(withFetch()),
+    provideLocalStorage(),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
