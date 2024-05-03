@@ -18,7 +18,7 @@ export class ChatComponent {
 
   @Select() chat$!: Observable<ChatSliceModel>
 
-  messages: Signal<ChatMessage[]>
+  messages: Signal<Omit<ChatMessage, 'chatRoomId'>[]>
 
   constructor(
     identitySvc: IdentityService,
@@ -44,6 +44,6 @@ export class ChatComponent {
 
   private async loadMessages() {
     const messages = await this.messageSvc.getMessages('global')
-    this.store.dispatch(new ChatActions.Add(messages))
+    this.store.dispatch(new ChatActions.Add('global', messages))
   }
 }

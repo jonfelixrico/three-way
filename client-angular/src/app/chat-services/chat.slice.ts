@@ -5,7 +5,7 @@ import { ChatActions } from './chat.actions'
 import { produce } from 'immer'
 
 interface Chat {
-  messages: ChatMessage[]
+  messages: Omit<ChatMessage, 'chatRoomId'>[]
 }
 
 export interface ChatSliceModel {
@@ -23,21 +23,22 @@ export interface ChatSliceModel {
 @Injectable()
 export class ChatSlice {
   @Action(ChatActions.Add)
-  addMessage(ctx: StateContext<ChatSliceModel>, { messages }: ChatActions.Add) {
+  addMessage(
+    ctx: StateContext<ChatSliceModel>,
+    { messages, chatId }: ChatActions.Add
+  ) {
     ctx.setState(
       produce((draft) => {
-        for (const message of messages) {
-          let chat = draft.chats[message.chatRoomId]
-          if (!chat) {
-            chat = {
-              messages: [],
-            }
-
-            draft.chats[message.chatRoomId] = chat
+        let chat = draft.chats[chatId]
+        if (!chat) {
+          chat = {
+            messages: [],
           }
 
-          chat.messages.push(...messages)
+          draft.chats[chatId] = chat
         }
+
+        chat.messages.push(...messages)
       })
     )
   }

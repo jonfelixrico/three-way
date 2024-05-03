@@ -4,6 +4,9 @@ import { ChatMessage } from './chat-rest-api.types'
 export namespace ChatActions {
   export class Add {
     static readonly type = '[Chat] Add'
-    constructor(public messages: ChatMessage[]) {}
+    constructor(
+      public chatId: string,
+      public messages: Omit<ChatMessage, 'chatRoomId'>[]
+    ) {}
   }
 }
