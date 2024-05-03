@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core'
 import { randomUUID } from 'crypto'
 
-const CLIENT_ID = 'CLIENT_ID'
+const USER_ID = 'CLIENT_ID'
 
 @Injectable()
 export class IdentityService {
   constructor() {}
 
   getUserId() {
-    let clientId = localStorage.getItem(CLIENT_ID)
+    let userId = localStorage.getItem(USER_ID)
 
-    if (!clientId) {
-      clientId = randomUUID()
-      localStorage.setItem(CLIENT_ID, clientId)
+    if (!userId) {
+      userId = randomUUID()
+      localStorage.setItem(USER_ID, userId)
     }
 
-    return clientId
+    return userId
   }
 }
