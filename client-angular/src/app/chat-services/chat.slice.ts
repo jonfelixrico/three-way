@@ -8,19 +8,22 @@ interface Chat {
   messages: ChatMessage[]
 }
 
-interface ChatStateModel {
+export interface ChatSliceModel {
   chats: {
     [chatId: string]: Chat
   }
 }
 
-@State<ChatStateModel>({
+@State<ChatSliceModel>({
   name: 'chat',
+  defaults: {
+    chats: {},
+  },
 })
 @Injectable()
 export class ChatSlice {
   @Action(ChatActions.Add)
-  addMessage(ctx: StateContext<ChatStateModel>, { messages }: ChatActions.Add) {
+  addMessage(ctx: StateContext<ChatSliceModel>, { messages }: ChatActions.Add) {
     ctx.setState(
       produce((draft) => {
         for (const message of messages) {
