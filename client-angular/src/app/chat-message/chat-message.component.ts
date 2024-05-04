@@ -4,6 +4,7 @@ import { ChatMessage } from '../chat-services/chat-rest-api.types'
 @Component({
   selector: 'app-chat-message',
   templateUrl: './chat-message.component.html',
+  styleUrl: './chat-message.component.scss',
 })
 export class ChatMessageComponent {
   @Input({
@@ -32,19 +33,17 @@ export class ChatMessageComponent {
     const classes: string[] = []
 
     if (this.isSender) {
-      classes.push('border-round-left-3xl', 'border-round-right-lg')
+      classes.push('from-user')
     } else {
-      classes.push('border-round-left-lg', 'border-round-right-3xl')
+      classes.push('from-others')
     }
 
-    if (this.isFirstInSequence && !this.isLastInSequence) {
-      classes.push('border-round-bottom-lg', 'border-round-top-3xl')
-    } else if (!this.isFirstInSequence && this.isLastInSequence) {
-      classes.push('border-round-bottom-3xl', 'border-round-top-lg')
-    } else if (this.isFirstInSequence && this.isLastInSequence) {
-      classes.push('border-round-bottom-3xl', 'border-round-top-3xl')
-    } else {
-      classes.push('border-round-bottom-lg', 'border-round-top-lg')
+    if (this.isFirstInSequence) {
+      classes.push('first')
+    }
+
+    if (this.isLastInSequence) {
+      classes.push('last')
     }
 
     return classes

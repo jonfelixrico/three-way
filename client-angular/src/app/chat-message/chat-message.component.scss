@@ -1,0 +1,34 @@
+$rounded: 0.5rem;
+$very-rounded: 1.5rem;
+
+.corners {
+  &.from-user {
+    border-top-left-radius: $very-rounded;
+    border-bottom-left-radius: $very-rounded;
+    border-top-right-radius: $rounded;
+    border-bottom-right-radius: $rounded;
+
+    &.first {
+      border-top-right-radius: $very-rounded;
+    }
+
+    &.last {
+      border-bottom-right-radius: $very-rounded;
+    }
+  }
+
+  &.from-others {
+    border-top-right-radius: $very-rounded;
+    border-bottom-right-radius: $very-rounded;
+    border-top-left-radius: $rounded;
+    border-bottom-left-radius: $rounded;
+
+    &.first {
+      border-top-right-radius: $very-rounded;
+    }
+
+    &.last {
+      border-bottom-right-radius: $very-rounded;
+    }
+  }
+}
