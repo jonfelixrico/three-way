@@ -13,4 +13,12 @@ export class ChatMessageComponent {
 
   @Input()
   isSender = false
+
+  get senderClasses() {
+    if (!this.isSender) {
+      return ['surface-200', 'align-items-start']
+    }
+
+    return ['align-items-end', 'bg-primary-300']
+  }
 }
