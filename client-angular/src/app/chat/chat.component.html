@@ -1,6 +1,6 @@
 <div class="h-full flex flex-column">
   <div class="col overflow-auto">
-    <div class="flex flex-column-reverse">
+    <div class="flex flex-column-reverse gap-1">
       @for (message of messages(); track message.id) {
         <app-chat-message
           [message]="message"
