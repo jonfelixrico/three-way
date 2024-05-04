@@ -19,6 +19,6 @@ export class ChatMessageComponent {
       return ['surface-200', 'align-items-start']
     }
 
-    return ['align-items-end', 'bg-primary-300']
+    return ['align-items-end', 'bg-primary', 'text-white']
   }
 }
