@@ -1,4 +1,4 @@
-<div class="h-full flex flex-column grid grid-nogutter">
+<div class="h-full flex flex-column">
   <div class="col overflow-auto">
     <div class="flex flex-column-reverse">
       @for (message of messages(); track message.id) {
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div class="col-fixed grid">
+  <div class="col-fixed flex flex-row">
     <input type="text" pInputText class="col" [(ngModel)]="content" />
     <button (click)="sendMessage()" pButton>Submit</button>
   </div>

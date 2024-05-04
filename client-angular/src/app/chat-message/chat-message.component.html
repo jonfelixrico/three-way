@@ -1,7 +1,14 @@
 <div class="flex flex-row grid" [class.justify-content-end]="isSender">
-  <div class="col-4">
-    {{ message.senderId }}
-    {{ message.content }}
-    {{ sendTsString }}
+  <div
+    class="col-4 flex flex-column"
+    [class.align-items-start]="!isSender"
+    [class.align-items-end]="isSender"
+  >
+    <div>
+      {{ message.content }}
+    </div>
+    <div>
+      {{ sendTsString }}
+    </div>
   </div>
 </div>
