@@ -1,10 +1,20 @@
 <div class="h-full flex flex-column">
   <div class="col overflow-auto">
-    <div class="flex flex-column-reverse gap-1">
-      @for (message of messages(); track message.id) {
+    <div class="flex flex-column gap-1">
+      @for (
+        message of messages();
+        track message.id;
+        let index = $index, first = $first, last = $last
+      ) {
         <app-chat-message
           [message]="message"
           [isSender]="message.senderId === userId"
+          [isFirstInSequence]="
+            first || messages()[index - 1].senderId !== message.senderId
+          "
+          [isLastInSequence]="
+            last || messages()[index + 1].senderId !== message.senderId
+          "
         />
       }
     </div>

@@ -12,9 +12,11 @@ export class MessageService {
   ) {}
 
   async getMessages(chatId: string) {
-    return await firstValueFrom(
+    const messages = await firstValueFrom(
       this.http.get<ChatMessage[]>(`/api/chat/${chatId}/message`)
     )
+
+    return messages.reverse()
   }
 
   async sendMessage(chatId: string, content: string): Promise<ChatMessage> {
