@@ -1,13 +1,13 @@
-<div class="flex flex-row grid" [class.justify-content-end]="isSender">
+<div class="flex flex-row" [class.justify-content-end]="isSender">
   <div
-    class="col-4 flex flex-column"
+    class="flex flex-column surface-200"
     [class.align-items-start]="!isSender"
     [class.align-items-end]="isSender"
   >
     <div>
       {{ message.content }}
     </div>
-    <div>
+    <div class="text-xs">
       {{ sendTsString }}
     </div>
   </div>
