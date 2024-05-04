@@ -34,7 +34,7 @@ export class ChatMessageComponent {
     if (this.isSender) {
       classes.push('border-round-left-3xl', 'border-round-right-lg')
     } else {
-      classes.push('border-round-right-3xl', 'border-round-left-lg')
+      classes.push('border-round-left-lg', 'border-round-right-3xl')
     }
 
     if (this.isFirstInSequence && !this.isLastInSequence) {
