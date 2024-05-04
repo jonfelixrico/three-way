@@ -11,10 +11,6 @@ export class ChatMessageComponent {
   })
   message!: ChatMessage
 
-  get sendTsString() {
-    return new Date(this.message.timestamp)
-  }
-
   @Input()
   isSender = false
 }
