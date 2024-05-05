@@ -10,9 +10,10 @@ import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
 import { ChatRoomController } from './chat-room.controller/chat-room.controller'
 import { ChatRoomService } from './chat-room.service/chat-room.service'
 import { DATASOURCE_PROVIDER } from 'src/datasource/datasource.constants'
+import { WebsocketModule } from 'src/websocket/websocket.module'
 
 @Module({
-  imports: [DatasourceModule],
+  imports: [DatasourceModule, WebsocketModule],
   providers: [
     {
       provide: CHAT_ROOM_REPOSITORY_PROVIDER,

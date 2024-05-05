@@ -6,6 +6,7 @@ import {
 import { IChatRoom, IChatRoomMessage } from 'src/chat-room/chat-room.types'
 import { ChatRoomMessage } from 'src/chat-room/entity/chat-room-message.entity'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
+import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 import { Repository } from 'typeorm'
 
 @Injectable()
@@ -15,7 +16,9 @@ export class ChatRoomService {
     private roomRepo: Repository<ChatRoom>,
 
     @Inject(CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER)
-    private messageRepo: Repository<ChatRoomMessage>
+    private messageRepo: Repository<ChatRoomMessage>,
+
+    private dispatcher: WebsocketDispatcherService
   ) {}
 
   async sendMessage({
@@ -27,7 +30,7 @@ export class ChatRoomService {
     content: string
     senderId: string
   }): Promise<IChatRoomMessage> {
-    return await this.messageRepo.save({
+    const sent = await this.messageRepo.save({
       content: message,
       chatRoom: {
         id: chatId,
@@ -35,6 +38,10 @@ export class ChatRoomService {
       senderId,
       timestamp: new Date(),
     })
+
+    this.dispatcher.dispatch('MESSAGE_SENT', sent, (id) => id !== senderId)
+
+    return sent
   }
 
   async getMessages({
