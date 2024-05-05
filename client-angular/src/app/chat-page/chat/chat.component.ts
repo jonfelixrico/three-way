@@ -62,6 +62,13 @@ export class ChatComponent {
   }
 
   private async connectWs() {
-    await this.realtime.connect()
+    const socket = await this.realtime.connect()
+    socket.on('message', (payload) => {
+      if (payload.MESSAGE_SENT) {
+        this.store.dispatch(
+          new ChatActions.Add('global', [payload.MESSAGE_SENT])
+        )
+      }
+    })
   }
 }
