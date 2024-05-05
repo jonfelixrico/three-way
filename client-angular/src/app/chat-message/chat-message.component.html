@@ -1,4 +1,14 @@
-<div class="flex flex-row" [class.justify-content-end]="isSender">
+<div
+  class="flex flex-column gap-1"
+  [class.align-items-end]="isSender"
+  [class.align-items-start]="!isSender"
+>
+  @if (!isSender && isFirstInSequence) {
+    <div class="text-xs ml-2">
+      {{ message.senderId }}
+    </div>
+  }
+
   <div class="py-2 px-3 corners" [class]="dynamicClasses">
     <div>
       {{ message.content }}
