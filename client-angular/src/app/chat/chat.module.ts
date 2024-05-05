@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core'
-import { CommonModule, NgFor, NgIf } from '@angular/common'
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common'
 
 import { ChatRoutingModule } from './chat-routing.module'
 import { ChatComponent } from './chat.component'
@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms'
     UserModule,
     FormsModule,
     NgIf,
+    NgClass,
   ],
 })
 export class ChatModule {}

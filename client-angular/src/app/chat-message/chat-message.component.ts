@@ -21,35 +21,29 @@ export class ChatMessageComponent {
   @Input()
   isLastInSequence = false
 
-  get senderClasses() {
-    if (!this.isSender) {
-      return ['surface-200', 'align-items-start']
-    }
+  @Input()
+  isFirst = false
 
-    return ['align-items-end', 'bg-primary', 'text-white']
+  @Input()
+  isLast = false
+
+  get senderClasses() {
+    return {
+      'surface-200 align-items-start': !this.isSender,
+      'align-items-end bg-primary text-white': this.isSender,
+    }
   }
 
   get radiusClasses() {
-    const classes: string[] = []
-
-    if (this.isSender) {
-      classes.push('from-user')
-    } else {
-      classes.push('from-others')
+    return {
+      'from-user': this.isSender,
+      'from-others': !this.isSender,
+      first: this.isFirstInSequence,
+      last: this.isLastInSequence,
     }
-
-    if (this.isFirstInSequence) {
-      classes.push('first')
-    }
-
-    if (this.isLastInSequence) {
-      classes.push('last')
-    }
-
-    return classes
   }
 
   get dynamicClasses() {
-    return [...this.radiusClasses, ...this.senderClasses]
+    return { ...this.radiusClasses, ...this.senderClasses }
   }
 }
