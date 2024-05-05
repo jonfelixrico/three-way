@@ -1,24 +1,27 @@
 <div class="h-full p-3 surface-100">
   <div class="p-card h-full py-2 border-round-xl flex flex-column">
-    <div class="col overflow-auto">
-      <div class="flex flex-column gap-1">
-        @for (
-          message of messages();
-          track message.id;
-          let index = $index, first = $first, last = $last
-        ) {
-          <app-chat-message
-            [message]="message"
-            [isSender]="message.senderId === userId"
-            [isFirstInSequence]="
-              first || messages()[index - 1].senderId !== message.senderId
-            "
-            [isLastInSequence]="
-              last || messages()[index + 1].senderId !== message.senderId
-            "
-          />
-        }
-      </div>
+    <!-- flex-column reverse is needed to make the scroll start at the end, and stick to the end if the user submits new messages -->
+    <div class="col overflow-auto flex flex-column-reverse gap-1">
+      @for (
+        message of messages();
+        track message.id;
+        let index = $index, first = $first, last = $last
+      ) {
+        <!--
+          Since the list is reversed, the logically previous item is the physically the next item, hence,
+          isFIrstInSequence checks for the last or the next message
+        -->
+        <app-chat-message
+          [message]="message"
+          [isSender]="message.senderId === userId"
+          [isFirstInSequence]="
+            last || messages()[index + 1].senderId !== message.senderId
+          "
+          [isLastInSequence]="
+            first || messages()[index - 1].senderId !== message.senderId
+          "
+        />
+      }
     </div>
 
     <div class="col-fixed flex flex-row gap-2">
