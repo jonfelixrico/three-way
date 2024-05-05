@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common'
 
-import { ChatRoomRoutingModule } from './chat-room-routing.module'
+import { ChatPageRoutingModule } from './chat-page-routing.module'
 import { ChatComponent } from './chat/chat.component'
 import { ChatMessageComponent } from './chat-message/chat-message.component'
 import { InputTextModule } from 'primeng/inputtext'
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms'
   declarations: [ChatComponent, ChatMessageComponent],
   imports: [
     CommonModule,
-    ChatRoomRoutingModule,
+    ChatPageRoutingModule,
     NgFor,
     InputTextModule,
     ChatServicesModule,
@@ -23,4 +23,4 @@ import { FormsModule } from '@angular/forms'
     NgClass,
   ],
 })
-export class ChatRoomModule {}
+export class ChatPageModule {}
