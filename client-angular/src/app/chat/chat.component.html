@@ -14,8 +14,7 @@
         <app-chat-message
           [message]="message"
           [isSender]="message.senderId === userId"
-          [isFirst]="last"
-          [isLast]="first"
+          [isFirstInChat]="last"
           [isFirstInSequence]="
             last || messages()[index + 1].senderId !== message.senderId
           "

@@ -22,20 +22,17 @@ export class ChatMessageComponent {
   isLastInSequence = false
 
   @Input()
-  isFirst = false
-
-  @Input()
-  isLast = false
+  isFirstInChat = false
 
   get containerClasses() {
-    const { isSender, isFirst, isFirstInSequence } = this
+    const { isSender, isFirstInChat, isFirstInSequence } = this
 
     return {
       'align-items-end': isSender,
       'align-items-start': !isSender,
 
-      'mt-1': !isFirst && !isFirstInSequence,
-      'mt-5': !isFirst && isFirstInSequence,
+      'mt-1': !isFirstInChat && !isFirstInSequence,
+      'mt-5': !isFirstInChat && isFirstInSequence,
     }
   }
 
