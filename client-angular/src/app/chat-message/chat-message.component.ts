@@ -27,6 +27,18 @@ export class ChatMessageComponent {
   @Input()
   isLast = false
 
+  get containerClasses() {
+    const { isSender, isFirst, isFirstInSequence } = this
+
+    return {
+      'align-items-end': isSender,
+      'align-items-start': !isSender,
+
+      'mt-1': !isFirst && !isFirstInSequence,
+      'mt-5': !isFirst && isFirstInSequence,
+    }
+  }
+
   get bubbleClasses() {
     return {
       'surface-200 align-items-start from-others': !this.isSender,

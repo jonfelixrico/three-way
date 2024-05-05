@@ -1,8 +1,4 @@
-<div
-  class="flex flex-column gap-1"
-  [class.align-items-end]="isSender"
-  [class.align-items-start]="!isSender"
->
+<div class="flex flex-column gap-1" [ngClass]="containerClasses">
   @if (!isSender && isFirstInSequence) {
     <div class="text-xs ml-2">
       {{ message.senderId }}
