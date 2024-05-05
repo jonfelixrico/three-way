@@ -3,7 +3,7 @@ import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common'
 
 import { ChatRoomRoutingModule } from './chat-room-routing.module'
 import { ChatComponent } from './chat.component'
-import { ChatMessageComponent } from '@/chat-message/chat-message.component'
+import { ChatMessageComponent } from './chat-message/chat-message.component'
 import { InputTextModule } from 'primeng/inputtext'
 import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { UserModule } from '@/user/user.module'
