@@ -1,7 +1,7 @@
 <div class="h-full p-3 surface-100">
   <div class="p-card h-full py-2 border-round-xl flex flex-column">
     <div class="col overflow-auto">
-      <div class="flex flex-column">
+      <div class="flex flex-column gap-1">
         @for (
           message of messages();
           track message.id;
@@ -22,8 +22,13 @@
     </div>
 
     <div class="col-fixed flex flex-row gap-2">
-      <input type="text" pInputText class="col" [(ngModel)]="content" />
-      <button (click)="sendMessage()" pButton>Submit</button>
+      <input
+        type="text"
+        pInputText
+        class="col"
+        [(ngModel)]="content"
+        (keydown.enter)="sendMessage()"
+      />
     </div>
   </div>
 </div>
