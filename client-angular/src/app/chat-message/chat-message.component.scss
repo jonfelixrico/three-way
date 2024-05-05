@@ -24,11 +24,11 @@ $very-rounded: 1.5rem;
     border-bottom-left-radius: $rounded;
 
     &.first {
-      border-top-right-radius: $very-rounded;
+      border-top-left-radius: $very-rounded;
     }
 
     &.last {
-      border-bottom-right-radius: $very-rounded;
+      border-bottom-left-radius: $very-rounded;
     }
   }
 }
