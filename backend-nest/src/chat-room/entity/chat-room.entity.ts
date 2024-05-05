@@ -1,4 +1,4 @@
-import { IChatRoom } from './chat-room-entity.types'
+import { IChatRoom } from '../chat-room.types'
 import { Column, Entity, PrimaryColumn } from 'typeorm'
 
 @Entity()

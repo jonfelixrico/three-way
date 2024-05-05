@@ -3,10 +3,7 @@ import {
   CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER,
   CHAT_ROOM_REPOSITORY_PROVIDER,
 } from 'src/chat-room/chat-room.constants'
-import {
-  IChatRoom,
-  IChatRoomMessage,
-} from 'src/chat-room/entity/chat-room-entity.types'
+import { IChatRoom, IChatRoomMessage } from 'src/chat-room/chat-room.types'
 import { ChatRoomMessage } from 'src/chat-room/entity/chat-room-message.entity'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
 import { Repository } from 'typeorm'
