@@ -18,7 +18,6 @@ export const DatasourceProvider: Provider = {
       ],
       // TODO remove once we're starting to work on production-ready code
       synchronize: true,
-      logging: true,
     })
 
     return dataSource.initialize()
