@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { ChatMessage } from '../chat-services/chat-rest-api.types'
+import { ChatMessage } from '@/chat-services/chat-rest-api.types'
 
 @Component({
   selector: 'app-chat-message',
