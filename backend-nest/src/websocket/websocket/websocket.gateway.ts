@@ -27,7 +27,7 @@ export class WebsocketGateway implements OnGatewayConnection {
 
     this.bus
       .pipe(
-        filter((value) => value.recipients.has(userId as string)),
+        filter(({ filter }) => filter(userId as string)),
         takeUntil(disconnect$)
       )
       .subscribe({

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs'
 export interface Event<Payload> {
   payload: Payload
   code: string
-  recipients: Set<string>
+  filter(receiverId: string): boolean
 }
 
 export type EventBus = Subject<Event<unknown>>
