@@ -27,23 +27,12 @@ export class ChatMessageComponent {
   @Input()
   isLast = false
 
-  get senderClasses() {
+  get bubbleClasses() {
     return {
-      'surface-200 align-items-start': !this.isSender,
-      'align-items-end bg-primary text-white': this.isSender,
-    }
-  }
-
-  get radiusClasses() {
-    return {
-      'from-user': this.isSender,
-      'from-others': !this.isSender,
+      'surface-200 align-items-start from-others': !this.isSender,
+      'align-items-end bg-primary text-white from-user': this.isSender,
       first: this.isFirstInSequence,
       last: this.isLastInSequence,
     }
-  }
-
-  get dynamicClasses() {
-    return { ...this.radiusClasses, ...this.senderClasses }
   }
 }
