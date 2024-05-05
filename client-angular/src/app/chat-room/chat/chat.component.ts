@@ -1,11 +1,11 @@
 import { Component, Signal, afterNextRender } from '@angular/core'
-import { ChatMessage } from '../chat-services/chat-rest-api.types'
-import { IdentityService } from '../user/identity.service'
-import { MessageService } from '../chat-services/message.service'
+import { ChatMessage } from '../../chat-services/chat-rest-api.types'
+import { IdentityService } from '../../user/identity.service'
+import { MessageService } from '../../chat-services/message.service'
 import { Select, Store } from '@ngxs/store'
-import { ChatActions } from '../chat-services/chat.actions'
+import { ChatActions } from '../../chat-services/chat.actions'
 import { Observable, map } from 'rxjs'
-import { ChatSliceModel } from '../chat-services/chat.slice'
+import { ChatSliceModel } from '../../chat-services/chat.slice'
 import { toSignal } from '@angular/core/rxjs-interop'
 
 @Component({
