@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideHttpClient, withFetch } from '@angular/common/http'
 import { provideLocalStorage } from './localstorage.provider'
 import { StoreModule } from './store/store.module'
+import { RealtimeModule } from '@/realtime/realtime.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { StoreModule } from './store/store.module'
     AppRoutingModule,
     BrowserAnimationsModule,
     StoreModule,
+    RealtimeModule,
   ],
   providers: [
     provideClientHydration(),
