@@ -7,6 +7,7 @@ import { ChatActions } from '@/chat-services/chat.actions'
 import { Observable, map } from 'rxjs'
 import { ChatSliceModel } from '@/chat-services/chat.slice'
 import { toSignal } from '@angular/core/rxjs-interop'
+import { RealtimeService } from '@/realtime/realtime.service'
 
 @Component({
   selector: 'app-chat',
@@ -25,7 +26,8 @@ export class ChatComponent {
   constructor(
     identitySvc: IdentityService,
     private messageSvc: MessageService,
-    private store: Store
+    private store: Store,
+    private realtime: RealtimeService
   ) {
     this.userId = identitySvc.getUserId()
     this.messages = toSignal(
@@ -37,6 +39,7 @@ export class ChatComponent {
 
     afterNextRender(() => {
       this.loadMessages()
+      this.connectWs()
     })
   }
 
@@ -56,5 +59,16 @@ export class ChatComponent {
   private async loadMessages() {
     const messages = await this.messageSvc.getMessages('global')
     this.store.dispatch(new ChatActions.Add('global', messages))
+  }
+
+  private async connectWs() {
+    const socket = await this.realtime.connect()
+    socket.on('message', (payload) => {
+      if (payload.MESSAGE_SENT) {
+        this.store.dispatch(
+          new ChatActions.Add('global', [payload.MESSAGE_SENT])
+        )
+      }
+    })
   }
 }

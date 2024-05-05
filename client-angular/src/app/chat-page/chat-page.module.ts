@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext'
 import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { UserModule } from '@/user/user.module'
 import { FormsModule } from '@angular/forms'
+import { RealtimeModule } from '@/realtime/realtime.module'
 
 @NgModule({
   declarations: [ChatComponent, ChatMessageComponent],
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms'
     FormsModule,
     NgIf,
     NgClass,
+    RealtimeModule,
   ],
 })
 export class ChatPageModule {}

@@ -1,5 +1,5 @@
 import { ChatRoom } from './chat-room.entity'
-import { IChatRoomMessage } from './chat-room-entity.types'
+import { IChatRoomMessage } from '../chat-room.types'
 import {
   Column,
   Entity,
