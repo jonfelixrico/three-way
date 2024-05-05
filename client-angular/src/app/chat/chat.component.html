@@ -1,27 +1,29 @@
-<div class="h-full flex flex-column">
-  <div class="col overflow-auto">
-    <div class="flex flex-column gap-1">
-      @for (
-        message of messages();
-        track message.id;
-        let index = $index, first = $first, last = $last
-      ) {
-        <app-chat-message
-          [message]="message"
-          [isSender]="message.senderId === userId"
-          [isFirstInSequence]="
-            first || messages()[index - 1].senderId !== message.senderId
-          "
-          [isLastInSequence]="
-            last || messages()[index + 1].senderId !== message.senderId
-          "
-        />
-      }
+<div class="h-full p-3 surface-100">
+  <div class="p-card h-full py-2 border-round-xl flex flex-column">
+    <div class="col overflow-auto">
+      <div class="flex flex-column">
+        @for (
+          message of messages();
+          track message.id;
+          let index = $index, first = $first, last = $last
+        ) {
+          <app-chat-message
+            [message]="message"
+            [isSender]="message.senderId === userId"
+            [isFirstInSequence]="
+              first || messages()[index - 1].senderId !== message.senderId
+            "
+            [isLastInSequence]="
+              last || messages()[index + 1].senderId !== message.senderId
+            "
+          />
+        }
+      </div>
     </div>
-  </div>
 
-  <div class="col-fixed flex flex-row gap-2">
-    <input type="text" pInputText class="col" [(ngModel)]="content" />
-    <button (click)="sendMessage()" pButton>Submit</button>
+    <div class="col-fixed flex flex-row gap-2">
+      <input type="text" pInputText class="col" [(ngModel)]="content" />
+      <button (click)="sendMessage()" pButton>Submit</button>
+    </div>
   </div>
 </div>
