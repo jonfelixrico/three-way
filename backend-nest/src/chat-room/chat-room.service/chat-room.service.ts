@@ -24,15 +24,18 @@ export class ChatRoomService {
   async sendMessage({
     chatId,
     content: message,
+    senderId,
   }: {
     chatId: string
     content: string
+    senderId: string
   }): Promise<IChatRoomMessage> {
     return await this.messageRepo.save({
       content: message,
       chatRoom: {
         id: chatId,
       },
+      senderId,
       timestamp: new Date(),
     })
   }

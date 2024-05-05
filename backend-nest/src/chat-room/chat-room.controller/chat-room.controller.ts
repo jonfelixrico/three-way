@@ -18,10 +18,16 @@ export class ChatRoomController {
   }
 
   @Post(':id/message')
-  async sendMessage(@Param('id') id: string, @Body('content') content: string) {
+  async sendMessage(
+    @Param('id') id: string,
+    @Body('content') content: string,
+    // TODO get from session/token once implemetned
+    @Body('senderId') senderId: string
+  ) {
     return await this.chatSvc.sendMessage({
       chatId: id,
       content,
+      senderId,
     })
   }
 }
