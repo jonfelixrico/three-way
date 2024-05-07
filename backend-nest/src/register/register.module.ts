@@ -4,6 +4,6 @@ import { UserModule } from 'src/user/user.module'
 
 @Module({
   controllers: [RegisterController],
-  providers: [UserModule],
+  imports: [UserModule],
 })
 export class RegisterModule {}
