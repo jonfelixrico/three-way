@@ -1,26 +1,13 @@
-import {
-  Body,
-  Controller,
-  HttpException,
-  HttpStatus,
-  Post,
-} from '@nestjs/common'
-import { CredentialsReqDto } from 'src/user/user.dtos'
-import { UserService } from 'src/user/user.service/user.service'
+import { Controller, Post, Request, UseGuards } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
+import { IUser } from 'src/user/user.types'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private userSvc: UserService) {}
-
+  @UseGuards(AuthGuard('local'))
   @Post()
-  async authenticate(@Body() body: CredentialsReqDto) {
-    const matchingUser = await this.userSvc.verifyCredentials(
-      body.username,
-      body.password
-    )
-
-    if (!matchingUser) {
-      throw new HttpException('Wrong credentials', HttpStatus.UNAUTHORIZED)
-    }
+  async authenticate(@Request() req: { user: IUser }) {
+    const { id } = req.user
+    return { id }
   }
 }
