@@ -1,4 +1,11 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common'
+import {
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { LocalAuthGuard } from 'src/auth/local-auth.guard'
 import { Public } from 'src/auth/public.decorator'
@@ -11,6 +18,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Public()
   @Post()
+  @HttpCode(HttpStatus.OK)
   async authenticate(@Request() req: { user: IUser }) {
     const { id } = req.user
     const token = await this.jwt.signAsync({
