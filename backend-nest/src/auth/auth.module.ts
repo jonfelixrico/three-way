@@ -24,9 +24,10 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
   providers: [
     LocalStrategy,
     JwtStrategy,
+    JwtAuthGuard,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
+      useExisting: JwtAuthGuard,
     },
   ],
 })
