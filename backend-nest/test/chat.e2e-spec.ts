@@ -3,6 +3,8 @@ import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 import { randomUUID } from 'crypto'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { MockGuard } from 'test/mock-guard'
 
 describe('AppController (e2e)', () => {
   let app: INestApplication
@@ -10,7 +12,11 @@ describe('AppController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile()
+    })
+
+      .overrideProvider(JwtAuthGuard)
+      .useClass(MockGuard)
+      .compile()
 
     app = moduleFixture.createNestApplication()
     await app.init()
