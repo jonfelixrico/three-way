@@ -6,7 +6,7 @@ import { randomUUID } from 'crypto'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { MockGuard } from 'test/mock-guard'
 
-describe('AppController (e2e)', () => {
+describe('chat', () => {
   let app: INestApplication
 
   beforeEach(async () => {
