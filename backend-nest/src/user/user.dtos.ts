@@ -6,7 +6,7 @@ export class UserRespDto implements IUser {
   username: string
 }
 
-export class CreateUserReqDto {
+export class CredentialsReqDto {
   username: string
   password: string
 }

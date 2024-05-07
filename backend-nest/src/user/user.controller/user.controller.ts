@@ -7,7 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common'
-import { CreateUserReqDto, UserRespDto } from 'src/user/user.dtos'
+import { CredentialsReqDto, UserRespDto } from 'src/user/user.dtos'
 import { UserService } from 'src/user/user.service/user.service'
 
 @Controller('user')
@@ -15,7 +15,7 @@ export class UserController {
   constructor(private svc: UserService) {}
 
   @Post()
-  async create(@Body() body: CreateUserReqDto): Promise<UserRespDto> {
+  async create(@Body() body: CredentialsReqDto): Promise<UserRespDto> {
     return await this.svc.create(body)
   }
 
