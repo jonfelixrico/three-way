@@ -26,9 +26,15 @@ describe('user - public', () => {
       .send(credentials)
       .expect(201)
 
-    await request(app.getHttpServer())
+    const response = await request(app.getHttpServer())
       .post('/auth')
       .send(credentials)
       .expect(200)
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        accessToken: expect.stringMatching(/.*/),
+      })
+    )
   })
 })
