@@ -9,7 +9,9 @@ export class User implements IUser {
   })
   id: string
 
-  @Column('varchar')
+  @Column('varchar', {
+    unique: true,
+  })
   @Index()
   username: string
 
