@@ -26,7 +26,7 @@ export class UserService {
     return user
   }
 
-  async verifyCredentials(username: string, password: string) {
+  async verifyCredentials(username: string, password: string): Promise<IUser> {
     const fromDb = await this.userDb.findOne({
       where: {
         username,
@@ -34,24 +34,21 @@ export class UserService {
     })
 
     if (!fromDb) {
-      throw new Error('not found')
+      return null
     }
 
-    return await bcrypt.compare(password, fromDb.encryptedPassword)
+    const hasAMatch = await bcrypt.compare(password, fromDb.encryptedPassword)
+    if (!hasAMatch) {
+      return null
+    }
+
+    return fromDb
   }
 
   async getById(id: string): Promise<IUser> {
     return await this.userDb.findOne({
       where: {
         id,
-      },
-    })
-  }
-
-  async getByUsername(username: string): Promise<IUser> {
-    return await this.userDb.findOne({
-      where: {
-        username,
       },
     })
   }
