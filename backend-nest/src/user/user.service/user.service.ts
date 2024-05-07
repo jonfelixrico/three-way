@@ -40,10 +40,10 @@ export class UserService {
     return await bcrypt.compare(password, fromDb.encryptedPassword)
   }
 
-  async getByUsername(username: string): Promise<IUser> {
+  async getById(id: string): Promise<IUser> {
     return await this.userDb.findOne({
       where: {
-        username,
+        id,
       },
     })
   }
