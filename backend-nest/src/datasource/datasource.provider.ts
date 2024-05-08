@@ -18,11 +18,11 @@ export const DatasourceProvider: Provider = {
          */
         `${__dirname}/../**/*.entity.{ts,js}`,
       ],
-      synchronize: !inProduction,
       migrations: [
         `${__dirname}/migrations/*-migration.{ts,js}`,
         inProduction ? null : `${__dirname}/migrations/*-seed.{ts,js}`,
       ].filter(Boolean),
+      logging: true,
     })
 
     return dataSource.initialize()
