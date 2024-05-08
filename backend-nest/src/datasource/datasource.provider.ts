@@ -22,7 +22,7 @@ export const DatasourceProvider: Provider = {
       migrations: [
         `${__dirname}/migrations/*-migration.{ts,js}`,
         inProduction ? null : `${__dirname}/migrations/*-seed.{ts,js}`,
-      ],
+      ].filter(Boolean),
     })
 
     return dataSource.initialize()
