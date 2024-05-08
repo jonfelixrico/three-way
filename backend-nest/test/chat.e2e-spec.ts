@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
-import { randomUUID } from 'crypto'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { MockGuard } from 'test/mock-guard'
 
@@ -38,20 +37,16 @@ describe('chat', () => {
 
   test('POST /chat/:id/message', async () => {
     const content = `Test message ${Date.now()}`
-    const senderId = randomUUID()
 
     const postResponse = await request(app.getHttpServer())
       .post('/chat/global/message')
       .send({
         content,
-        senderId,
       })
       .expect(201)
     expect(postResponse.body).toEqual(
       expect.objectContaining({
-        // TODO change this once we start implementing real chatrooms
         content,
-        senderId,
       })
     )
 
@@ -63,7 +58,6 @@ describe('chat', () => {
       expect.arrayContaining([
         expect.objectContaining({
           content,
-          senderId,
         }),
       ])
     )

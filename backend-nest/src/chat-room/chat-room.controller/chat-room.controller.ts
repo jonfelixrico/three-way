@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.service'
+import { UserId } from 'src/decorators/user-id.param-decorator'
 
 @Controller('chat')
 export class ChatRoomController {
@@ -21,13 +22,12 @@ export class ChatRoomController {
   async sendMessage(
     @Param('id') id: string,
     @Body('content') content: string,
-    // TODO get from session/token once implemetned
-    @Body('senderId') senderId: string
+    @UserId() userId: string
   ) {
     return await this.chatSvc.sendMessage({
       chatId: id,
       content,
-      senderId,
+      senderId: userId,
     })
   }
 }

@@ -35,7 +35,9 @@ export class ChatRoomService {
       chatRoom: {
         id: chatId,
       },
-      senderId,
+      sender: {
+        id: senderId,
+      },
       timestamp: new Date(),
     })
 
