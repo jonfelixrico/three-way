@@ -5,6 +5,7 @@ import { WebsocketModule } from './websocket/websocket.module'
 import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
 import { RegisterModule } from './register/register.module'
+import { ConfigModule } from '@nestjs/config'
 
 @Module({
   imports: [
@@ -14,6 +15,10 @@ import { RegisterModule } from './register/register.module'
     UserModule,
     AuthModule,
     RegisterModule,
+    ConfigModule.forRoot({
+      cache: true,
+      envFilePath: ['.env.local', '.env'],
+    }),
   ],
   controllers: [],
   providers: [],
