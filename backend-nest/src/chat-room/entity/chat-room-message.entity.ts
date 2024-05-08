@@ -7,6 +7,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
+import { User } from 'src/user/user.entity'
 
 @Entity()
 export class ChatRoomMessage implements IChatRoomMessage {
@@ -28,7 +29,10 @@ export class ChatRoomMessage implements IChatRoomMessage {
   @Column('datetime')
   timestamp: Date
 
-  @Index()
-  @Column()
-  senderId: string
+  @ManyToOne(() => User)
+  sender: User
+
+  get senderId() {
+    return this.sender.id
+  }
 }
