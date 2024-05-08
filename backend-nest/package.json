@@ -18,7 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:format": "prettier --write \"typeorm/migrations/*.ts\"",
+    "migration:generate": "pnpm typeorm migration:generate -d typeorm/datasource.ts typeorm/migrations/migration && pnpm migration:format"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
