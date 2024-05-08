@@ -1,10 +1,8 @@
+import { UserActions } from '@/user/user.actions'
+import { User } from '@/user/user.types'
 import { Injectable } from '@angular/core'
-import { State } from '@ngxs/store'
-
-interface User {
-  id: string
-  username: string
-}
+import { Action, State, StateContext } from '@ngxs/store'
+import { produce } from 'immer'
 
 export interface UserSliceModel {
   user: User | null
@@ -17,4 +15,13 @@ export interface UserSliceModel {
   },
 })
 @Injectable()
-export class UserSlice {}
+export class UserSlice {
+  @Action(UserActions.Set)
+  setUser(ctx: StateContext<UserSliceModel>, { user }: UserActions.Set) {
+    ctx.setState(
+      produce((draft) => {
+        draft.user = user
+      })
+    )
+  }
+}
