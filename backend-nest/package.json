@@ -21,7 +21,7 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "format:migrations": "prettier --write \"./**/migrations/*.ts\"",
     "migrate": "pnpm typeorm migration:generate -d typeorm/datasource.ts src/datasource/migrations/migration && pnpm format:migrations",
-    "migrate:seed:": "pnpm typeorm migration:create -d src/datasource/migrations/seed && pnpm format:migrations"
+    "migrate:seed": "pnpm typeorm migration:create src/datasource/migrations/seed && pnpm format:migrations"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
