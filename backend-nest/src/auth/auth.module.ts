@@ -7,17 +7,23 @@ import { LocalStrategy } from 'src/auth/local.strategy'
 import { JwtStrategy } from 'src/auth/jwt.strategy'
 import { APP_GUARD } from '@nestjs/core'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { ConfigService } from '@nestjs/config'
+import { JWT_SECRET } from 'src/env.constants'
 
 @Module({
   imports: [
     UserModule,
     PassportModule,
-    JwtModule.register({
-      // TODO take secrets form env
-      secret: 'test',
-      signOptions: {
-        expiresIn: '1h',
+    JwtModule.registerAsync({
+      useFactory: (cfg: ConfigService) => {
+        return {
+          secret: cfg.getOrThrow<string>(JWT_SECRET),
+          signOptions: {
+            expiresIn: '1h',
+          },
+        }
       },
+      inject: [ConfigService],
     }),
   ],
   controllers: [AuthController],
