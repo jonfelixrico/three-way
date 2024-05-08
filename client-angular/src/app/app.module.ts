@@ -11,6 +11,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http'
 import { provideLocalStorage } from './localstorage.provider'
 import { StoreModule } from './store/store.module'
 import { RealtimeModule } from '@/realtime/realtime.module'
+import { UserModule } from '@/user/user.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { RealtimeModule } from '@/realtime/realtime.module'
     BrowserAnimationsModule,
     StoreModule,
     RealtimeModule,
+    UserModule,
   ],
   providers: [
     provideClientHydration(),
