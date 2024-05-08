@@ -1,16 +1,31 @@
+import { userLoaderGuard } from '@/app-guards/user-loader.guard'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
 const routes: Routes = [
   {
-    path: 'chat',
-    loadChildren: () =>
-      import('./chat-page/chat-page.module').then((m) => m.ChatPageModule),
-  },
-  {
-    path: 'login',
-    loadChildren: () =>
-      import('./login-page/login-page.module').then((m) => m.LoginPageModule),
+    path: '',
+    canActivateChild: [userLoaderGuard],
+
+    children: [
+      {
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full',
+      },
+      {
+        path: 'chat',
+        loadChildren: () =>
+          import('./chat-page/chat-page.module').then((m) => m.ChatPageModule),
+      },
+      {
+        path: 'login',
+        loadChildren: () =>
+          import('./login-page/login-page.module').then(
+            (m) => m.LoginPageModule
+          ),
+      },
+    ],
   },
 ]
 
