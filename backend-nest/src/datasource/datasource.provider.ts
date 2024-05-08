@@ -10,7 +10,7 @@ export const DatasourceProvider: Provider = {
 
     const dataSource = new DataSource({
       type: 'sqlite',
-      database: 'db',
+      database: 'db.sqlite',
       entities: [
         /*
          * Even though we strictly use ts, we still need to include js in the glob.
