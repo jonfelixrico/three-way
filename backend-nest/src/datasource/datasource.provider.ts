@@ -24,7 +24,6 @@ export const DatasourceProvider: Provider = {
       ].filter(Boolean),
       migrationsRun: true,
 
-      synchronize: true,
       logging: true,
     })
 
