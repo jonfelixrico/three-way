@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Request } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.service'
-import { IUser } from 'src/user/user.types'
+import { UserId } from 'src/decorators/user-id.param-decorator'
 
 @Controller('chat')
 export class ChatRoomController {
@@ -22,12 +22,12 @@ export class ChatRoomController {
   async sendMessage(
     @Param('id') id: string,
     @Body('content') content: string,
-    @Request() { user }: { user: IUser }
+    @UserId() userId: string
   ) {
     return await this.chatSvc.sendMessage({
       chatId: id,
       content,
-      senderId: user.id,
+      senderId: userId,
     })
   }
 }
