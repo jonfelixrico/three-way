@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@angular/core'
 import { v4 as uuidv4 } from 'uuid'
 import { LOCAL_STORAGE } from '../localstorage.provider'
-import { Store } from '@ngxs/store'
+import { Select, Store } from '@ngxs/store'
 import { HttpClient } from '@angular/common/http'
-import { firstValueFrom } from 'rxjs'
+import { Observable, firstValueFrom } from 'rxjs'
 import { User } from '@/user/user.types'
 import { UserActions } from '@/user/user.actions'
+import { UserSliceModel } from '@/user/user.slice'
 
 const USER_ID = 'CLIENT_ID'
 
@@ -16,6 +17,8 @@ export class IdentityService {
     private http: HttpClient,
     @Inject(LOCAL_STORAGE) private localStorage?: typeof window.localStorage
   ) {}
+
+  @Select() user$!: Observable<UserSliceModel>
 
   async loadUser() {
     const { localStorage } = this
@@ -37,6 +40,11 @@ export class IdentityService {
     console.debug('Loaded user data for %s', data.id)
 
     this.store.dispatch(new UserActions.Set(data))
+  }
+
+  async hasUser() {
+    const user = await firstValueFrom(this.user$)
+    return !!user.user
   }
 
   getUserId() {
