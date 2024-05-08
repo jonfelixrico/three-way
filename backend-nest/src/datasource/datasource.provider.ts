@@ -7,7 +7,6 @@ export const DatasourceProvider: Provider = {
   useFactory: async () => {
     const dataSource = new DataSource({
       type: 'sqlite',
-      // TODO make this configurable via env
       database: 'db',
       entities: [
         /*
