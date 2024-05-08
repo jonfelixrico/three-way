@@ -17,6 +17,7 @@ export const DatasourceProvider: Provider = {
       ],
       // TODO remove once we're starting to work on production-ready code
       synchronize: true,
+      migrations: [__dirname + '/migrations/*-migration.ts'],
     })
 
     return dataSource.initialize()
