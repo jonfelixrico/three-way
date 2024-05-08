@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm'
 
 export default new DataSource({
   type: 'sqlite',
-  database: 'db',
+  database: 'db.sqlite',
   entities: [
     /*
      * Even though we strictly use ts, we still need to include js in the glob.
@@ -10,5 +10,6 @@ export default new DataSource({
      */
     __dirname + '/../src/**/*.entity.{ts,js}',
   ],
-  synchronize: true,
+
+  migrations: [`${__dirname}/../src/**/migrations/*.ts`],
 })
