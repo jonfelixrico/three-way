@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
-import size from 'lodash/size'
 import { firstValueFrom } from 'rxjs'
+import omit from 'lodash/omit'
+import isEmpty from 'lodash/isEmpty'
 
 @Component({
   selector: 'app-register-page',
@@ -33,18 +34,14 @@ export class RegisterPageComponent {
           const password = formGroup.get('password')!
           const passwordConfirm = formGroup.get('passwordConfirm')!
 
-          if (
-            size(passwordConfirm.errors ?? {}) > 0 &&
-            !passwordConfirm.errors?.['mustMatch']
-          ) {
-            passwordConfirm.setErrors(null)
-            return null
-          }
-
           if (password.value !== passwordConfirm.value) {
-            passwordConfirm.setErrors({ mustMatch: true })
+            passwordConfirm.setErrors({
+              ...passwordConfirm.errors,
+              mustMatch: true,
+            })
           } else {
-            passwordConfirm.setErrors(null)
+            const errors = omit(passwordConfirm.errors, 'mustMatch')
+            passwordConfirm.setErrors(isEmpty(errors) ? null : errors)
           }
 
           return null
@@ -55,6 +52,9 @@ export class RegisterPageComponent {
 
   async submit() {
     const { form } = this
+
+    Object.values(form.controls).forEach((control) => control.markAsDirty())
+
     if (!form.valid) {
       return
     }
