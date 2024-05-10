@@ -1,4 +1,4 @@
-import { userLoaderGuard } from '@/app-guards/user-loader.guard'
+import { userLoaderGuard } from '@/app-guards/user-loader/user-loader.guard'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
