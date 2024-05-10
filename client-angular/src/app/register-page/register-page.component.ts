@@ -40,18 +40,6 @@ export class RegisterPageComponent {
     }
   )
 
-  get username() {
-    return this.form.get('username')
-  }
-
-  get password() {
-    return this.form.get('password')
-  }
-
-  get passwordConfirm() {
-    return this.form.get('passwordConfirm')
-  }
-
   submit() {
     const { password, username } = this.form.value
     console.log(password, username)
