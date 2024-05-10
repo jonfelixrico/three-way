@@ -24,11 +24,14 @@ export class RegisterPageComponent {
             size(passwordConfirm.errors ?? {}) > 0 &&
             !passwordConfirm.errors?.['mustMatch']
           ) {
+            passwordConfirm.setErrors(null)
             return null
           }
 
           if (password.value !== passwordConfirm.value) {
-            passwordConfirm!.setErrors({ mustMatch: true })
+            passwordConfirm.setErrors({ mustMatch: true })
+          } else {
+            passwordConfirm.setErrors(null)
           }
 
           return null
