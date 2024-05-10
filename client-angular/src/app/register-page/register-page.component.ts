@@ -17,17 +17,17 @@ export class RegisterPageComponent {
     {
       validators: [
         (formGroup) => {
-          const password = formGroup.get('password')
-          const passwordConfirm = formGroup.get('passwordConfirm')
+          const password = formGroup.get('password')!
+          const passwordConfirm = formGroup.get('passwordConfirm')!
 
           if (
-            size(passwordConfirm?.errors ?? {}) > 0 &&
-            !passwordConfirm?.errors?.['mustMatch']
+            size(passwordConfirm.errors ?? {}) > 0 &&
+            !passwordConfirm.errors?.['mustMatch']
           ) {
             return null
           }
 
-          if (password!.value !== passwordConfirm!.value) {
+          if (password.value !== passwordConfirm.value) {
             passwordConfirm!.setErrors({ mustMatch: true })
           }
 
@@ -45,7 +45,7 @@ export class RegisterPageComponent {
     return this.form.get('password')
   }
 
-  get confirmPassword() {
-    return this.form.get('confirmPassword')
+  get passwordConfirm() {
+    return this.form.get('passwordConfirm')
   }
 }
