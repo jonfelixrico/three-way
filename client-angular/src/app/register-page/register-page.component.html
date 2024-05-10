@@ -1,12 +1,12 @@
 <div class="h-screen flex flex-row justify-content-center align-items-center">
-  <div class="col-3 flex flex-column row-gap-1">
+  <form [formGroup]="form" class="col-3 flex flex-column row-gap-1">
     <p-iconField iconPosition="right">
       <p-inputIcon styleClass="pi pi-spinner pi-spin" />
-      <input type="text" pInputText class="w-full" />
+      <input type="text" pInputText class="w-full" formControlName="username" />
     </p-iconField>
 
-    <input type="password" pInputText />
+    <input type="password" pInputText formControlName="password" />
 
-    <input type="password" pInputText />
-  </div>
+    <input type="password" pInputText formControlName="passwordConfirm" />
+  </form>
 </div>

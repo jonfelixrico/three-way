@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import size from 'lodash/size'
 
 @Component({
   selector: 'app-register-page',
@@ -7,11 +8,34 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrl: './register-page.component.scss',
 })
 export class RegisterPageComponent {
-  form = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    passwordConfirm: new FormControl('', [Validators.required]),
-  })
+  form = new FormGroup(
+    {
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      passwordConfirm: new FormControl('', [Validators.required]),
+    },
+    {
+      validators: [
+        (formGroup) => {
+          const password = formGroup.get('password')
+          const passwordConfirm = formGroup.get('passwordConfirm')
+
+          if (
+            size(passwordConfirm?.errors ?? {}) > 0 &&
+            !passwordConfirm?.errors?.['mustMatch']
+          ) {
+            return null
+          }
+
+          if (password!.value !== passwordConfirm!.value) {
+            passwordConfirm!.setErrors({ mustMatch: true })
+          }
+
+          return null
+        },
+      ],
+    }
+  )
 
   get username() {
     return this.form.get('username')
