@@ -4,6 +4,7 @@ import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { lastValueFrom } from 'rxjs'
+import forEach from 'lodash/forEach'
 
 @Component({
   selector: 'app-login-page',
@@ -25,6 +26,7 @@ export class LoginPageComponent {
   async submit() {
     const { form } = this
     if (!form.valid) {
+      forEach(form.controls, (control) => control.markAsDirty())
       return
     }
 
