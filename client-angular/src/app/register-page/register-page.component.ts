@@ -5,6 +5,7 @@ import { Router } from '@angular/router'
 import { firstValueFrom } from 'rxjs'
 import omit from 'lodash/omit'
 import isEmpty from 'lodash/isEmpty'
+import forEach from 'lodash/forEach'
 
 @Component({
   selector: 'app-register-page',
@@ -53,9 +54,8 @@ export class RegisterPageComponent {
   async submit() {
     const { form } = this
 
-    Object.values(form.controls).forEach((control) => control.markAsDirty())
-
     if (!form.valid) {
+      forEach(form.controls, (control) => control.markAsDirty())
       return
     }
 
