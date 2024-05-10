@@ -54,8 +54,12 @@ export class RegisterPageComponent {
   )
 
   async submit() {
-    const { password, username } = this.form.value
+    const { form } = this
+    if (!form.valid) {
+      return
+    }
 
+    const { password, username } = form.value
     try {
       await firstValueFrom(
         this.http.post('/api/register', {
