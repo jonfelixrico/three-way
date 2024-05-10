@@ -1,1 +1,21 @@
-<p>login-page works!</p>
+<div class="h-screen flex flex-row justify-content-center align-items-center">
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    class="col-3 flex flex-column row-gap-3"
+  >
+    <!-- TODO impl error messages -->
+
+    <div class="flex flex-column row-gap-1">
+      <label for="username">Username</label>
+      <input type="text" pInputText class="w-full" formControlName="username" />
+    </div>
+
+    <div class="flex flex-column row-gap-1">
+      <label for="password">Password</label>
+      <input type="password" pInputText formControlName="password" />
+    </div>
+
+    <button pButton class="justify-content-center" type="submit">Log In</button>
+  </form>
+</div>

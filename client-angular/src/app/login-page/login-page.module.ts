@@ -1,11 +1,22 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { InputTextModule } from 'primeng/inputtext'
+import { ReactiveFormsModule } from '@angular/forms'
+import { ButtonModule } from 'primeng/button'
 
 import { LoginPageRoutingModule } from './login-page-routing.module'
 import { LoginPageComponent } from './login-page.component'
+import { UserModule } from '@/user/user.module'
 
 @NgModule({
   declarations: [LoginPageComponent],
-  imports: [CommonModule, LoginPageRoutingModule],
+  imports: [
+    CommonModule,
+    LoginPageRoutingModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    UserModule,
+  ],
 })
 export class LoginPageModule {}

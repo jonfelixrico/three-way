@@ -20,6 +20,16 @@ export class IdentityService {
 
   @Select() user$!: Observable<UserSliceModel>
 
+  setAccessToken(token: string) {
+    const { localStorage } = this
+
+    if (!localStorage) {
+      return
+    }
+
+    localStorage.setItem('token', token)
+  }
+
   async loadUser() {
     const { localStorage } = this
 
