@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
 import size from 'lodash/size'
+import { firstValueFrom } from 'rxjs'
 
 @Component({
   selector: 'app-register-page',
@@ -8,6 +11,11 @@ import size from 'lodash/size'
   styleUrl: './register-page.component.scss',
 })
 export class RegisterPageComponent {
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
+
   form = new FormGroup(
     {
       username: new FormControl('', [Validators.required]),
@@ -40,8 +48,21 @@ export class RegisterPageComponent {
     }
   )
 
-  submit() {
+  async submit() {
     const { password, username } = this.form.value
-    console.log(password, username)
+
+    try {
+      await firstValueFrom(
+        this.http.post('/api/register', {
+          username,
+          password,
+        })
+      )
+
+      await this.router.navigateByUrl('/login')
+    } catch (e) {
+      // TODO add error handling
+      console.log(e)
+    }
   }
 }
