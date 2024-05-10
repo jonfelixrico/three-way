@@ -1,24 +1,28 @@
-import { Inject, Injectable } from '@angular/core'
-import { v4 as uuidv4 } from 'uuid'
+import { Inject, Injectable, Signal } from '@angular/core'
 import { LOCAL_STORAGE } from '../localstorage.provider'
 import { Select, Store } from '@ngxs/store'
 import { HttpClient } from '@angular/common/http'
-import { Observable, firstValueFrom } from 'rxjs'
+import { Observable, firstValueFrom, map } from 'rxjs'
 import { User } from '@/user/user.types'
 import { UserActions } from '@/user/user.actions'
 import { UserSliceModel } from '@/user/user.slice'
-
-const USER_ID = 'CLIENT_ID'
+import { toSignal } from '@angular/core/rxjs-interop'
 
 @Injectable()
 export class IdentityService {
+  @Select() user$!: Observable<UserSliceModel>
+
+  private userIdSignal: Signal<string | undefined>
+
   constructor(
     private store: Store,
     private http: HttpClient,
     @Inject(LOCAL_STORAGE) private localStorage?: typeof window.localStorage
-  ) {}
-
-  @Select() user$!: Observable<UserSliceModel>
+  ) {
+    this.userIdSignal = toSignal(
+      this.user$.pipe(map((userState) => userState.user?.id))
+    )
+  }
 
   setAccessToken(token: string) {
     const { localStorage } = this
@@ -59,17 +63,6 @@ export class IdentityService {
   }
 
   getUserId() {
-    if (!this.localStorage) {
-      return 'SERVER'
-    }
-
-    let userId = this.localStorage.getItem(USER_ID)
-
-    if (!userId) {
-      userId = uuidv4()
-      this.localStorage.setItem(USER_ID, userId)
-    }
-
-    return userId
+    return this.userIdSignal()
   }
 }
