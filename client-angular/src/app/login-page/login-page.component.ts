@@ -37,7 +37,7 @@ export class LoginPageComponent {
 
       this.identitySvc.setAccessToken(accessToken)
 
-      await this.router.navigateByUrl('/chat')
+      await this.router.navigateByUrl('/app')
     } catch (e) {
       // TODO add error handling
       console.log(e)

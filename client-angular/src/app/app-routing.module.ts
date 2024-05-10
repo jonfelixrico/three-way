@@ -14,11 +14,6 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'chat',
-        loadChildren: () =>
-          import('./chat-page/chat-page.module').then((m) => m.ChatPageModule),
-      },
-      {
         path: 'login',
         loadChildren: () =>
           import('./login-page/login-page.module').then(
@@ -31,6 +26,23 @@ const routes: Routes = [
           import('./register-page/register-page.module').then(
             (m) => m.RegisterPageModule
           ),
+      },
+      {
+        path: 'app',
+        children: [
+          {
+            path: '',
+            redirectTo: 'chat',
+            pathMatch: 'full',
+          },
+          {
+            path: 'chat',
+            loadChildren: () =>
+              import('./chat-page/chat-page.module').then(
+                (m) => m.ChatPageModule
+              ),
+          },
+        ],
       },
     ],
   },
