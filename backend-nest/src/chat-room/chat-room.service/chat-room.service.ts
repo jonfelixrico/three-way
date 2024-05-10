@@ -31,7 +31,9 @@ export class ChatRoomService {
     content: string
     senderId: string
   }): Promise<IChatRoomMessage> {
-    const sent = await this.messageRepo.save({
+    // Can't use save directly since it wil render instanceToPlain useless.
+    // Save seems to return a plain object rather than the entity class.
+    const model = this.messageRepo.create({
       content: message,
       chatRoom: {
         id: chatId,
@@ -41,10 +43,11 @@ export class ChatRoomService {
       },
       timestamp: new Date(),
     })
+    const sent = await this.messageRepo.save(model)
 
     this.dispatcher.dispatch('MESSAGE_SENT', sent, (id) => id !== senderId)
 
-    return sent
+    return instanceToPlain(sent) as IChatRoomMessage
   }
 
   async getMessages({
