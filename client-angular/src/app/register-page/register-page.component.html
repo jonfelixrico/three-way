@@ -1,16 +1,27 @@
 <div class="h-screen flex flex-row justify-content-center align-items-center">
-  <form [formGroup]="form" class="col-3 flex flex-column row-gap-1">
-    <label for="username">Username</label>
-    <p-iconField iconPosition="right">
-      <p-inputIcon styleClass="pi pi-spinner pi-spin" />
-      <input type="text" pInputText class="w-full" formControlName="username" />
-    </p-iconField>
+  <form [formGroup]="form" class="col-3 flex flex-column row-gap-3">
+    <div class="flex flex-column row-gap-1">
+      <label for="username">Username</label>
+      <p-iconField iconPosition="right">
+        <p-inputIcon styleClass="pi pi-spinner pi-spin" />
+        <input
+          type="text"
+          pInputText
+          class="w-full"
+          formControlName="username"
+        />
+      </p-iconField>
+    </div>
 
-    <label for="password">Password</label>
-    <input type="password" pInputText formControlName="password" />
+    <div class="flex flex-column row-gap-1">
+      <label for="password">Password</label>
+      <input type="password" pInputText formControlName="password" />
+    </div>
 
-    <label for="passwordConfirm">Confirm Password</label>
-    <input type="password" pInputText formControlName="passwordConfirm" />
+    <div class="flex flex-column row-gap-1">
+      <label for="passwordConfirm">Confirm Password</label>
+      <input type="password" pInputText formControlName="passwordConfirm" />
+    </div>
 
     <button pButton class="justify-content-center" type="submit">
       Register
