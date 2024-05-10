@@ -1,5 +1,9 @@
 <div class="h-screen flex flex-row justify-content-center align-items-center">
-  <form [formGroup]="form" class="col-3 flex flex-column row-gap-3">
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    class="col-3 flex flex-column row-gap-3"
+  >
     <div class="flex flex-column row-gap-1">
       <label for="username">Username</label>
       <p-iconField iconPosition="right">

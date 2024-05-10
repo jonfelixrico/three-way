@@ -51,4 +51,9 @@ export class RegisterPageComponent {
   get passwordConfirm() {
     return this.form.get('passwordConfirm')
   }
+
+  submit() {
+    const { password, username } = this.form.value
+    console.log(password, username)
+  }
 }
