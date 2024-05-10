@@ -30,15 +30,16 @@ export class IdentityService {
     localStorage.setItem('token', token)
   }
 
-  async loadUser() {
-    const { localStorage } = this
-
-    // TODO explicitly check for browsermode instead
-    if (!localStorage) {
+  getAccessToken() {
+    if (!this.localStorage) {
       return
     }
 
-    const token = localStorage.getItem('token')
+    return this.localStorage.getItem('token')
+  }
+
+  async loadUser() {
+    const token = this.getAccessToken()
     if (!token) {
       console.debug('No token found')
       return
