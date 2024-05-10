@@ -1,4 +1,4 @@
-import { NgModule, inject } from '@angular/core'
+import { NgModule } from '@angular/core'
 import {
   BrowserModule,
   provideClientHydration,
