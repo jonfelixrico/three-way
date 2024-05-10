@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common'
+import { instanceToPlain } from 'class-transformer'
 import {
   CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER,
   CHAT_ROOM_REPOSITORY_PROVIDER,
@@ -51,7 +52,7 @@ export class ChatRoomService {
   }: {
     chatId: string
   }): Promise<IChatRoomMessage[]> {
-    return await this.messageRepo.find({
+    const messages = await this.messageRepo.find({
       where: {
         chatRoom: {
           id: chatId,
@@ -61,6 +62,11 @@ export class ChatRoomService {
         timestamp: 'DESC',
       },
     })
+
+    return messages.map(
+      (message) =>
+        instanceToPlain<IChatRoomMessage>(message) as IChatRoomMessage
+    )
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
