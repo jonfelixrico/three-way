@@ -18,12 +18,17 @@ export class RegisterPageComponent {
 
   form = new FormGroup(
     {
+      // TODO implement username check
       username: new FormControl('', [Validators.required]),
+
       password: new FormControl('', [Validators.required]),
       passwordConfirm: new FormControl('', [Validators.required]),
     },
     {
       validators: [
+        /**
+         * "Confirm password" validation
+         */
         (formGroup) => {
           const password = formGroup.get('password')!
           const passwordConfirm = formGroup.get('passwordConfirm')!
