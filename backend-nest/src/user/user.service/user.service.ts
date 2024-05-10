@@ -4,6 +4,7 @@ import { User } from 'src/user/user.entity'
 import { Repository } from 'typeorm'
 import { hash, compare } from 'bcrypt'
 import { IUser } from 'src/user/user.types'
+import { instanceToPlain } from 'class-transformer'
 
 const SALT_ROUNDS = 10
 
@@ -23,7 +24,7 @@ export class UserService {
       username,
     })
 
-    return user
+    return instanceToPlain(user) as IUser
   }
 
   async verifyCredentials(username: string, password: string): Promise<IUser> {
@@ -42,14 +43,16 @@ export class UserService {
       return null
     }
 
-    return fromDb
+    return instanceToPlain(fromDb) as IUser
   }
 
   async getById(id: string): Promise<IUser> {
-    return await this.userDb.findOne({
+    const user = await this.userDb.findOne({
       where: {
         id,
       },
     })
+
+    return instanceToPlain(user) as IUser
   }
 }
