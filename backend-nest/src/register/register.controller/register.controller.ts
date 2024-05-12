@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common'
 import { Public } from 'src/auth/public.decorator'
 import { CredentialsReqDto } from 'src/user/user.dtos'
 import { UserService } from 'src/user/user.service/user.service'
@@ -10,6 +16,10 @@ export class RegisterController {
   @Public()
   @Post()
   async register(@Body() credentials: CredentialsReqDto): Promise<void> {
-    await this.userSvc.create(credentials)
+    const createdUser = await this.userSvc.create(credentials)
+
+    if (!createdUser) {
+      throw new HttpException('Username taken', HttpStatus.CONFLICT)
+    }
   }
 }

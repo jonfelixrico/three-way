@@ -1,5 +1,5 @@
 import { Inject, Injectable, Signal } from '@angular/core'
-import { LOCAL_STORAGE } from '../localstorage.provider'
+import { LOCAL_STORAGE } from '@/localstorage.provider'
 import { Select, Store } from '@ngxs/store'
 import { HttpClient } from '@angular/common/http'
 import { Observable, firstValueFrom, map } from 'rxjs'
@@ -7,6 +7,7 @@ import { User } from '@/user/user.types'
 import { UserActions } from '@/user/user.actions'
 import { UserSliceModel } from '@/user/user.slice'
 import { toSignal } from '@angular/core/rxjs-interop'
+import { PlatformService } from '@/platform.service'
 
 @Injectable()
 export class IdentityService {
@@ -17,6 +18,7 @@ export class IdentityService {
   constructor(
     private store: Store,
     private http: HttpClient,
+    private platformSvc: PlatformService,
     @Inject(LOCAL_STORAGE) private localStorage?: typeof window.localStorage
   ) {
     this.userIdSignal = toSignal(
@@ -25,24 +27,18 @@ export class IdentityService {
   }
 
   setAccessToken(token: string) {
-    const { localStorage } = this
-
-    if (!localStorage) {
-      return
-    }
-
-    localStorage.setItem('token', token)
+    return this.localStorage?.setItem('token', token)
   }
 
   getAccessToken() {
-    if (!this.localStorage) {
-      return
-    }
-
-    return this.localStorage.getItem('token')
+    return this.localStorage?.getItem('token')
   }
 
   async loadUser() {
+    if (!this.platformSvc.isBrowser) {
+      return
+    }
+
     const token = this.getAccessToken()
     if (!token) {
       console.debug('No token found')

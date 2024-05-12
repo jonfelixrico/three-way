@@ -1,3 +1,4 @@
+import { TranslocoModule } from '@jsverse/transloco'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { InputTextModule } from 'primeng/inputtext'
@@ -8,6 +9,9 @@ import { LoginPageRoutingModule } from './login-page-routing.module'
 import { LoginPageComponent } from './login-page.component'
 import { UserModule } from '@/user/user.module'
 import { CardModule } from 'primeng/card'
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
+import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
+import { InputSubtextComponent } from '@/common-components/input-help-text/input-subtext.component'
 
 @NgModule({
   declarations: [LoginPageComponent],
@@ -19,6 +23,11 @@ import { CardModule } from 'primeng/card'
     ButtonModule,
     UserModule,
     CardModule,
+    TranslocoModule,
+    DynamicDialogModule,
+    TextDialogContentComponent,
+    InputSubtextComponent,
   ],
+  providers: [DialogService],
 })
 export class LoginPageModule {}

@@ -1,0 +1,5 @@
+@if (errorMessage) {
+  <small [id]="id" class="text-red-500">{{ errorMessage }}</small>
+} @else if (hintMessage) {
+  <small [id]="id">{{ hintMessage }}</small>
+}

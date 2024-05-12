@@ -1,3 +1,4 @@
+import { TranslocoModule } from '@jsverse/transloco'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 
@@ -7,6 +8,9 @@ import { InputTextModule } from 'primeng/inputtext'
 import { ReactiveFormsModule } from '@angular/forms'
 import { ButtonModule } from 'primeng/button'
 import { CardModule } from 'primeng/card'
+import { InputSubtextComponent } from '@/common-components/input-help-text/input-subtext.component'
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
+import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
 
 @NgModule({
   declarations: [RegisterPageComponent],
@@ -17,6 +21,11 @@ import { CardModule } from 'primeng/card'
     ReactiveFormsModule,
     ButtonModule,
     CardModule,
+    TranslocoModule,
+    InputSubtextComponent,
+    DynamicDialogModule,
+    TextDialogContentComponent,
   ],
+  providers: [DialogService],
 })
 export class RegisterPageModule {}

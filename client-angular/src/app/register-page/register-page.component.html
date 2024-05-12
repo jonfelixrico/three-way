@@ -1,5 +1,6 @@
 <div
   class="h-screen flex flex-row justify-content-center align-items-center surface-100 p-3"
+  *transloco="let t"
 >
   <p-card class="card-width">
     <form
@@ -7,26 +8,80 @@
       (ngSubmit)="submit()"
       class="w-full flex flex-column row-gap-3"
     >
-      <!-- TODO impl error messages -->
-
       <div class="flex flex-column row-gap-1">
-        <label for="username">Username</label>
-        <input type="text" pInputText formControlName="username" />
+        <label for="username">{{ t('auth.username') }}</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="username"
+          aria-describedby="username"
+        />
+
+        <app-input-subtext
+          [control]="form.get('username')!"
+          [errorMessages]="[
+            {
+              error: 'required',
+              message: t('validationError.required')
+            }
+          ]"
+          id="username-hint"
+        />
       </div>
 
       <div class="flex flex-column row-gap-1">
-        <label for="password">Password</label>
-        <input type="password" pInputText formControlName="password" />
+        <label for="password">{{ t('auth.password') }}</label>
+        <input
+          type="password"
+          pInputText
+          formControlName="password"
+          aria-describedby="password-hint"
+        />
+
+        <app-input-subtext
+          [control]="form.get('password')!"
+          [errorMessages]="[
+            {
+              error: 'required',
+              message: t('validationError.required')
+            }
+          ]"
+          id="password-hint"
+        />
       </div>
 
       <div class="flex flex-column row-gap-1">
-        <label for="passwordConfirm">Confirm Password</label>
-        <input type="password" pInputText formControlName="passwordConfirm" />
+        <label for="passwordConfirm">{{ t('auth.passwordConfirm') }}</label>
+        <input
+          type="password"
+          pInputText
+          formControlName="passwordConfirm"
+          aria-describedby="password-confirm-hint"
+        />
+
+        <app-input-subtext
+          [control]="form.get('passwordConfirm')!"
+          [errorMessages]="[
+            {
+              error: 'required',
+              message: t('validationError.required')
+            },
+            {
+              error: 'mustMatch',
+              message: t('auth.validationError.confirmPassword')
+            }
+          ]"
+          id="password-confirm-hint"
+        />
       </div>
 
       <button pButton class="justify-content-center" type="submit">
-        Register
+        {{ t('auth.register') }}
       </button>
+
+      <a routerLink="/login" class="mt-5">
+        {{ t('auth.loginHint') }}
+      </a>
     </form>
   </p-card>
 </div>
