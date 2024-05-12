@@ -13,6 +13,7 @@ import forEach from 'lodash/forEach'
 import { DialogService } from 'primeng/dynamicdialog'
 import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
 import { TranslocoService } from '@jsverse/transloco'
+import { UsernameValidatorService } from '@/register-page/username-validator.service'
 
 @Component({
   selector: 'app-register-page',
@@ -24,41 +25,47 @@ export class RegisterPageComponent {
     private http: HttpClient,
     private router: Router,
     private dialogSvc: DialogService,
-    private tl: TranslocoService
-  ) {}
+    private tl: TranslocoService,
+    usernameValidator: UsernameValidatorService
+  ) {
+    this.form = new FormGroup(
+      {
+        // TODO implement username check
+        username: new FormControl('', {
+          validators: [Validators.required],
+          asyncValidators: [usernameValidator.validate.bind(usernameValidator)],
+        }),
 
-  form = new FormGroup(
-    {
-      // TODO implement username check
-      username: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required]),
+        passwordConfirm: new FormControl('', [Validators.required]),
+      },
+      {
+        validators: [
+          /**
+           * "Confirm password" validation
+           */
+          (formGroup) => {
+            const password = formGroup.get('password')!
+            const passwordConfirm = formGroup.get('passwordConfirm')!
 
-      password: new FormControl('', [Validators.required]),
-      passwordConfirm: new FormControl('', [Validators.required]),
-    },
-    {
-      validators: [
-        /**
-         * "Confirm password" validation
-         */
-        (formGroup) => {
-          const password = formGroup.get('password')!
-          const passwordConfirm = formGroup.get('passwordConfirm')!
+            if (password.value !== passwordConfirm.value) {
+              passwordConfirm.setErrors({
+                ...passwordConfirm.errors,
+                mustMatch: true,
+              })
+            } else {
+              const errors = omit(passwordConfirm.errors, 'mustMatch')
+              passwordConfirm.setErrors(isEmpty(errors) ? null : errors)
+            }
 
-          if (password.value !== passwordConfirm.value) {
-            passwordConfirm.setErrors({
-              ...passwordConfirm.errors,
-              mustMatch: true,
-            })
-          } else {
-            const errors = omit(passwordConfirm.errors, 'mustMatch')
-            passwordConfirm.setErrors(isEmpty(errors) ? null : errors)
-          }
+            return null
+          },
+        ],
+      }
+    )
+  }
 
-          return null
-        },
-      ],
-    }
-  )
+  form: FormGroup
 
   async submit() {
     const { form } = this
