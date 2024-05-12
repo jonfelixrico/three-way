@@ -1,5 +1,5 @@
-import { isPlatformBrowser } from '@angular/common'
-import { InjectionToken, PLATFORM_ID, Provider } from '@angular/core'
+import { PlatformService } from '@/platform.service'
+import { InjectionToken, Provider } from '@angular/core'
 
 export const LOCAL_STORAGE = new InjectionToken<
   typeof localStorage | undefined
@@ -8,8 +8,8 @@ export const LOCAL_STORAGE = new InjectionToken<
 export function provideLocalStorage(): Provider {
   return {
     provide: LOCAL_STORAGE,
-    deps: [PLATFORM_ID],
-    useFactory: (platformId: object) =>
-      isPlatformBrowser(platformId) ? window.localStorage : null,
+    deps: [PlatformService],
+    useFactory: (platform: PlatformService) =>
+      platform.isBrowser ? window.localStorage : null,
   }
 }
