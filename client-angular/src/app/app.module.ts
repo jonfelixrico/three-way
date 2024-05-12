@@ -13,7 +13,7 @@ import { RealtimeModule } from '@/realtime/realtime.module'
 import { UserModule } from '@/user/user.module'
 import { AppHttpModule } from '@/app-http/app-http.module'
 import { HttpClientModule } from '@angular/common/http'
-import { TranslocoRootModule } from './i18n/transloco-root.module'
+import { TranslocoRootModule } from './transloco/transloco-root.module'
 
 @NgModule({
   declarations: [AppComponent],
