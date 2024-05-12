@@ -11,6 +11,7 @@ import { CardModule } from 'primeng/card'
 import { InputSubtextComponent } from '@/common-components/input-help-text/input-subtext.component'
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
 import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
+import { UsernameValidatorService } from '@/register-page/username-validator.service'
 
 @NgModule({
   declarations: [RegisterPageComponent],
@@ -26,6 +27,6 @@ import { TextDialogContentComponent } from '@/common-components/text-dialog-cont
     DynamicDialogModule,
     TextDialogContentComponent,
   ],
-  providers: [DialogService],
+  providers: [DialogService, UsernameValidatorService],
 })
 export class RegisterPageModule {}
