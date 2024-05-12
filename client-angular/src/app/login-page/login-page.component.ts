@@ -48,24 +48,26 @@ export class LoginPageComponent {
 
       await this.router.navigateByUrl('/app')
     } catch (e) {
-      if (
+      const isWrongCredentials =
         e instanceof HttpErrorResponse &&
         e.status === HttpStatusCode.Unauthorized
-      ) {
-        this.dialogSvc.open(TextDialogContentComponent, {
-          header: this.tl.translate('auth.wrongCredentialsError.title'),
-          data: {
-            text: this.tl.translate('auth.wrongCredentialsError.message'),
-          },
-        })
-
-        this.form.reset({
-          username: this.form.get('username')?.value,
-        })
-        return
-      }
 
       console.log(e)
+
+      this.dialogSvc.open(TextDialogContentComponent, {
+        header: this.tl.translate('auth.logInError.title'),
+        data: {
+          text: this.tl.translate(
+            isWrongCredentials
+              ? 'auth.logInError.wrongCredentials'
+              : 'common.genericError'
+          ),
+        },
+      })
+
+      this.form.reset({
+        username: this.form.get('username')?.value,
+      })
     }
   }
 }

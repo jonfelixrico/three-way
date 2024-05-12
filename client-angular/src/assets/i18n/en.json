@@ -6,9 +6,13 @@
     "password": "Password",
     "passwordConfirm": "Confirm Password",
 
-    "wrongCredentialsError": {
+    "logInError": {
       "title": "Log-in Failed",
-      "message": "Wrong username and/or password. Please verify that your credentials are correct and try again."
+      "wrongCredentials": "Wrong username and/or password. Please verify that your credentials are correct and try again."
     }
+  },
+
+  "common": {
+    "genericError": "An unexpected error occurred. Please try again later."
   }
 }
