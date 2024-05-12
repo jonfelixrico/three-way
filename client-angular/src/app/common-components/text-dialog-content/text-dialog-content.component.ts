@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core'
+import { Component } from '@angular/core'
+import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 
 /**
  * Just renders the text.
@@ -12,8 +13,9 @@ import { Component, Input } from '@angular/core'
   templateUrl: './text-dialog-content.component.html',
 })
 export class TextDialogContentComponent {
-  @Input({
-    required: true,
-  })
-  text!: string
+  text: string
+
+  constructor(config: DynamicDialogConfig) {
+    this.text = config.data.text
+  }
 }
