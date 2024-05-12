@@ -12,6 +12,8 @@ import { StoreModule } from './store/store.module'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { UserModule } from '@/user/user.module'
 import { AppHttpModule } from '@/app-http/app-http.module'
+import { HttpClientModule } from '@angular/common/http'
+import { TranslocoRootModule } from './transloco-root.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +25,8 @@ import { AppHttpModule } from '@/app-http/app-http.module'
     RealtimeModule,
     UserModule,
     AppHttpModule,
+    HttpClientModule,
+    TranslocoRootModule,
   ],
   providers: [provideClientHydration(), provideLocalStorage()],
   bootstrap: [AppComponent],
