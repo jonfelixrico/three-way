@@ -1,5 +1,5 @@
 import { Inject, Injectable, Signal } from '@angular/core'
-import { LOCAL_STORAGE } from '../localstorage.provider'
+import { LOCAL_STORAGE } from '@/localstorage.provider'
 import { Select, Store } from '@ngxs/store'
 import { HttpClient } from '@angular/common/http'
 import { Observable, firstValueFrom, map } from 'rxjs'
@@ -25,21 +25,11 @@ export class IdentityService {
   }
 
   setAccessToken(token: string) {
-    const { localStorage } = this
-
-    if (!localStorage) {
-      return
-    }
-
-    localStorage.setItem('token', token)
+    return this.localStorage?.setItem('token', token)
   }
 
   getAccessToken() {
-    if (!this.localStorage) {
-      return
-    }
-
-    return this.localStorage.getItem('token')
+    return this.localStorage?.getItem('token')
   }
 
   async loadUser() {
