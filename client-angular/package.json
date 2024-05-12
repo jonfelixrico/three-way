@@ -10,7 +10,7 @@
     "test": "ng test",
     "serve:ssr:client-angular": "node dist/client-angular/server/server.mjs",
     "lint": "ng lint",
-    "format": "prettier --write \"src/**/*.{html,ts,scss}\""
+    "format": "prettier --write \"**/*.{html,ts,scss,js,json}\""
   },
   "private": true,
   "dependencies": {
