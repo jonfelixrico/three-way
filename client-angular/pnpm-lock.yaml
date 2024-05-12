@@ -75,7 +75,7 @@ dependencies:
 devDependencies:
   '@angular-devkit/build-angular':
     specifier: ^17.3.6
-    version: 17.3.6(@angular/compiler-cli@17.3.6)(@angular/localize@17.3.6)(@angular/platform-server@17.3.6)(@types/express@4.17.21)(@types/node@18.19.31)(karma@6.4.3)(typescript@5.4.5)
+    version: 17.3.6(@angular/compiler-cli@17.3.6)(@angular/platform-server@17.3.6)(@types/express@4.17.21)(@types/node@18.19.31)(karma@6.4.3)(typescript@5.4.5)
   '@angular-eslint/builder':
     specifier: 17.3.0
     version: 17.3.0(eslint@8.57.0)(typescript@5.4.5)
@@ -97,9 +97,6 @@ devDependencies:
   '@angular/compiler-cli':
     specifier: ^17.3.0
     version: 17.3.6(@angular/compiler@17.3.6)(typescript@5.4.5)
-  '@angular/localize':
-    specifier: 17.3.6
-    version: 17.3.6(@angular/compiler-cli@17.3.6)(@angular/compiler@17.3.6)
   '@ngxs/devtools-plugin':
     specifier: ^3.8.2
     version: 3.8.2(@angular/core@17.3.6)(@ngxs/store@3.8.2)(rxjs@7.8.1)
@@ -181,7 +178,7 @@ packages:
       - chokidar
     dev: true
 
-  /@angular-devkit/build-angular@17.3.6(@angular/compiler-cli@17.3.6)(@angular/localize@17.3.6)(@angular/platform-server@17.3.6)(@types/express@4.17.21)(@types/node@18.19.31)(karma@6.4.3)(typescript@5.4.5):
+  /@angular-devkit/build-angular@17.3.6(@angular/compiler-cli@17.3.6)(@angular/platform-server@17.3.6)(@types/express@4.17.21)(@types/node@18.19.31)(karma@6.4.3)(typescript@5.4.5):
     resolution: {integrity: sha512-K4CEZvhQZUUOpmXPVoI1YBM8BARbIlqE6FZRxakmnr+YOtVTYE5s+Dr1wgja8hZIohNz6L7j167G9Aut7oPU/w==}
     engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
     peerDependencies:
@@ -227,7 +224,6 @@ packages:
       '@angular-devkit/build-webpack': 0.1703.6(webpack-dev-server@4.15.1)(webpack@5.90.3)
       '@angular-devkit/core': 17.3.6
       '@angular/compiler-cli': 17.3.6(@angular/compiler@17.3.6)(typescript@5.4.5)
-      '@angular/localize': 17.3.6(@angular/compiler-cli@17.3.6)(@angular/compiler@17.3.6)
       '@angular/platform-server': 17.3.6(@angular/animations@17.3.6)(@angular/common@17.3.6)(@angular/compiler@17.3.6)(@angular/core@17.3.6)(@angular/platform-browser@17.3.6)
       '@babel/core': 7.24.0
       '@babel/generator': 7.23.6
@@ -566,24 +562,6 @@ packages:
       rxjs: 7.8.1
       tslib: 2.6.2
     dev: false
-
-  /@angular/localize@17.3.6(@angular/compiler-cli@17.3.6)(@angular/compiler@17.3.6):
-    resolution: {integrity: sha512-bgXuhCiQoKJUJPj30b5VFApQw2/L34M1vnVI1pYOdcFM0rQbK9EQHqi7kdoz9j2IOdaSOTmVEGRmfxtxyyhZiw==}
-    engines: {node: ^18.13.0 || >=20.9.0}
-    hasBin: true
-    peerDependencies:
-      '@angular/compiler': 17.3.6
-      '@angular/compiler-cli': 17.3.6
-    dependencies:
-      '@angular/compiler': 17.3.6(@angular/core@17.3.6)
-      '@angular/compiler-cli': 17.3.6(@angular/compiler@17.3.6)(typescript@5.4.5)
-      '@babel/core': 7.23.9
-      '@types/babel__core': 7.20.5
-      fast-glob: 3.3.2
-      yargs: 17.7.2
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /@angular/platform-browser-dynamic@17.3.6(@angular/common@17.3.6)(@angular/compiler@17.3.6)(@angular/core@17.3.6)(@angular/platform-browser@17.3.6):
     resolution: {integrity: sha512-dI+mgEROmSll042+XqkSsvkMQe6Et6L9BBiYYe7VbIFaRR9Dz5Pw2SeBLb+Ou+gWaxXc2Wc+13n442WEYWZ7Ew==}
@@ -3006,35 +2984,6 @@ packages:
     dependencies:
       '@tufjs/canonical-json': 2.0.0
       minimatch: 9.0.4
-    dev: true
-
-  /@types/babel__core@7.20.5:
-    resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
-    dependencies:
-      '@babel/parser': 7.24.5
-      '@babel/types': 7.24.5
-      '@types/babel__generator': 7.6.8
-      '@types/babel__template': 7.4.4
-      '@types/babel__traverse': 7.20.5
-    dev: true
-
-  /@types/babel__generator@7.6.8:
-    resolution: {integrity: sha512-ASsj+tpEDsEiFr1arWrlN6V3mdfjRMZt6LtK/Vp/kreFLnr5QH5+DhvD5nINYZXzwJvXeGq+05iUXcAzVrqWtw==}
-    dependencies:
-      '@babel/types': 7.24.5
-    dev: true
-
-  /@types/babel__template@7.4.4:
-    resolution: {integrity: sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A==}
-    dependencies:
-      '@babel/parser': 7.24.5
-      '@babel/types': 7.24.5
-    dev: true
-
-  /@types/babel__traverse@7.20.5:
-    resolution: {integrity: sha512-WXCyOcRtH37HAUkpXhUduaxdm82b4GSlyTqajXviN4EfiuPgNYR109xMCKvpl6zPIpua0DGlMEDCq+g8EdoheQ==}
-    dependencies:
-      '@babel/types': 7.24.5
     dev: true
 
   /@types/body-parser@1.19.5:
