@@ -29,7 +29,7 @@ export class ChatComponent {
     private store: Store,
     private realtime: RealtimeService
   ) {
-    this.userId = identitySvc.getUserId()
+    this.userId = identitySvc.getUserId()!
     this.messages = toSignal(
       this.chat$.pipe(map((chat) => chat.chats['global']?.messages ?? [])),
       {

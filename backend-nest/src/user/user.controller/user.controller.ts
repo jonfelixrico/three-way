@@ -7,6 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common'
+import { UserId } from 'src/decorators/user-id.param-decorator'
 import { CredentialsReqDto, UserRespDto } from 'src/user/user.dtos'
 import { UserService } from 'src/user/user.service/user.service'
 
@@ -17,6 +18,20 @@ export class UserController {
   @Post()
   async create(@Body() body: CredentialsReqDto): Promise<UserRespDto> {
     return await this.svc.create(body)
+  }
+
+  @Get('@me')
+  async getSessionUser(@UserId() userId: string): Promise<UserRespDto> {
+    const user = await this.svc.getById(userId)
+
+    if (!user) {
+      throw new HttpException(
+        'No matching user record found',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+
+    return user
   }
 
   @Get(':id')
