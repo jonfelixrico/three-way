@@ -8,6 +8,7 @@ import { IconFieldModule } from 'primeng/iconfield'
 import { InputIconModule } from 'primeng/inputicon'
 import { ReactiveFormsModule } from '@angular/forms'
 import { ButtonModule } from 'primeng/button'
+import { CardModule } from 'primeng/card'
 
 @NgModule({
   declarations: [RegisterPageComponent],
@@ -19,6 +20,7 @@ import { ButtonModule } from 'primeng/button'
     InputIconModule,
     ReactiveFormsModule,
     ButtonModule,
+    CardModule,
   ],
 })
 export class RegisterPageModule {}

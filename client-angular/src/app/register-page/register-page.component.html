@@ -1,36 +1,40 @@
-<div class="h-screen flex flex-row justify-content-center align-items-center">
-  <form
-    [formGroup]="form"
-    (ngSubmit)="submit()"
-    class="col-3 flex flex-column row-gap-3"
-  >
-    <!-- TODO impl error messages -->
+<div
+  class="h-screen flex flex-row justify-content-center align-items-center surface-100"
+>
+  <p-card class="col-3">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="w-full flex flex-column row-gap-3"
+    >
+      <!-- TODO impl error messages -->
 
-    <div class="flex flex-column row-gap-1">
-      <label for="username">Username</label>
-      <p-iconField iconPosition="right">
-        <p-inputIcon styleClass="pi pi-spinner pi-spin" />
-        <input
-          type="text"
-          pInputText
-          class="w-full"
-          formControlName="username"
-        />
-      </p-iconField>
-    </div>
+      <div class="flex flex-column row-gap-1">
+        <label for="username">Username</label>
+        <p-iconField iconPosition="right">
+          <p-inputIcon styleClass="pi pi-spinner pi-spin" />
+          <input
+            type="text"
+            pInputText
+            class="w-full"
+            formControlName="username"
+          />
+        </p-iconField>
+      </div>
 
-    <div class="flex flex-column row-gap-1">
-      <label for="password">Password</label>
-      <input type="password" pInputText formControlName="password" />
-    </div>
+      <div class="flex flex-column row-gap-1">
+        <label for="password">Password</label>
+        <input type="password" pInputText formControlName="password" />
+      </div>
 
-    <div class="flex flex-column row-gap-1">
-      <label for="passwordConfirm">Confirm Password</label>
-      <input type="password" pInputText formControlName="passwordConfirm" />
-    </div>
+      <div class="flex flex-column row-gap-1">
+        <label for="passwordConfirm">Confirm Password</label>
+        <input type="password" pInputText formControlName="passwordConfirm" />
+      </div>
 
-    <button pButton class="justify-content-center" type="submit">
-      Register
-    </button>
-  </form>
+      <button pButton class="justify-content-center" type="submit">
+        Register
+      </button>
+    </form>
+  </p-card>
 </div>
