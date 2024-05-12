@@ -19,6 +19,16 @@ export class UserService {
     username: string
     password: string
   }): Promise<IUser> {
+    if (
+      await this.userDb.findOne({
+        where: {
+          username,
+        },
+      })
+    ) {
+      return null
+    }
+
     const user = await this.userDb.save({
       encryptedPassword: await hash(password, SALT_ROUNDS),
       username,
