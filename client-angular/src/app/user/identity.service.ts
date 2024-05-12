@@ -7,6 +7,7 @@ import { User } from '@/user/user.types'
 import { UserActions } from '@/user/user.actions'
 import { UserSliceModel } from '@/user/user.slice'
 import { toSignal } from '@angular/core/rxjs-interop'
+import { PlatformService } from '@/platform.service'
 
 @Injectable()
 export class IdentityService {
@@ -17,6 +18,7 @@ export class IdentityService {
   constructor(
     private store: Store,
     private http: HttpClient,
+    private platformSvc: PlatformService,
     @Inject(LOCAL_STORAGE) private localStorage?: typeof window.localStorage
   ) {
     this.userIdSignal = toSignal(
@@ -33,6 +35,10 @@ export class IdentityService {
   }
 
   async loadUser() {
+    if (!this.platformSvc.isBrowser) {
+      return
+    }
+
     const token = this.getAccessToken()
     if (!token) {
       console.debug('No token found')
