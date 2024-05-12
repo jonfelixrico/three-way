@@ -9,6 +9,7 @@ import { LoginPageRoutingModule } from './login-page-routing.module'
 import { LoginPageComponent } from './login-page.component'
 import { UserModule } from '@/user/user.module'
 import { CardModule } from 'primeng/card'
+import { DynamicDialogModule } from 'primeng/dynamicdialog'
 
 @NgModule({
   declarations: [LoginPageComponent],
@@ -21,6 +22,7 @@ import { CardModule } from 'primeng/card'
     UserModule,
     CardModule,
     TranslocoModule,
+    DynamicDialogModule,
   ],
 })
 export class LoginPageModule {}
