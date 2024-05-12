@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext'
 import { ReactiveFormsModule } from '@angular/forms'
 import { ButtonModule } from 'primeng/button'
 import { CardModule } from 'primeng/card'
-import { InputHelpTextComponent } from '@/common-components/input-help-text/input-help-text.component'
+import { InputSubtextComponent } from '@/common-components/input-help-text/input-subtext.component'
 
 @NgModule({
   declarations: [RegisterPageComponent],
@@ -20,7 +20,7 @@ import { InputHelpTextComponent } from '@/common-components/input-help-text/inpu
     ButtonModule,
     CardModule,
     TranslocoModule,
-    InputHelpTextComponent,
+    InputSubtextComponent,
   ],
 })
 export class RegisterPageModule {}

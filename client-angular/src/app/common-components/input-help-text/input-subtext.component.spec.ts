@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { InputHelpTextComponent } from './input-help-text.component'
+import { InputSubtextComponent } from './input-subtext.component'
 
-describe('InputHelpTextComponent', () => {
-  let component: InputHelpTextComponent
-  let fixture: ComponentFixture<InputHelpTextComponent>
+describe('InputSubtextComponent', () => {
+  let component: InputSubtextComponent
+  let fixture: ComponentFixture<InputSubtextComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InputHelpTextComponent],
+      imports: [InputSubtextComponent],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(InputHelpTextComponent)
+    fixture = TestBed.createComponent(InputSubtextComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

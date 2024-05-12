@@ -19,7 +19,7 @@
           aria-describedby="username"
         />
 
-        <app-input-help-text
+        <app-input-subtext
           [control]="form.get('username')!"
           [errorMessages]="[
             {
@@ -40,7 +40,7 @@
           aria-describedby="password-hint"
         />
 
-        <app-input-help-text
+        <app-input-subtext
           [control]="form.get('password')!"
           [errorMessages]="[
             {
@@ -61,7 +61,7 @@
           aria-describedby="password-confirm-hint"
         />
 
-        <app-input-help-text
+        <app-input-subtext
           [control]="form.get('passwordConfirm')!"
           [errorMessages]="[
             {

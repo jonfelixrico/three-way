@@ -3,12 +3,12 @@ import { Component, Input } from '@angular/core'
 import { AbstractControl } from '@angular/forms'
 
 @Component({
-  selector: 'app-input-help-text',
+  selector: 'app-input-subtext',
   standalone: true,
   imports: [NgIf],
-  templateUrl: './input-help-text.component.html',
+  templateUrl: './input-subtext.component.html',
 })
-export class InputHelpTextComponent {
+export class InputSubtextComponent {
   @Input({
     required: true,
   })
