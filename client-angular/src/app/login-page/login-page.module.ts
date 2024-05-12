@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button'
 import { LoginPageRoutingModule } from './login-page-routing.module'
 import { LoginPageComponent } from './login-page.component'
 import { UserModule } from '@/user/user.module'
+import { CardModule } from 'primeng/card'
 
 @NgModule({
   declarations: [LoginPageComponent],
@@ -17,6 +18,7 @@ import { UserModule } from '@/user/user.module'
     ReactiveFormsModule,
     ButtonModule,
     UserModule,
+    CardModule,
   ],
 })
 export class LoginPageModule {}
