@@ -11,6 +11,7 @@ import { UserModule } from '@/user/user.module'
 import { CardModule } from 'primeng/card'
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
 import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
+import { InputHelpTextComponent } from '@/common-components/input-help-text/input-help-text.component'
 
 @NgModule({
   declarations: [LoginPageComponent],
@@ -25,6 +26,7 @@ import { TextDialogContentComponent } from '@/common-components/text-dialog-cont
     TranslocoModule,
     DynamicDialogModule,
     TextDialogContentComponent,
+    InputHelpTextComponent,
   ],
   providers: [DialogService],
 })
