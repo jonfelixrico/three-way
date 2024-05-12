@@ -11,6 +11,11 @@
       "wrongCredentials": "Wrong username and/or password. Please verify that your credentials are correct and try again."
     },
 
+    "registerError": {
+      "title": "Registration Failed",
+      "usernameTaken": "Username \"{{username}}\" is already taken"
+    },
+
     "validationError": {
       "confirmPassword": "Passwords must match"
     }
