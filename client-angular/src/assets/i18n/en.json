@@ -4,6 +4,11 @@
     "logIn": "Log In",
     "username": "Username",
     "password": "Password",
-    "passwordConfirm": "Confirm Password"
+    "passwordConfirm": "Confirm Password",
+
+    "wrongCredentialsError": {
+      "title": "Log-in Failed",
+      "message": "Wrong username and/or password. Please verify that your credentials are correct and try again."
+    }
   }
 }
