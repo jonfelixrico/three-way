@@ -1,4 +1,8 @@
-import { HttpClient } from '@angular/common/http'
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpStatusCode,
+} from '@angular/common/http'
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
@@ -6,6 +10,9 @@ import { firstValueFrom } from 'rxjs'
 import omit from 'lodash/omit'
 import isEmpty from 'lodash/isEmpty'
 import forEach from 'lodash/forEach'
+import { DialogService } from 'primeng/dynamicdialog'
+import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
+import { TranslocoService } from '@jsverse/transloco'
 
 @Component({
   selector: 'app-register-page',
@@ -15,7 +22,9 @@ import forEach from 'lodash/forEach'
 export class RegisterPageComponent {
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private dialogSvc: DialogService,
+    private tl: TranslocoService
   ) {}
 
   form = new FormGroup(
@@ -70,8 +79,26 @@ export class RegisterPageComponent {
 
       await this.router.navigateByUrl('/login')
     } catch (e) {
-      // TODO add error handling
       console.log(e)
+
+      let errorMessage = this.tl.translate('common.genericError')
+      if (
+        e instanceof HttpErrorResponse &&
+        e.status === HttpStatusCode.Conflict
+      ) {
+        errorMessage = this.tl.translate('auth.registerError.usernameTaken', {
+          username,
+        })
+      }
+
+      this.dialogSvc.open(TextDialogContentComponent, {
+        header: this.tl.translate('auth.registerError.title'),
+        data: {
+          text: errorMessage,
+        },
+      })
+
+      this.form.reset()
     }
   }
 }

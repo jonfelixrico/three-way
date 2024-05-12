@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { ButtonModule } from 'primeng/button'
 import { CardModule } from 'primeng/card'
 import { InputSubtextComponent } from '@/common-components/input-help-text/input-subtext.component'
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
+import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
 
 @NgModule({
   declarations: [RegisterPageComponent],
@@ -21,6 +23,9 @@ import { InputSubtextComponent } from '@/common-components/input-help-text/input
     CardModule,
     TranslocoModule,
     InputSubtextComponent,
+    DynamicDialogModule,
+    TextDialogContentComponent,
   ],
+  providers: [DialogService],
 })
 export class RegisterPageModule {}
