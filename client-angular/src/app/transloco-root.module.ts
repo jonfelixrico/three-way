@@ -1,7 +1,6 @@
 import { provideTransloco, TranslocoModule } from '@jsverse/transloco'
-import { NgModule } from '@angular/core'
+import { NgModule, isDevMode } from '@angular/core'
 import { TranslocoHttpLoader } from './transloco-loader'
-import { environment } from '../../home/jrico/Code/three-way/client-angular/src/environments/environment'
 
 @NgModule({
   exports: [TranslocoModule],
