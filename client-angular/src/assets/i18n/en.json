@@ -9,10 +9,18 @@
     "logInError": {
       "title": "Log-in Failed",
       "wrongCredentials": "Wrong username and/or password. Please verify that your credentials are correct and try again."
+    },
+
+    "validationError": {
+      "confirmPassword": "Passwords do not match"
     }
   },
 
   "common": {
     "genericError": "An unexpected error occurred. Please try again later."
+  },
+
+  "validationError": {
+    "required": "This field is required"
   }
 }
