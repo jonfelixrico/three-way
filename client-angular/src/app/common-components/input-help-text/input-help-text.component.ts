@@ -17,8 +17,6 @@ export class InputHelpTextComponent {
   @Input()
   hintMessage?: string
 
-  @Input() formControlName?: string
-
   @Input()
   errorMessages: {
     error: string
@@ -27,22 +25,8 @@ export class InputHelpTextComponent {
 
   @Input() id?: string
 
-  private get formControl() {
-    if (this.formControlName) {
-      const foundControl = this.control.get(this.formControlName)
-
-      if (!foundControl) {
-        throw new Error('Control not found!')
-      }
-
-      return foundControl
-    }
-
-    return this.control
-  }
-
   get errorMessage() {
-    const fc = this.formControl
+    const fc = this.control
 
     if (!(fc.invalid && !fc.pristine)) {
       return
