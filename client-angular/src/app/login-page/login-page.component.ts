@@ -1,10 +1,17 @@
 import { IdentityService } from '@/user/identity.service'
-import { HttpClient } from '@angular/common/http'
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpStatusCode,
+} from '@angular/common/http'
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { lastValueFrom } from 'rxjs'
 import forEach from 'lodash/forEach'
+import { DialogService } from 'primeng/dynamicdialog'
+import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
+import { TranslocoService } from '@jsverse/transloco'
 
 @Component({
   selector: 'app-login-page',
@@ -15,7 +22,9 @@ export class LoginPageComponent {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private identitySvc: IdentityService
+    private identitySvc: IdentityService,
+    private dialogSvc: DialogService,
+    private tl: TranslocoService
   ) {}
 
   form = new FormGroup({
@@ -39,7 +48,23 @@ export class LoginPageComponent {
 
       await this.router.navigateByUrl('/app')
     } catch (e) {
-      // TODO add error handling
+      if (
+        e instanceof HttpErrorResponse &&
+        e.status === HttpStatusCode.Unauthorized
+      ) {
+        this.dialogSvc.open(TextDialogContentComponent, {
+          header: this.tl.translate('auth.wrongCredentialsError.title'),
+          data: {
+            text: this.tl.translate('auth.wrongCredentialsError.message'),
+          },
+        })
+
+        this.form.reset({
+          username: this.form.get('username')?.value,
+        })
+        return
+      }
+
       console.log(e)
     }
   }
