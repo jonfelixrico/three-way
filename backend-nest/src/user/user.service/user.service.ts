@@ -12,13 +12,16 @@ const SALT_ROUNDS = 10
 export class UserService {
   constructor(@Inject(USER_DB) private userDb: Repository<User>) {}
 
+  /**
+   * @returns null if no account was created because of the username being taken. Else, returns the newly-created user.
+   */
   async create({
     username,
     password,
   }: {
     username: string
     password: string
-  }): Promise<IUser> {
+  }): Promise<IUser | null> {
     if (
       await this.userDb.findOne({
         where: {
@@ -37,7 +40,13 @@ export class UserService {
     return instanceToPlain(user) as IUser
   }
 
-  async verifyCredentials(username: string, password: string): Promise<IUser> {
+  /**
+   * @returns null if the credentials are incorrect. Else, returns the matching user.
+   */
+  async verifyCredentials(
+    username: string,
+    password: string
+  ): Promise<IUser | null> {
     const fromDb = await this.userDb.findOne({
       where: {
         username,
@@ -56,7 +65,7 @@ export class UserService {
     return instanceToPlain(fromDb) as IUser
   }
 
-  async getById(id: string): Promise<IUser> {
+  async getById(id: string): Promise<IUser | null> {
     const user = await this.userDb.findOne({
       where: {
         id,
