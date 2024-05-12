@@ -20,7 +20,8 @@
       "confirmPassword": "Passwords must match"
     },
 
-    "registerHint": "No account yet? Register now"
+    "registerHint": "No account yet? Register now",
+    "loginHint": "Already have an account? Log in"
   },
 
   "common": {
