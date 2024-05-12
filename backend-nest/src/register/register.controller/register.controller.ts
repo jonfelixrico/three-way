@@ -33,7 +33,7 @@ export class RegisterController {
     }
 
     return {
-      taken: !(await this.userSvc.getByUsername(username)),
+      taken: !!(await this.userSvc.getByUsername(username)),
     }
   }
 }
