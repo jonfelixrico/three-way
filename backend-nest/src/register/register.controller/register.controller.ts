@@ -28,6 +28,10 @@ export class RegisterController {
   @Public()
   @Get()
   async checkUsername(@Query('username') username: string) {
+    if (!username) {
+      throw new HttpException('No username provided', HttpStatus.BAD_REQUEST)
+    }
+
     return {
       taken: !!(await this.userSvc.getByUsername(username)),
     }
