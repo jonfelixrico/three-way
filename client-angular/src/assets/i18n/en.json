@@ -18,7 +18,9 @@
 
     "validationError": {
       "confirmPassword": "Passwords must match"
-    }
+    },
+
+    "registerHint": "No account yet? Register now"
   },
 
   "common": {
