@@ -12,7 +12,7 @@
     },
 
     "validationError": {
-      "confirmPassword": "Passwords do not match"
+      "confirmPassword": "Passwords must match"
     }
   },
 
