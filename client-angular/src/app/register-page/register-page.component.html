@@ -1,5 +1,6 @@
 <div
   class="h-screen flex flex-row justify-content-center align-items-center surface-100 p-3"
+  *transloco="let t; prefix: 'auth'"
 >
   <p-card class="card-width">
     <form
@@ -10,22 +11,22 @@
       <!-- TODO impl error messages -->
 
       <div class="flex flex-column row-gap-1">
-        <label for="username">Username</label>
+        <label for="username">{{ t('username') }}</label>
         <input type="text" pInputText formControlName="username" />
       </div>
 
       <div class="flex flex-column row-gap-1">
-        <label for="password">Password</label>
+        <label for="password">{{ t('password') }}</label>
         <input type="password" pInputText formControlName="password" />
       </div>
 
       <div class="flex flex-column row-gap-1">
-        <label for="passwordConfirm">Confirm Password</label>
+        <label for="passwordConfirm">{{ t('passwordConfirm') }}</label>
         <input type="password" pInputText formControlName="passwordConfirm" />
       </div>
 
       <button pButton class="justify-content-center" type="submit">
-        Register
+        {{ t('register') }}
       </button>
     </form>
   </p-card>

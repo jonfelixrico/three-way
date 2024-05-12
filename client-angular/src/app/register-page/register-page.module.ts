@@ -1,3 +1,4 @@
+import { TranslocoModule } from '@jsverse/transloco'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 
@@ -17,6 +18,7 @@ import { CardModule } from 'primeng/card'
     ReactiveFormsModule,
     ButtonModule,
     CardModule,
+    TranslocoModule,
   ],
 })
 export class RegisterPageModule {}
