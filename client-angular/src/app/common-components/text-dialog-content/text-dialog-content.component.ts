@@ -9,8 +9,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog'
 @Component({
   selector: 'app-text-dialog-content',
   standalone: true,
-  imports: [],
-  templateUrl: './text-dialog-content.component.html',
+  template: '{{ text }}',
 })
 export class TextDialogContentComponent {
   text: string
