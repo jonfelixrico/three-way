@@ -12,6 +12,7 @@ import { RealtimeModule } from '@/realtime/realtime.module'
 import { ChatLayoutComponent } from './chat-layout/chat-layout.component'
 import { ChatListComponent } from './chat-list/chat-list.component'
 import { DividerModule } from 'primeng/divider'
+import { ButtonModule } from 'primeng/button'
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { DividerModule } from 'primeng/divider'
     NgClass,
     RealtimeModule,
     DividerModule,
+    ButtonModule,
   ],
 })
 export class ChatPageModule {}

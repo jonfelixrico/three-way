@@ -2,7 +2,7 @@
   <div class="col-3 p-0 p-card border-round-xl flex flex-column">
     <div class="p-3 flex flex-row justify-content-between align-items-center">
       <div class="text-3xl font-bold">Chats</div>
-      <div>Btn</div>
+      <p-button rounded icon="pi pi-pen-to-square" size="small" outlined />
     </div>
 
     <p-divider styleClass="my-0" />
@@ -11,10 +11,11 @@
 
     <p-divider styleClass="my-0" />
 
-    <div class="p-3 flex flex-row justify-content-between">
-      <div>{{ username }}</div>
+    <div class="p-3 flex flex-row justify-content-between align-items-center">
+      <div class="text-lg font-medium">{{ username }}</div>
 
-      <div>Button Placeholder</div>
+      <!-- TODO i18nize -->
+      <button pButton>Log Out</button>
     </div>
   </div>
 
