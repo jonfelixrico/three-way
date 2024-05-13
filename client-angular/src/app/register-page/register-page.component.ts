@@ -13,7 +13,7 @@ import forEach from 'lodash/forEach'
 import { DialogService } from 'primeng/dynamicdialog'
 import { TextDialogContentComponent } from '@/common-components/text-dialog-content/text-dialog-content.component'
 import { TranslocoService } from '@jsverse/transloco'
-import { UsernameValidatorService } from '@/register-page/username-validator.service'
+import { UsernameAsyncValidator } from '@/register-page/username.async-validator'
 
 @Component({
   selector: 'app-register-page',
@@ -26,7 +26,7 @@ export class RegisterPageComponent {
     private router: Router,
     private dialogSvc: DialogService,
     private tl: TranslocoService,
-    usernameValidator: UsernameValidatorService
+    usernameValidator: UsernameAsyncValidator
   ) {
     this.form = new FormGroup(
       {
