@@ -10,9 +10,15 @@ import { UserModule } from '@/user/user.module'
 import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { ChatLayoutComponent } from './chat-layout/chat-layout.component'
+import { ChatListComponent } from './chat-list/chat-list.component'
 
 @NgModule({
-  declarations: [ChatComponent, ChatMessageComponent, ChatLayoutComponent],
+  declarations: [
+    ChatComponent,
+    ChatMessageComponent,
+    ChatLayoutComponent,
+    ChatListComponent,
+  ],
   imports: [
     CommonModule,
     ChatPageRoutingModule,
