@@ -12,7 +12,7 @@ export class ChatRoomController {
 
   @Get('global')
   async getChat() {
-    return await this.chatSvc.getGlobalRoom()
+    return await this.chatSvc.getGlobal()
   }
 
   @Get(':id/message')

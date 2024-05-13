@@ -11,7 +11,7 @@ export class ChatRoomService {
     private roomRepo: Repository<ChatRoom>
   ) {}
 
-  async getGlobalRoom(): Promise<IChatRoom> {
+  async getGlobal(): Promise<IChatRoom> {
     /*
      * TODO create an actual implementation for this
      * for now this just finds the atomic chat room for the entire app
