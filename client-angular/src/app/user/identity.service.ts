@@ -13,7 +13,7 @@ import { PlatformService } from '@/platform.service'
 export class IdentityService {
   @Select() user$!: Observable<UserSliceModel>
 
-  private userIdSignal: Signal<string | undefined>
+  private userSignal: Signal<User | undefined>
 
   constructor(
     private store: Store,
@@ -21,8 +21,8 @@ export class IdentityService {
     private platformSvc: PlatformService,
     @Inject(LOCAL_STORAGE) private localStorage?: typeof window.localStorage
   ) {
-    this.userIdSignal = toSignal(
-      this.user$.pipe(map((userState) => userState.user?.id))
+    this.userSignal = toSignal(
+      this.user$.pipe(map((state) => state.user ?? undefined))
     )
   }
 
@@ -58,7 +58,11 @@ export class IdentityService {
     return !!user.user
   }
 
+  get user() {
+    return this.userSignal()
+  }
+
   getUserId() {
-    return this.userIdSignal()
+    return this.user?.id
   }
 }
