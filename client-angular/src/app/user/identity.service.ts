@@ -13,7 +13,7 @@ import { PlatformService } from '@/platform.service'
 export class IdentityService {
   @Select() user$!: Observable<UserSliceModel>
 
-  private userIdSignal: Signal<string | undefined>
+  private userSignal: Signal<User | undefined>
 
   constructor(
     private store: Store,
@@ -21,9 +21,14 @@ export class IdentityService {
     private platformSvc: PlatformService,
     @Inject(LOCAL_STORAGE) private localStorage?: typeof window.localStorage
   ) {
-    this.userIdSignal = toSignal(
-      this.user$.pipe(map((userState) => userState.user?.id))
+    this.userSignal = toSignal(
+      this.user$.pipe(map((state) => state.user ?? undefined))
     )
+  }
+
+  clearSession() {
+    this.localStorage?.removeItem('token')
+    this.store.dispatch(new UserActions.Set(null))
   }
 
   setAccessToken(token: string) {
@@ -58,7 +63,7 @@ export class IdentityService {
     return !!user.user
   }
 
-  getUserId() {
-    return this.userIdSignal()
+  get user() {
+    return this.userSignal()
   }
 }
