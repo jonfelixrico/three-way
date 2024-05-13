@@ -11,7 +11,6 @@ export class ChatRoomService {
     private roomRepo: Repository<ChatRoom>
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getChatRoomById(id: string): Promise<IChatRoom> {
     /*
      * TODO create an actual implementation for this
