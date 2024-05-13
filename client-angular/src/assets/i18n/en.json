@@ -17,7 +17,8 @@
     },
 
     "validationError": {
-      "confirmPassword": "Passwords must match"
+      "confirmPassword": "Passwords must match",
+      "usernameTaken": "This username is already taken"
     },
 
     "registerHint": "No account yet? Register now",

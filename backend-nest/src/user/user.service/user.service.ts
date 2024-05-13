@@ -74,4 +74,14 @@ export class UserService {
 
     return instanceToPlain(user) as IUser
   }
+
+  async getByUsername(username: string): Promise<IUser | null> {
+    const user = await this.userDb.findOne({
+      where: {
+        username,
+      },
+    })
+
+    return instanceToPlain(user) as IUser
+  }
 }

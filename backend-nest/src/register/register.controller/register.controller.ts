@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Post,
+  Query,
 } from '@nestjs/common'
 import { Public } from 'src/auth/public.decorator'
 import { CredentialsReqDto } from 'src/user/user.dtos'
@@ -20,6 +22,18 @@ export class RegisterController {
 
     if (!createdUser) {
       throw new HttpException('Username taken', HttpStatus.CONFLICT)
+    }
+  }
+
+  @Public()
+  @Get()
+  async checkUsername(@Query('username') username: string) {
+    if (!username) {
+      throw new HttpException('No username provided', HttpStatus.BAD_REQUEST)
+    }
+
+    return {
+      taken: !!(await this.userSvc.getByUsername(username)),
     }
   }
 }

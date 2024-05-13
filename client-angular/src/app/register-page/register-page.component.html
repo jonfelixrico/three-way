@@ -10,12 +10,23 @@
     >
       <div class="flex flex-column row-gap-1">
         <label for="username">{{ t('auth.username') }}</label>
-        <input
-          type="text"
-          pInputText
-          formControlName="username"
-          aria-describedby="username"
-        />
+        <p-iconField iconPosition="right">
+          @if (username.pending) {
+            <p-inputIcon styleClass="pi pi-spin pi-spinner" />
+          } @else if (username.valid) {
+            <p-inputIcon styleClass="pi pi-check text-green-500" />
+          } @else if (username.dirty && username.hasError('usernameTaken')) {
+            <p-inputIcon styleClass="pi pi-times text-red-500" />
+          }
+
+          <input
+            type="text"
+            pInputText
+            formControlName="username"
+            aria-describedby="username"
+            class="w-full"
+          />
+        </p-iconField>
 
         <app-input-subtext
           [control]="form.get('username')!"
@@ -23,6 +34,10 @@
             {
               error: 'required',
               message: t('validationError.required')
+            },
+            {
+              error: 'usernameTaken',
+              message: t('auth.validationError.usernameTaken')
             }
           ]"
           id="username-hint"
