@@ -11,6 +11,7 @@ import { ChatRoomController } from './chat-room.controller/chat-room.controller'
 import { ChatRoomService } from './chat-room.service/chat-room.service'
 import { DATASOURCE_PROVIDER } from 'src/datasource/datasource.constants'
 import { WebsocketModule } from 'src/websocket/websocket.module'
+import { ChatRoomMessageService } from './chat-room-message.service/chat-room-message.service'
 
 @Module({
   imports: [DatasourceModule, WebsocketModule],
@@ -28,6 +29,7 @@ import { WebsocketModule } from 'src/websocket/websocket.module'
       inject: [DATASOURCE_PROVIDER],
     },
     ChatRoomService,
+    ChatRoomMessageService,
   ],
   controllers: [ChatRoomController],
 })
