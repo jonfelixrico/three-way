@@ -67,6 +67,13 @@ export class IdentityService {
     return this.userSignal()
   }
 
+  get userId() {
+    return this.user?.id
+  }
+
+  /**
+   * @deprecated use IdentityService#userId instead
+   */
   getUserId() {
     return this.user?.id
   }
