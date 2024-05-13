@@ -1,5 +1,6 @@
 import { IdentityService } from '@/user/identity.service'
 import { Component } from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-chat-layout',
@@ -7,13 +8,18 @@ import { Component } from '@angular/core'
   styleUrl: './chat-layout.component.scss',
 })
 export class ChatLayoutComponent {
-  constructor(private identitySvc: IdentityService) {}
+  constructor(
+    private identitySvc: IdentityService,
+    private router: Router
+  ) {}
 
   get username() {
     return this.identitySvc.user?.username
   }
 
   logOut() {
-    return this.identitySvc.clearAccessToken()
+    // TODO improve UX by adding a confirmation
+    this.identitySvc.clearSession()
+    this.router.navigateByUrl('/login')
   }
 }

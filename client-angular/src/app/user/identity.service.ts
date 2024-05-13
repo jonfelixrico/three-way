@@ -26,8 +26,9 @@ export class IdentityService {
     )
   }
 
-  clearAccessToken() {
-    return this.localStorage?.removeItem('token')
+  clearSession() {
+    this.localStorage?.removeItem('token')
+    this.store.dispatch(new UserActions.Set(null))
   }
 
   setAccessToken(token: string) {
