@@ -1,5 +1,17 @@
 <div class="h-screen flex flex-row surface-100 p-3 column-gap-3">
-  <div class="col-3 p-card border-round-xl"></div>
+  <div class="col-3 p-card border-round-xl flex flex-column">
+    <div></div>
+
+    <div class="col p-0"></div>
+
+    <p-divider />
+
+    <div class="p-3 flex flex-row justify-content-between">
+      <div>{{ username }}</div>
+
+      <div>Button Placeholder</div>
+    </div>
+  </div>
 
   <div class="col p-card border-round-xl">
     <router-outlet />

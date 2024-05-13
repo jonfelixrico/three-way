@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { ChatLayoutComponent } from './chat-layout/chat-layout.component'
 import { ChatListComponent } from './chat-list/chat-list.component'
+import { DividerModule } from 'primeng/divider'
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ChatListComponent } from './chat-list/chat-list.component'
     NgIf,
     NgClass,
     RealtimeModule,
+    DividerModule,
   ],
 })
 export class ChatPageModule {}
