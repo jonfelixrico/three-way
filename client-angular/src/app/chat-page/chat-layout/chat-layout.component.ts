@@ -12,4 +12,8 @@ export class ChatLayoutComponent {
   get username() {
     return this.identitySvc.user?.username
   }
+
+  logOut() {
+    return this.identitySvc.clearAccessToken()
+  }
 }
