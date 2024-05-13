@@ -8,7 +8,7 @@ import {
 import { Observable, catchError, delay, map, of, switchMap } from 'rxjs'
 
 @Injectable()
-export class UsernameValidatorService implements AsyncValidator {
+export class UsernameAsyncValidator implements AsyncValidator {
   constructor(private http: HttpClient) {}
 
   validate(
