@@ -9,9 +9,10 @@ import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { UserModule } from '@/user/user.module'
 import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
+import { ChatPageComponent } from './chat-page.component'
 
 @NgModule({
-  declarations: [ChatComponent, ChatMessageComponent],
+  declarations: [ChatComponent, ChatMessageComponent, ChatPageComponent],
   imports: [
     CommonModule,
     ChatPageRoutingModule,
