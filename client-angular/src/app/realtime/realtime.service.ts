@@ -14,7 +14,7 @@ export class RealtimeService {
         autoConnect: false,
         path: '/api/socket.io',
         query: {
-          userId: this.identitySvc.getUserId(),
+          userId: this.identitySvc.user!.id,
         },
       })
 

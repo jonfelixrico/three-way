@@ -5,7 +5,7 @@ import { CanActivateChildFn, Router } from '@angular/router'
 export const authenticatedOnlyGuard: CanActivateChildFn = () => {
   const identitySvc = inject(IdentityService)
 
-  if (identitySvc.getUserId()) {
+  if (identitySvc.user) {
     return true
   }
 
