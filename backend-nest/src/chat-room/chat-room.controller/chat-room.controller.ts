@@ -10,9 +10,9 @@ export class ChatRoomController {
     private msgSvc: ChatRoomMessageService
   ) {}
 
-  @Get(':id')
-  async getChat(@Param('id') id: string) {
-    return await this.chatSvc.getChatRoomById(id)
+  @Get('global')
+  async getChat() {
+    return await this.chatSvc.getGlobalRoom()
   }
 
   @Get(':id/message')

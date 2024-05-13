@@ -11,7 +11,7 @@ export class ChatRoomService {
     private roomRepo: Repository<ChatRoom>
   ) {}
 
-  async getChatRoomById(id: string): Promise<IChatRoom> {
+  async getGlobalRoom(): Promise<IChatRoom> {
     /*
      * TODO create an actual implementation for this
      * for now this just finds the atomic chat room for the entire app
@@ -20,7 +20,7 @@ export class ChatRoomService {
 
     const room = await this.roomRepo.findOne({
       where: {
-        id,
+        id: 'global',
       },
     })
     if (room) {
