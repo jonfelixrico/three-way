@@ -7,10 +7,13 @@ import {
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { provideHttpClient, withFetch } from '@angular/common/http'
 import { provideLocalStorage } from './localstorage.provider'
 import { StoreModule } from './store/store.module'
 import { RealtimeModule } from '@/realtime/realtime.module'
+import { UserModule } from '@/user/user.module'
+import { AppHttpModule } from '@/app-http/app-http.module'
+import { HttpClientModule } from '@angular/common/http'
+import { TranslocoRootModule } from './transloco-root/transloco-root.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,12 +23,12 @@ import { RealtimeModule } from '@/realtime/realtime.module'
     BrowserAnimationsModule,
     StoreModule,
     RealtimeModule,
+    UserModule,
+    AppHttpModule,
+    HttpClientModule,
+    TranslocoRootModule,
   ],
-  providers: [
-    provideClientHydration(),
-    provideHttpClient(withFetch()),
-    provideLocalStorage(),
-  ],
+  providers: [provideClientHydration(), provideLocalStorage()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

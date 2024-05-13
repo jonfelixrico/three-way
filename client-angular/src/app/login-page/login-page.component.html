@@ -1,0 +1,63 @@
+<div
+  *transloco="let t"
+  class="h-screen flex flex-row justify-content-center align-items-center surface-100 p-3"
+>
+  <p-card class="card-width">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="w-full flex flex-column row-gap-3"
+    >
+      <div class="flex flex-column row-gap-1">
+        <label for="username">{{ t('auth.username') }}</label>
+        <input
+          type="text"
+          pInputText
+          class="w-full"
+          formControlName="username"
+          aria-describedby="username-hint"
+        />
+
+        <app-input-subtext
+          [control]="form.get('username')!"
+          [errorMessages]="[
+            {
+              error: 'required',
+              message: t('validationError.required')
+            }
+          ]"
+          id="username-hint"
+        />
+      </div>
+
+      <div class="flex flex-column row-gap-1">
+        <label for="password">{{ t('auth.password') }}</label>
+        <input
+          type="password"
+          pInputText
+          formControlName="password"
+          aria-describedby="password-hint"
+        />
+
+        <app-input-subtext
+          [control]="form.get('password')!"
+          [errorMessages]="[
+            {
+              error: 'required',
+              message: t('validationError.required')
+            }
+          ]"
+          id="password-hint"
+        />
+      </div>
+
+      <button pButton class="justify-content-center" type="submit">
+        {{ t('auth.logIn') }}
+      </button>
+
+      <a routerLink="/register" class="mt-5">
+        {{ t('auth.registerHint') }}
+      </a>
+    </form>
+  </p-card>
+</div>

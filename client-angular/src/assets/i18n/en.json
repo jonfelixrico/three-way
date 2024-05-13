@@ -1,0 +1,35 @@
+{
+  "auth": {
+    "register": "Register",
+    "logIn": "Log In",
+    "username": "Username",
+    "password": "Password",
+    "passwordConfirm": "Confirm Password",
+
+    "logInError": {
+      "title": "Log-in Failed",
+      "wrongCredentials": "Wrong username and/or password. Please verify that your credentials are correct and try again."
+    },
+
+    "registerError": {
+      "title": "Registration Failed",
+      "usernameTaken": "Username \"{{username}}\" is already taken. Please try again with a different username."
+    },
+
+    "validationError": {
+      "confirmPassword": "Passwords must match",
+      "usernameTaken": "This username is already taken"
+    },
+
+    "registerHint": "No account yet? Register now",
+    "loginHint": "Already have an account? Log in"
+  },
+
+  "common": {
+    "genericError": "An unexpected error occurred. Please try again later."
+  },
+
+  "validationError": {
+    "required": "This field is required"
+  }
+}

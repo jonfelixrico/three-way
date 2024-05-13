@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common'
+import { instanceToPlain } from 'class-transformer'
 import {
   CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER,
   CHAT_ROOM_REPOSITORY_PROVIDER,
@@ -30,18 +31,23 @@ export class ChatRoomService {
     content: string
     senderId: string
   }): Promise<IChatRoomMessage> {
-    const sent = await this.messageRepo.save({
+    // Can't use save directly since it wil render instanceToPlain useless.
+    // Save seems to return a plain object rather than the entity class.
+    const model = this.messageRepo.create({
       content: message,
       chatRoom: {
         id: chatId,
       },
-      senderId,
+      sender: {
+        id: senderId,
+      },
       timestamp: new Date(),
     })
+    const sent = await this.messageRepo.save(model)
 
     this.dispatcher.dispatch('MESSAGE_SENT', sent, (id) => id !== senderId)
 
-    return sent
+    return instanceToPlain(sent) as IChatRoomMessage
   }
 
   async getMessages({
@@ -49,7 +55,7 @@ export class ChatRoomService {
   }: {
     chatId: string
   }): Promise<IChatRoomMessage[]> {
-    return await this.messageRepo.find({
+    const messages = await this.messageRepo.find({
       where: {
         chatRoom: {
           id: chatId,
@@ -59,6 +65,11 @@ export class ChatRoomService {
         timestamp: 'DESC',
       },
     })
+
+    return messages.map(
+      (message) =>
+        instanceToPlain<IChatRoomMessage>(message) as IChatRoomMessage
+    )
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
