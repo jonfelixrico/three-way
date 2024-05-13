@@ -21,6 +21,8 @@ import { UsernameAsyncValidator } from '@/register-page/username.async-validator
   styleUrl: './register-page.component.scss',
 })
 export class RegisterPageComponent {
+  form: FormGroup
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -65,7 +67,9 @@ export class RegisterPageComponent {
     )
   }
 
-  form: FormGroup
+  get username() {
+    return this.form.get('username')!
+  }
 
   async submit() {
     const { form } = this
