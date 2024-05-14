@@ -38,4 +38,29 @@ export class ChatRoomService {
 
     return userChats.map(({ chat }) => instanceToPlain(chat) as IChatRoom)
   }
+
+  async create({
+    name,
+    createdBy,
+  }: {
+    name: string
+    createdBy: string
+  }): Promise<IChatRoom> {
+    let newChat = this.roomRepo.create({
+      name,
+    })
+    newChat = await this.roomRepo.save(newChat)
+
+    await this.memberRepo.save({
+      chat: {
+        id: newChat.id,
+      },
+
+      user: {
+        id: createdBy,
+      },
+    })
+
+    return instanceToPlain(newChat) as IChatRoom
+  }
 }
