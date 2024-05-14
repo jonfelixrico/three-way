@@ -19,20 +19,28 @@ export class ChatRoomController {
   ) {}
 
   @Get(':id/message')
-  async getMessages(@Param('id') id: string) {
+  async getMessages(@Param('id') chatId: string, @UserId() userId: string) {
+    if (!(await this.chatSvc.checkUserMembership(chatId, userId))) {
+      throw new HttpException('Not a member', HttpStatus.FORBIDDEN)
+    }
+
     return await this.msgSvc.getMessages({
-      chatId: id,
+      chatId,
     })
   }
 
   @Post(':id/message')
   async sendMessage(
-    @Param('id') id: string,
+    @Param('id') chatId: string,
     @Body('content') content: string,
     @UserId() userId: string
   ) {
+    if (!(await this.chatSvc.checkUserMembership(chatId, userId))) {
+      throw new HttpException('Not a member', HttpStatus.FORBIDDEN)
+    }
+
     return await this.msgSvc.sendMessage({
-      chatId: id,
+      chatId,
       content,
       senderId: userId,
     })
