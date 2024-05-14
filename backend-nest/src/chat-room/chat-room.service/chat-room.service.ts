@@ -49,7 +49,6 @@ export class ChatRoomService {
           id: userId,
         },
       },
-      relationLoadStrategy: 'query',
     })
 
     if (!member) {
