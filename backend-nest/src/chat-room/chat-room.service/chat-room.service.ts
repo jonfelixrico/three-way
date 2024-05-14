@@ -52,8 +52,6 @@ export class ChatRoomService {
       relationLoadStrategy: 'query',
     })
 
-    console.log(member)
-
     if (!member) {
       return
     }
