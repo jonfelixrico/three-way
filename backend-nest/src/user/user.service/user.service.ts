@@ -1,16 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common'
-import { USER_DB } from 'src/user/user-db.providers'
+import { Injectable } from '@nestjs/common'
 import { User } from 'src/user/user.entity'
 import { Repository } from 'typeorm'
 import { hash, compare } from 'bcrypt'
 import { IUser } from 'src/user/user.types'
 import { instanceToPlain } from 'class-transformer'
+import { InjectRepository } from '@nestjs/typeorm'
 
 const SALT_ROUNDS = 10
 
 @Injectable()
 export class UserService {
-  constructor(@Inject(USER_DB) private userDb: Repository<User>) {}
+  constructor(@InjectRepository(User) private userDb: Repository<User>) {}
 
   /**
    * @returns null if no account was created because of the username being taken. Else, returns the newly-created user.
