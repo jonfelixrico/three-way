@@ -23,7 +23,7 @@ describe('chat', () => {
     await app.init()
   })
 
-  test('GET /chat/:id', async () => {
+  test('Checking of room existence', async () => {
     const response = await request(app.getHttpServer())
       .get('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16')
       .expect(200)
@@ -33,9 +33,11 @@ describe('chat', () => {
         name: 'Seed room 1',
       })
     )
+
+    await request(app.getHttpServer()).get('/chat/does-not-exist').expect(403)
   })
 
-  test('POST /chat/:id/message', async () => {
+  test('Sending of messages', async () => {
     const content = `Test message ${Date.now()}`
 
     const postResponse = await request(app.getHttpServer())
