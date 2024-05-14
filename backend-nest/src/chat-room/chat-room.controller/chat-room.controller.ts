@@ -61,4 +61,9 @@ export class ChatRoomController {
       chatId,
     })
   }
+
+  @Get()
+  async getList(@UserId() userId: string) {
+    return await this.getList(userId)
+  }
 }
