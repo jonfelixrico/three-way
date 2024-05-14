@@ -4,6 +4,7 @@ import { instanceToPlain } from 'class-transformer'
 import { IChatRoom } from 'src/chat-room/chat-room.types'
 import { ChatRoomMember } from 'src/chat-room/entity/chat-room-member.entity'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
+import { IUser } from 'src/user/user.types'
 import { Repository } from 'typeorm'
 import { Transactional } from 'typeorm-transactional'
 
@@ -17,12 +18,24 @@ export class ChatRoomService {
     private memberRepo: Repository<ChatRoomMember>
   ) {}
 
-  async getById(id: string): Promise<IChatRoom> {
+  async getById(chatId: string): Promise<IChatRoom> {
     const room = await this.roomRepo.findOne({
-      where: { id },
+      where: { id: chatId },
     })
 
     return instanceToPlain(room) as IChatRoom
+  }
+
+  async getMembers(chatId: string): Promise<IUser[]> {
+    const members = await this.memberRepo.find({
+      where: {
+        chat: {
+          id: chatId,
+        },
+      },
+    })
+
+    return members.map(({ user }) => instanceToPlain(user) as IUser)
   }
 
   async checkUserMembership(chatId: string, userId: string): Promise<boolean> {
@@ -41,11 +54,11 @@ export class ChatRoomService {
     return !!member
   }
 
-  async listByUser(id: string): Promise<IChatRoom[]> {
+  async listByUser(userId: string): Promise<IChatRoom[]> {
     const userChats = await this.memberRepo.find({
       where: {
         user: {
-          id,
+          id: userId,
         },
       },
     })
