@@ -23,8 +23,9 @@ describe('chat', () => {
     await app.init()
   })
 
-  test('Checking of room existence', async () => {
+  test('Checking of chat existence', async () => {
     const response = await request(app.getHttpServer())
+      // This chat is from Seed1715698245510
       .get('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16')
       .expect(200)
 
