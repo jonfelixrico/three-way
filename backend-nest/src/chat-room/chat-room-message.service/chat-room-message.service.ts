@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
 import { instanceToPlain } from 'class-transformer'
-import { CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER } from 'src/chat-room/chat-room.constants'
 import { IChatRoomMessage } from 'src/chat-room/chat-room.types'
 import { ChatRoomMessage } from 'src/chat-room/entity/chat-room-message.entity'
 import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
@@ -9,7 +9,7 @@ import { Repository } from 'typeorm'
 @Injectable()
 export class ChatRoomMessageService {
   constructor(
-    @Inject(CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER)
+    @InjectRepository(ChatRoomMessage)
     private messageRepo: Repository<ChatRoomMessage>,
 
     private dispatcher: WebsocketDispatcherService
