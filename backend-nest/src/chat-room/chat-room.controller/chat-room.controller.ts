@@ -76,4 +76,13 @@ export class ChatRoomController {
   async getList(@UserId() userId: string) {
     return await this.getList(userId)
   }
+
+  @Get(':id')
+  async getChat(@UserId() userId: string, @Param('id') chatId: string) {
+    if (!(await this.chatSvc.checkUserMembership(chatId, userId))) {
+      throw new HttpException('Not part of the room', HttpStatus.FORBIDDEN)
+    }
+
+    return await this.chatSvc.getById(chatId)
+  }
 }
