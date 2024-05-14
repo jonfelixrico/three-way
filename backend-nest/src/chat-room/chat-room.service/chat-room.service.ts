@@ -5,6 +5,7 @@ import { IChatRoom } from 'src/chat-room/chat-room.types'
 import { ChatRoomMember } from 'src/chat-room/entity/chat-room-member.entity'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
 import { Repository } from 'typeorm'
+import { Transactional } from 'typeorm-transactional'
 
 @Injectable()
 export class ChatRoomService {
@@ -36,6 +37,7 @@ export class ChatRoomService {
     return userChats.map(({ chat }) => instanceToPlain(chat) as IChatRoom)
   }
 
+  @Transactional()
   async create({
     name,
     createdBy,
