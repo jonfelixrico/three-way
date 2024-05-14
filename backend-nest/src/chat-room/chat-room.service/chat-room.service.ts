@@ -49,7 +49,10 @@ export class ChatRoomService {
           id: userId,
         },
       },
+      relationLoadStrategy: 'query',
     })
+
+    console.log(member)
 
     if (!member) {
       return
@@ -61,7 +64,7 @@ export class ChatRoomService {
   }
 
   async checkUserMembership(chatId: string, userId: string): Promise<boolean> {
-    return !(await this.getMemberPermissions(chatId, userId))
+    return !!(await this.getMemberPermissions(chatId, userId))
   }
 
   async listByUser(userId: string): Promise<IChatRoom[]> {
