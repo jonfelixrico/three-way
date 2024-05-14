@@ -6,11 +6,10 @@ import {
   CHAT_ROOM_REPOSITORY_PROVIDER,
 } from 'src/chat-room/chat-room.constants'
 import { DatasourceModule } from 'src/datasource/datasource.module'
-import type { DataSource } from 'typeorm'
+import { DataSource } from 'typeorm'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
 import { ChatRoomController } from './chat-room.controller/chat-room.controller'
 import { ChatRoomService } from './chat-room.service/chat-room.service'
-import { DATASOURCE_PROVIDER } from 'src/datasource/datasource.constants'
 import { WebsocketModule } from 'src/websocket/websocket.module'
 import { ChatRoomMessageService } from './chat-room-message.service/chat-room-message.service'
 import { ChatRoomMember } from 'src/chat-room/entity/chat-room-member.entity'
@@ -22,19 +21,19 @@ import { ChatRoomMember } from 'src/chat-room/entity/chat-room-member.entity'
       provide: CHAT_ROOM_REPOSITORY_PROVIDER,
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(ChatRoom),
-      inject: [DATASOURCE_PROVIDER],
+      inject: [DataSource],
     },
     {
       provide: CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER,
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(ChatRoomMessage),
-      inject: [DATASOURCE_PROVIDER],
+      inject: [DataSource],
     },
     {
       provide: CHAT_ROOM_MEMBER_REPOSITORY_PROVIDER,
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(ChatRoomMember),
-      inject: [DATASOURCE_PROVIDER],
+      inject: [DataSource],
     },
 
     ChatRoomService,
