@@ -88,5 +88,11 @@ describe('chat', () => {
         userId: '36352646-d85f-49e1-bac1-d6f29907bd90',
       })
       .expect(201)
+
+    const userListResponse = await request(app.getHttpServer())
+      .get(`/chat/${id}/user`)
+      .expect(200)
+
+    expect(userListResponse.body).toHaveLength(2)
   })
 })
