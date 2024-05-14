@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common'
 import { ChatRoomMessageService } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
 import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.service'
 import { UserId } from 'src/decorators/user-id.param-decorator'
@@ -27,6 +35,30 @@ export class ChatRoomController {
       chatId: id,
       content,
       senderId: userId,
+    })
+  }
+
+  @Post()
+  async createChat(@UserId() userId: string, @Body('name') name: string) {
+    return this.chatSvc.create({
+      createdBy: userId,
+      name,
+    })
+  }
+
+  @Post(':id/user')
+  async addUserToChat(
+    @UserId() userId: string,
+    @Body('userId') addedUserId: string,
+    @Param('id') chatId: string
+  ) {
+    if (!(await this.chatSvc.checkUserMembership(chatId, userId))) {
+      throw new HttpException('Not part of the room', HttpStatus.FORBIDDEN)
+    }
+
+    await this.chatSvc.addMember({
+      userId: addedUserId,
+      chatId,
     })
   }
 }
