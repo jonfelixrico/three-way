@@ -5,12 +5,14 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
 
 @Entity()
 export class ChatRoomMember implements IChatRoomMember {
-  @ManyToOne(() => ChatRoom)
+  @ManyToOne(() => ChatRoom, {
+    eager: true,
+  })
   @JoinColumn({ name: 'chatId' })
   @PrimaryColumn({ name: 'chatId', type: 'varchar' })
   chat: ChatRoom
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'userId' })
   @PrimaryColumn({ name: 'userId', type: 'varchar' })
   user: User
