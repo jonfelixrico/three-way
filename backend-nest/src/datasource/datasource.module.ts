@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataSource } from 'typeorm'
-import { addTransactionalDataSource } from 'typeorm-transactional'
+import {
+  addTransactionalDataSource,
+  getDataSourceByName,
+} from 'typeorm-transactional'
 
 @Module({
   imports: [
@@ -33,6 +36,8 @@ import { addTransactionalDataSource } from 'typeorm-transactional'
       },
 
       dataSourceFactory: async (options) =>
+        // This is to make this work with NestJS tests. See https://github.com/Aliheym/typeorm-transactional/issues/10
+        getDataSourceByName('default') ??
         addTransactionalDataSource(new DataSource(options)),
     }),
   ],
