@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-const uuids = `
+export const uuidList = `
 03ef5431-ad41-4543-8918-d63bab07e2a8
 28290a95-7f8d-40c4-8187-2d004f8a8625
 5b16c92f-5479-4d89-8282-4d5bb2ce911f
@@ -16,8 +16,8 @@ d958c60e-9f7a-40da-8b5a-162939098edf
 
 export class Seed1715702049970 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    for (let i = 0; i < uuids.length; i++) {
-      const uuid = uuids[i]
+    for (let i = 0; i < uuidList.length; i++) {
+      const uuid = uuidList[i]
 
       await queryRunner.query(
         /*
@@ -30,7 +30,7 @@ export class Seed1715702049970 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    for (const uuid of uuids) {
+    for (const uuid of uuidList) {
       await queryRunner.query(`DELETE FROM "user" WHERE id = "${uuid}"`)
     }
   }

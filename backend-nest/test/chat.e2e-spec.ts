@@ -5,6 +5,7 @@ import { AppModule } from 'src/app.module'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { MockGuard } from 'test/mock-guard'
 import { initializeTransactionalContext } from 'typeorm-transactional'
+import { uuidList } from 'src/datasource/migrations/1715702049970-seed'
 
 describe('chat', () => {
   let app: INestApplication
@@ -82,17 +83,19 @@ describe('chat', () => {
 
     const { id } = newChatResponse.body
 
-    await request(app.getHttpServer())
-      .post(`/chat/${id}/user`)
-      .send({
-        userId: '36352646-d85f-49e1-bac1-d6f29907bd90',
-      })
-      .expect(201)
+    for (const userId of uuidList) {
+      await request(app.getHttpServer())
+        .post(`/chat/${id}/user`)
+        .send({
+          userId,
+        })
+        .expect(201)
+    }
 
     const userListResponse = await request(app.getHttpServer())
       .get(`/chat/${id}/user`)
       .expect(200)
 
-    expect(userListResponse.body).toHaveLength(2)
+    expect(userListResponse.body).toHaveLength(10)
   })
 })
