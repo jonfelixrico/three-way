@@ -56,7 +56,7 @@ export class ChatRoomService {
     }
 
     return {
-      add: member.isOwner,
+      addMember: member.isOwner,
     }
   }
 
