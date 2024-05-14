@@ -99,6 +99,10 @@ export class ChatRoomService {
     userId: string
     chatId: string
   }): Promise<void> {
+    if (await this.checkUserMembership(chatId, userId)) {
+      throw new Error('User is already a member')
+    }
+
     await this.memberRepo.save({
       chat: {
         id: chatId,
