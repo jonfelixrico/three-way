@@ -7,7 +7,7 @@ export class Seed1715698245510 implements MigrationInterface {
     )
 
     await queryRunner.query(
-      `INSERT INTO "chat_room_member"("userId", "chatId", "isOwner") VALUES ("aab316fe-f3a4-4dc7-a220-44c3a5b24a16", "20354d7a-e4fe-47af-8ff6-187bca92f3f9", 1)`
+      `INSERT INTO "chat_room_member"("chatId", "userId", "isOwner") VALUES ("aab316fe-f3a4-4dc7-a220-44c3a5b24a16", "20354d7a-e4fe-47af-8ff6-187bca92f3f9", 1)`
     )
   }
 
