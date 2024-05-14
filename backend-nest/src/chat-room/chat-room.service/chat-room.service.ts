@@ -91,4 +91,22 @@ export class ChatRoomService {
 
     return instanceToPlain(newChat) as IChatRoom
   }
+
+  async addMember({
+    userId,
+    chatId,
+  }: {
+    userId: string
+    chatId: string
+  }): Promise<void> {
+    await this.memberRepo.save({
+      chat: {
+        id: chatId,
+      },
+
+      user: {
+        id: userId,
+      },
+    })
+  }
 }
