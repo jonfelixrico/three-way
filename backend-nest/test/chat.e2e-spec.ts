@@ -25,14 +25,12 @@ describe('chat', () => {
 
   test('GET /chat/:id', async () => {
     const response = await request(app.getHttpServer())
-      .get('/chat/global')
+      .get('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16')
       .expect(200)
 
     expect(response.body).toEqual(
       expect.objectContaining({
-        // TODO change this once we start implementing real chatrooms
-        name: 'global',
-        id: 'global',
+        name: 'Seed room 1',
       })
     )
   })
@@ -41,7 +39,7 @@ describe('chat', () => {
     const content = `Test message ${Date.now()}`
 
     const postResponse = await request(app.getHttpServer())
-      .post('/chat/global/message')
+      .post('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16/message')
       .send({
         content,
       })
@@ -53,7 +51,7 @@ describe('chat', () => {
     )
 
     const getResponse = await request(app.getHttpServer())
-      .get('/chat/global/message')
+      .get('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16/message')
       .expect(200)
 
     expect(getResponse.body).toEqual(
