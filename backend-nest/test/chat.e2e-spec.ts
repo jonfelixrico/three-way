@@ -71,4 +71,22 @@ describe('chat', () => {
 
     expect(messagesResp.body).toHaveLength(10)
   })
+
+  test('Room creation + adding of users', async () => {
+    const newChatResponse = await request(app.getHttpServer())
+      .post('/chat')
+      .send({
+        name: `Test chat ${Date.now()}`,
+      })
+      .expect(201)
+
+    const { id } = newChatResponse.body
+
+    await request(app.getHttpServer())
+      .post(`/chat/${id}/user`)
+      .send({
+        userId: '36352646-d85f-49e1-bac1-d6f29907bd90',
+      })
+      .expect(201)
+  })
 })
