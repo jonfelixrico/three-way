@@ -124,6 +124,8 @@ export class ChatRoomService {
       user: {
         id: userId,
       },
+
+      isOwner: false,
     })
   }
 }
