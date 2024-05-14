@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { DataSource } from 'typeorm'
+import { addTransactionalDataSource } from 'typeorm-transactional'
 
 @Module({
   imports: [
@@ -29,6 +31,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
           logging: true,
         }
       },
+
+      dataSourceFactory: async (options) =>
+        addTransactionalDataSource(new DataSource(options)),
     }),
   ],
 })
