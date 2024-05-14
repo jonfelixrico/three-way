@@ -100,6 +100,8 @@ export class ChatRoomService {
       user: {
         id: createdBy,
       },
+
+      isOwner: true,
     })
 
     return instanceToPlain(newChat) as IChatRoom
