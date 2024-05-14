@@ -1,9 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
 import { instanceToPlain } from 'class-transformer'
-import {
-  CHAT_ROOM_MEMBER_REPOSITORY_PROVIDER,
-  CHAT_ROOM_REPOSITORY_PROVIDER,
-} from 'src/chat-room/chat-room.constants'
 import { IChatRoom } from 'src/chat-room/chat-room.types'
 import { ChatRoomMember } from 'src/chat-room/entity/chat-room-member.entity'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
@@ -12,10 +9,10 @@ import { Repository } from 'typeorm'
 @Injectable()
 export class ChatRoomService {
   constructor(
-    @Inject(CHAT_ROOM_REPOSITORY_PROVIDER)
+    @InjectRepository(ChatRoom)
     private roomRepo: Repository<ChatRoom>,
 
-    @Inject(CHAT_ROOM_MEMBER_REPOSITORY_PROVIDER)
+    @InjectRepository(ChatRoomMember)
     private memberRepo: Repository<ChatRoomMember>
   ) {}
 
