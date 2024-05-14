@@ -38,7 +38,7 @@ export class ChatRoomService {
     return members.map(({ user }) => instanceToPlain(user) as IUser)
   }
 
-  async checkUserMembership(chatId: string, userId: string): Promise<boolean> {
+  async getMemberPermissions(chatId: string, userId: string) {
     const member = await this.memberRepo.findOne({
       where: {
         chat: {
@@ -51,7 +51,17 @@ export class ChatRoomService {
       },
     })
 
-    return !!member
+    if (!member) {
+      return
+    }
+
+    return {
+      add: member.isOwner,
+    }
+  }
+
+  async checkUserMembership(chatId: string, userId: string): Promise<boolean> {
+    return !(await this.getMemberPermissions(chatId, userId))
   }
 
   async listByUser(userId: string): Promise<IChatRoom[]> {
