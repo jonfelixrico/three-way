@@ -38,31 +38,37 @@ describe('chat', () => {
     await request(app.getHttpServer()).get('/chat/does-not-exist').expect(403)
   })
 
-  test('Sending of messages', async () => {
-    const content = `Test message ${Date.now()}`
-
-    const postResponse = await request(app.getHttpServer())
-      .post('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16/message')
+  test('Room creation + sending of messages', async () => {
+    const newChatResponse = await request(app.getHttpServer())
+      .post('/chat')
       .send({
-        content,
+        name: `Test chat ${Date.now()}`,
       })
       .expect(201)
-    expect(postResponse.body).toEqual(
+
+    expect(newChatResponse.body).toEqual(
       expect.objectContaining({
-        content,
+        id: expect.stringMatching(/.+/),
       })
     )
 
-    const getResponse = await request(app.getHttpServer())
-      .get('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16/message')
+    const { id } = newChatResponse.body
+
+    for (let i = 0; i < 10; i++) {
+      const messageContent = `Test message ${i + 1}`
+
+      await request(app.getHttpServer())
+        .post(`/chat/${id}/message`)
+        .send({
+          content: messageContent,
+        })
+        .expect(201)
+    }
+
+    const messagesResp = await request(app.getHttpServer())
+      .get(`/chat/${id}/message`)
       .expect(200)
 
-    expect(getResponse.body).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          content,
-        }),
-      ])
-    )
+    expect(messagesResp.body).toHaveLength(10)
   })
 })
