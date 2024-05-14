@@ -17,12 +17,24 @@ export class ChatRoomService {
     private memberRepo: Repository<ChatRoomMember>
   ) {}
 
-  async getById(id: string): Promise<IChatRoom> {
-    const room = await this.roomRepo.findOne({
-      where: { id },
+  async getByMembership(chatId: string, userId: string): Promise<IChatRoom> {
+    const membership = await this.memberRepo.findOne({
+      where: {
+        chat: {
+          id: chatId,
+        },
+
+        user: {
+          id: userId,
+        },
+      },
     })
 
-    return instanceToPlain(room) as IChatRoom
+    if (!membership) {
+      return null
+    }
+
+    return instanceToPlain(membership.chat) as IChatRoom
   }
 
   async listByUser(id: string): Promise<IChatRoom[]> {
