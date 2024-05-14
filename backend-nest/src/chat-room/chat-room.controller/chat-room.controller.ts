@@ -52,7 +52,9 @@ export class ChatRoomController {
     @Body('userId') addedUserId: string,
     @Param('id') chatId: string
   ) {
-    if (!(await this.chatSvc.checkUserMembership(chatId, userId))) {
+    const rights = await this.chatSvc.getMemberPermissions(chatId, userId)
+
+    if (!rights?.addMember) {
       throw new HttpException('Not part of the room', HttpStatus.FORBIDDEN)
     }
 
