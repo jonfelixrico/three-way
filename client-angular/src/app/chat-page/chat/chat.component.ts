@@ -32,7 +32,7 @@ export class ChatComponent {
     this.userId = identitySvc.user!.id!
     this.messages = toSignal(
       this.chat$.pipe(
-        map((chat) => chat.chatMessages['global']?.messages ?? [])
+        map((chat) => chat.chatHistories['global']?.messages ?? [])
       ),
       {
         initialValue: [],
