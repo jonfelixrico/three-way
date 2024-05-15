@@ -55,12 +55,12 @@ export class ChatComponent {
     this.content = ''
 
     const message = await this.messageSvc.sendMessage('global', content)
-    this.store.dispatch(new ChatActions.Add('global', [message]))
+    this.store.dispatch(new ChatActions.AddMessages('global', [message]))
   }
 
   private async loadMessages() {
     const messages = await this.messageSvc.getMessages('global')
-    this.store.dispatch(new ChatActions.Add('global', messages))
+    this.store.dispatch(new ChatActions.AddMessages('global', messages))
   }
 
   private async connectWs() {
@@ -68,7 +68,7 @@ export class ChatComponent {
     socket.on('message', (payload) => {
       if (payload.MESSAGE_SENT) {
         this.store.dispatch(
-          new ChatActions.Add('global', [payload.MESSAGE_SENT])
+          new ChatActions.AddMessages('global', [payload.MESSAGE_SENT])
         )
       }
     })

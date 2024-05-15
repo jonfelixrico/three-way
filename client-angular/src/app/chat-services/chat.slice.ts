@@ -35,10 +35,10 @@ export interface ChatSliceModel {
 })
 @Injectable()
 export class ChatSlice {
-  @Action(ChatActions.Add)
+  @Action(ChatActions.AddMessages)
   addMessage(
     ctx: StateContext<ChatSliceModel>,
-    { messages, chatId }: ChatActions.Add
+    { messages, chatId }: ChatActions.AddMessages
   ) {
     ctx.setState(
       produce((draft) => {
