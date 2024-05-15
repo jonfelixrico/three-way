@@ -47,4 +47,13 @@ export class ChatSlice {
       })
     )
   }
+
+  @Action(ChatActions.Set)
+  setChat(ctx: StateContext<ChatSliceModel>, { chat }: ChatActions.Set) {
+    ctx.setState(
+      produce((draft) => {
+        draft.chats[chat.id] = chat
+      })
+    )
+  }
 }
