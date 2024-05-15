@@ -4,20 +4,20 @@ import { ChatMessage } from './chat-rest-api.types'
 import { ChatActions } from './chat.actions'
 import { produce } from 'immer'
 
-interface Chat {
+interface ChatMessages {
   messages: ChatMessage[]
 }
 
 export interface ChatSliceModel {
-  chats: {
-    [chatId: string]: Chat
+  chatMessages: {
+    [chatId: string]: ChatMessages
   }
 }
 
 @State<ChatSliceModel>({
   name: 'chat',
   defaults: {
-    chats: {},
+    chatMessages: {},
   },
 })
 @Injectable()
@@ -29,13 +29,13 @@ export class ChatSlice {
   ) {
     ctx.setState(
       produce((draft) => {
-        let chat = draft.chats[chatId]
+        let chat = draft.chatMessages[chatId]
         if (!chat) {
           chat = {
             messages: [],
           }
 
-          draft.chats[chatId] = chat
+          draft.chatMessages[chatId] = chat
         }
 
         chat.messages.unshift(...messages)
