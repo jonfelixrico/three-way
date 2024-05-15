@@ -83,7 +83,7 @@ export class ChatRoomController {
 
   @Get()
   async getList(@UserId() userId: string) {
-    return await this.getList(userId)
+    return await this.chatSvc.listByUser(userId)
   }
 
   @Get(':id')
