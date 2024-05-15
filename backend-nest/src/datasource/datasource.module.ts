@@ -30,8 +30,6 @@ import {
             inProduction ? null : `${__dirname}/migrations/*-seed.{ts,js}`,
           ].filter(Boolean),
           migrationsRun: true,
-
-          logging: true,
         }
       },
 

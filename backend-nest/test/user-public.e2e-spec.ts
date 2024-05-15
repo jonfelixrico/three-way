@@ -39,4 +39,14 @@ describe('user - public', () => {
       })
     )
   })
+
+  test('Login', async () => {
+    await request(app.getHttpServer())
+      .post('/auth')
+      .send({
+        username: 'seed-1',
+        password: 'p@ssw0rd',
+      })
+      .expect(200)
+  })
 })
