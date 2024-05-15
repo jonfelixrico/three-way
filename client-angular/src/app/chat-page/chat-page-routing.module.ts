@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ChatLayoutComponent,
     children: [
       {
-        path: '',
+        path: ':chatId',
         component: ChatComponent,
       },
     ],
