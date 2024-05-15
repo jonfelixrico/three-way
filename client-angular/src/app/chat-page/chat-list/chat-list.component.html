@@ -1,1 +1,6 @@
-<p>chat-list works!</p>
+@for (chat of chats(); track chat.id) {
+  <div>
+    {{ chat.id }}
+    {{ chat.name }}
+  </div>
+}
