@@ -2,11 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
+import { initializeTransactionalContext } from 'typeorm-transactional'
 
 describe('user - public', () => {
   let app: INestApplication
 
   beforeEach(async () => {
+    initializeTransactionalContext()
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile()

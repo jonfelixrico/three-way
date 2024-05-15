@@ -1,98 +1,130 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
 import { instanceToPlain } from 'class-transformer'
-import {
-  CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER,
-  CHAT_ROOM_REPOSITORY_PROVIDER,
-} from 'src/chat-room/chat-room.constants'
-import { IChatRoom, IChatRoomMessage } from 'src/chat-room/chat-room.types'
-import { ChatRoomMessage } from 'src/chat-room/entity/chat-room-message.entity'
+import { IChatRoom } from 'src/chat-room/chat-room.types'
+import { ChatRoomMember } from 'src/chat-room/entity/chat-room-member.entity'
 import { ChatRoom } from 'src/chat-room/entity/chat-room.entity'
-import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
+import { IUser } from 'src/user/user.types'
 import { Repository } from 'typeorm'
+import { Transactional } from 'typeorm-transactional'
 
 @Injectable()
 export class ChatRoomService {
   constructor(
-    @Inject(CHAT_ROOM_REPOSITORY_PROVIDER)
+    @InjectRepository(ChatRoom)
     private roomRepo: Repository<ChatRoom>,
 
-    @Inject(CHAT_ROOM_MESSAGE_REPOSITORY_PROVIDER)
-    private messageRepo: Repository<ChatRoomMessage>,
-
-    private dispatcher: WebsocketDispatcherService
+    @InjectRepository(ChatRoomMember)
+    private memberRepo: Repository<ChatRoomMember>
   ) {}
 
-  async sendMessage({
-    chatId,
-    content: message,
-    senderId,
-  }: {
-    chatId: string
-    content: string
-    senderId: string
-  }): Promise<IChatRoomMessage> {
-    // Can't use save directly since it wil render instanceToPlain useless.
-    // Save seems to return a plain object rather than the entity class.
-    const model = this.messageRepo.create({
-      content: message,
-      chatRoom: {
-        id: chatId,
-      },
-      sender: {
-        id: senderId,
-      },
-      timestamp: new Date(),
+  async getById(chatId: string): Promise<IChatRoom> {
+    const room = await this.roomRepo.findOne({
+      where: { id: chatId },
     })
-    const sent = await this.messageRepo.save(model)
 
-    this.dispatcher.dispatch('MESSAGE_SENT', sent, (id) => id !== senderId)
-
-    return instanceToPlain(sent) as IChatRoomMessage
+    return instanceToPlain(room) as IChatRoom
   }
 
-  async getMessages({
-    chatId,
-  }: {
-    chatId: string
-  }): Promise<IChatRoomMessage[]> {
-    const messages = await this.messageRepo.find({
+  async listMembers(chatId: string): Promise<IUser[]> {
+    const members = await this.memberRepo.find({
       where: {
-        chatRoom: {
+        chat: {
           id: chatId,
         },
       },
-      order: {
-        timestamp: 'DESC',
-      },
     })
 
-    return messages.map(
-      (message) =>
-        instanceToPlain<IChatRoomMessage>(message) as IChatRoomMessage
-    )
+    return members.map(({ user }) => instanceToPlain(user) as IUser)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getChatRoomById(id: string): Promise<IChatRoom> {
-    /*
-     * TODO create an actual implementation for this
-     * for now this just finds the atomic chat room for the entire app
-     * this is to keep implementation simple
-     */
-
-    const room = await this.roomRepo.findOne({
+  async getMemberPermissions(chatId: string, userId: string) {
+    const member = await this.memberRepo.findOne({
       where: {
-        id,
+        chat: {
+          id: chatId,
+        },
+
+        user: {
+          id: userId,
+        },
       },
     })
-    if (room) {
-      return room
+
+    if (!member) {
+      return
     }
 
-    // this should be executed only once we want to have a single chat room for the entire app
-    return await this.roomRepo.save({
-      name: 'global',
-      id: 'global',
+    return {
+      addMember: member.isOwner,
+    }
+  }
+
+  async checkUserMembership(chatId: string, userId: string): Promise<boolean> {
+    return !!(await this.getMemberPermissions(chatId, userId))
+  }
+
+  async listByUser(userId: string): Promise<IChatRoom[]> {
+    const userChats = await this.memberRepo.find({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+    })
+
+    return userChats.map(({ chat }) => instanceToPlain(chat) as IChatRoom)
+  }
+
+  @Transactional()
+  async create({
+    name,
+    createdBy,
+  }: {
+    name: string
+    createdBy: string
+  }): Promise<IChatRoom> {
+    let newChat = this.roomRepo.create({
+      name,
+    })
+    newChat = await this.roomRepo.save(newChat)
+
+    await this.memberRepo.save({
+      chat: {
+        id: newChat.id,
+      },
+
+      user: {
+        id: createdBy,
+      },
+
+      isOwner: true,
+    })
+
+    return instanceToPlain(newChat) as IChatRoom
+  }
+
+  async addMember({
+    userId,
+    chatId,
+  }: {
+    userId: string
+    chatId: string
+  }): Promise<void> {
+    if (await this.checkUserMembership(chatId, userId)) {
+      throw new Error('User is already a member')
+    }
+
+    await this.memberRepo.save({
+      chat: {
+        id: chatId,
+      },
+
+      user: {
+        id: userId,
+      },
+
+      isOwner: false,
     })
   }
 }
