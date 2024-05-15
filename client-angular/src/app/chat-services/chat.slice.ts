@@ -1,19 +1,11 @@
 import { Injectable } from '@angular/core'
 import { State, Action, StateContext } from '@ngxs/store'
-import { ChatMessage } from './chat-rest-api.types'
+import { Chat, ChatMessage } from './chat-rest-api.types'
 import { ChatActions } from './chat.actions'
 import { produce } from 'immer'
 
 interface ChatHistory {
   messages: ChatMessage[]
-}
-
-interface Chat {
-  name: string
-  users: {
-    name: string
-    id: string
-  }[]
 }
 
 export interface ChatSliceModel {
