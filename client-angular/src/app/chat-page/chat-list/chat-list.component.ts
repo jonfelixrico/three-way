@@ -1,6 +1,6 @@
 import { Observable, map } from 'rxjs'
 import { ChatService } from '@/chat-services/chat.service'
-import { Component, OnInit, Signal, afterNextRender } from '@angular/core'
+import { Component, Signal, afterNextRender } from '@angular/core'
 import { Select } from '@ngxs/store'
 import { ChatSliceModel } from '@/chat-services/chat.slice'
 import { Chat } from '@/chat-services/chat-rest-api.types'
