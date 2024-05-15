@@ -1,6 +1,9 @@
-@for (chat of chats(); track chat.id) {
-  <div>
-    {{ chat.id }}
-    {{ chat.name }}
-  </div>
-}
+<div class="flex flex-column row-gap-2 p-2">
+  @for (chat of chats(); track chat.id) {
+    <div class="border-round-md p-2 hover:surface-100 select-none">
+      <div class="text-lg">
+        {{ chat.name }}
+      </div>
+    </div>
+  }
+</div>
