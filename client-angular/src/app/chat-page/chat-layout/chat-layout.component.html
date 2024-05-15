@@ -1,7 +1,10 @@
-<div class="h-screen flex flex-row surface-100 p-3 column-gap-3">
+<div
+  *transloco="let t"
+  class="h-screen flex flex-row surface-100 p-3 column-gap-3"
+>
   <div class="col-3 p-0 p-card border-round-xl flex flex-column">
     <div class="p-3 flex flex-row justify-content-between align-items-center">
-      <div class="text-3xl font-bold">Chats</div>
+      <div class="text-3xl font-bold">{{ t('chat.chat') }}</div>
       <p-button rounded icon="pi pi-pen-to-square" size="small" outlined />
     </div>
 
@@ -15,7 +18,9 @@
       <div class="text-lg font-medium">{{ username }}</div>
 
       <!-- TODO i18nize -->
-      <button pButton size="small" (click)="logOut()">Log Out</button>
+      <button pButton size="small" (click)="logOut()">
+        {{ t('common.logOut') }}
+      </button>
     </div>
   </div>
 
