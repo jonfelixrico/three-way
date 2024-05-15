@@ -4,3 +4,13 @@ export interface ChatMessage {
   timestamp: Date
   senderId: string
 }
+
+export interface Chat {
+  id: string
+  name: string
+}
+
+export interface ChatMember {
+  id: string
+  name: string
+}
