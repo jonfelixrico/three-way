@@ -2,9 +2,7 @@ import { unauthenticatedOnlyGuard } from './app-guards/unauthenticated-only/unau
 import { authenticatedOnlyGuard } from '@/app-guards/authenticated-only/authenticated-only.guard'
 import { userLoaderGuard } from '@/app-guards/user-loader/user-loader.guard'
 import { NoReuseRouteReuseStrategy } from '@/no-reuse.route-reuse-strategy'
-import { RealtimeModule } from '@/realtime/realtime.module'
-import { RealtimeService } from '@/realtime/realtime.service'
-import { NgModule, inject } from '@angular/core'
+import { NgModule } from '@angular/core'
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router'
 
 const routes: Routes = [
@@ -42,11 +40,6 @@ const routes: Routes = [
           authenticatedOnlyGuard,
 
           // TODO check if there's a more appropriate way to do this
-          async () => {
-            const realtime = inject(RealtimeService)
-            await realtime.connect()
-            return true
-          },
         ],
         children: [
           {
@@ -72,7 +65,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       bindToComponentInputs: true,
     }),
-    RealtimeModule,
   ],
   providers: [
     {
