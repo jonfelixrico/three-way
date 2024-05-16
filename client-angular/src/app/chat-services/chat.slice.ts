@@ -58,6 +58,8 @@ export class ChatSlice {
             messages: [],
             earliestTimestamp: new Date(),
           }
+
+          draft.chatHistories[chatId] = history
         }
 
         history.messages.push(...messages)
