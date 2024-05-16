@@ -1,8 +1,9 @@
 import { unauthenticatedOnlyGuard } from './app-guards/unauthenticated-only/unauthenticated-only.guard'
 import { authenticatedOnlyGuard } from '@/app-guards/authenticated-only/authenticated-only.guard'
 import { userLoaderGuard } from '@/app-guards/user-loader/user-loader.guard'
+import { NoReuseRouteReuseStrategy } from '@/no-reuse.route-reuse-strategy'
 import { NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
+import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router'
 
 const routes: Routes = [
   {
@@ -55,6 +56,12 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: NoReuseRouteReuseStrategy,
+    },
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
