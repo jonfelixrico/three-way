@@ -47,7 +47,17 @@ export class ChatRoomController {
       senderId: userId,
     })
 
-    this.dispatcher.dispatch('MESSAGE_SENT', sent, (id) => id !== userId)
+    /*
+     * We're doing this asynchronously as to not delay the response to the client further
+     */
+    this.chatSvc.listMembers(chatId).then((members) => {
+      const ids = new Set(members.map((m) => m.id))
+      this.dispatcher.dispatch(
+        'MESSAGE_SENT',
+        sent,
+        (id) => id !== userId && ids.has(id)
+      )
+    })
 
     return sent
   }
