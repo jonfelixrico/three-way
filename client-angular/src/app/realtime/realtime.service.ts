@@ -1,10 +1,11 @@
 import { IdentityService } from '@/user/identity.service'
 import { Injectable } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
 import { Socket, io } from 'socket.io-client'
 
 @Injectable()
 export class RealtimeService {
-  _socket: Socket | null = null
+  private readonly socket$ = new BehaviorSubject<Socket | null>(null)
 
   constructor(private identitySvc: IdentityService) {}
 
@@ -31,14 +32,17 @@ export class RealtimeService {
   }
 
   async connect() {
-    if (!this._socket) {
-      this._socket = await this.connectHelper()
+    if (this.socket) {
+      return
     }
 
-    return this._socket
+    const socket = await this.connectHelper()
+    this.socket$.next(socket)
+
+    return socket
   }
 
   get socket() {
-    return this._socket
+    return this.socket$.value
   }
 }
