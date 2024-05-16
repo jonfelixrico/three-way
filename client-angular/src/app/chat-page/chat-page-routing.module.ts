@@ -16,7 +16,7 @@ const routes: Routes = [
       },
     ],
 
-    canActivateChild: [
+    canActivate: [
       async () => {
         const realtime = inject(RealtimeService)
         await realtime.connect()
