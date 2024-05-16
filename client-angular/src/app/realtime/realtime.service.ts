@@ -1,11 +1,12 @@
 import { IdentityService } from '@/user/identity.service'
 import { Injectable } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 import { Socket, io } from 'socket.io-client'
 
 @Injectable()
 export class RealtimeService {
-  private readonly socket$ = new BehaviorSubject<Socket | null>(null)
+  readonly socket$ = new BehaviorSubject<Socket | null>(null)
+  readonly events$ = new Subject<[string, ...unknown[]]>()
 
   constructor(private identitySvc: IdentityService) {}
 
@@ -39,7 +40,22 @@ export class RealtimeService {
     const socket = await this.connectHelper()
     this.socket$.next(socket)
 
+    socket.onAny((event, ...args) => {
+      this.events$.next([event, ...args])
+    })
+
     return socket
+  }
+
+  async disconnect() {
+    if (!this.socket) {
+      return
+    }
+
+    this.socket.disconnect()
+    this.socket.offAny()
+
+    this.socket$.next(null)
   }
 
   get socket() {
