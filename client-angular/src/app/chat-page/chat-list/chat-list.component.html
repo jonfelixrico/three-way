@@ -1,5 +1,5 @@
 <div class="flex flex-column row-gap-2 px-2">
-  @for (chat of chats(); track chat.id) {
+  @for (chat of chatList$ | async; track chat.id) {
     <a
       [routerLink]="['/app/chat', chat.id]"
       class="no-style cursor-pointer border-round-md p-2 item-color select-none"
