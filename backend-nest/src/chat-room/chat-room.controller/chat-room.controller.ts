@@ -10,12 +10,14 @@ import {
 import { ChatRoomMessageService } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
 import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.service'
 import { UserId } from 'src/decorators/user-id.param-decorator'
+import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 
 @Controller('chat')
 export class ChatRoomController {
   constructor(
     private chatSvc: ChatRoomService,
-    private msgSvc: ChatRoomMessageService
+    private msgSvc: ChatRoomMessageService,
+    private dispatcher: WebsocketDispatcherService
   ) {}
 
   @Get(':id/message')
@@ -39,11 +41,15 @@ export class ChatRoomController {
       throw new HttpException('Not a member', HttpStatus.FORBIDDEN)
     }
 
-    return await this.msgSvc.sendMessage({
+    const sent = await this.msgSvc.sendMessage({
       chatId,
       content,
       senderId: userId,
     })
+
+    this.dispatcher.dispatch('MESSAGE_SENT', sent, (id) => id !== userId)
+
+    return sent
   }
 
   @Post()
