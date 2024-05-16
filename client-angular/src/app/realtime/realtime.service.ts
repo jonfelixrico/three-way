@@ -1,5 +1,6 @@
+import { EVENTS_SUBJECT, SOCKET_SUBJECT } from '@/realtime/realtime.constants'
 import { IdentityService } from '@/user/identity.service'
-import { Injectable } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { Socket, io } from 'socket.io-client'
 
@@ -7,8 +8,8 @@ import { Socket, io } from 'socket.io-client'
 export class RealtimeService {
   constructor(
     private identitySvc: IdentityService,
-    private socket$: BehaviorSubject<Socket | null>,
-    private events$: Subject<Record<string, unknown>>
+    @Inject(SOCKET_SUBJECT) private socket$: BehaviorSubject<Socket | null>,
+    @Inject(EVENTS_SUBJECT) private events$: Subject<Record<string, unknown>>
   ) {}
 
   private connectHelper() {
