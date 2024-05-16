@@ -48,6 +48,7 @@ export class ChatRoomController {
     })
 
     /*
+     * This is to reflect the chat message in real time to other chat members
      * We're doing this asynchronously as to not delay the response to the client further
      */
     this.chatSvc.listMembers(chatId).then((members) => {
@@ -55,6 +56,7 @@ export class ChatRoomController {
       this.dispatcher.dispatch(
         'MESSAGE_SENT',
         sent,
+        // The sender is expected to be a member of the room, but we're not relaying back to them to not need a FE handling to ignore self-sent messages from the WS
         (id) => id !== userId && ids.has(id)
       )
     })
