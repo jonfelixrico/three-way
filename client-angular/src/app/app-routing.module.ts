@@ -8,7 +8,7 @@ import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router'
 const routes: Routes = [
   {
     path: '',
-    canActivateChild: [userLoaderGuard],
+    canActivate: [userLoaderGuard],
 
     children: [
       {
