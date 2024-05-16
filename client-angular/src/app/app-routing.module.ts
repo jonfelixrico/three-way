@@ -32,6 +32,8 @@ const routes: Routes = [
           ),
         canActivateChild: [unauthenticatedOnlyGuard],
       },
+
+      // TODO give app its own module (named as HomeModule since AppModule is taken)
       {
         path: 'app',
         canActivateChild: [authenticatedOnlyGuard],
