@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { Socket, io } from 'socket.io-client'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class RealtimeService {
   readonly socket$ = new BehaviorSubject<Socket | null>(null)
   private readonly events$ = new Subject<Record<string, unknown>>()
