@@ -53,7 +53,6 @@ export class ChatComponent {
   }
 
   async sendMessage() {
-    console.log(this.content)
     if (!this.content) {
       return
     }
