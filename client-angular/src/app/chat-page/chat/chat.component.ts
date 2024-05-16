@@ -39,7 +39,6 @@ export class ChatComponent {
   ) {
     afterNextRender(() => {
       this.loadMessages()
-      this.connectWs()
     })
   }
 
@@ -71,16 +70,5 @@ export class ChatComponent {
     this.store.dispatch(
       new ChatActions.AddHistoricalMessages(this.chatId, messages)
     )
-  }
-
-  private async connectWs() {
-    const socket = await this.realtime.connect()
-    socket.on('message', (payload) => {
-      if (payload.MESSAGE_SENT) {
-        this.store.dispatch(
-          new ChatActions.AddMessages(this.chatId, [payload.MESSAGE_SENT])
-        )
-      }
-    })
   }
 }
