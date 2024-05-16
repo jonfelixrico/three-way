@@ -27,6 +27,7 @@ import { TranslocoRootModule } from './transloco-root/transloco-root.module'
     AppHttpModule,
     HttpClientModule,
     TranslocoRootModule,
+    RealtimeModule.forRoot(),
   ],
   providers: [provideClientHydration(), provideLocalStorage()],
   bootstrap: [AppComponent],

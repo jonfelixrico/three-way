@@ -3,14 +3,13 @@ import { Injectable } from '@angular/core'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { Socket, io } from 'socket.io-client'
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class RealtimeService {
-  readonly socket$ = new BehaviorSubject<Socket | null>(null)
-  private readonly events$ = new Subject<Record<string, unknown>>()
-
-  constructor(private identitySvc: IdentityService) {}
+  constructor(
+    private identitySvc: IdentityService,
+    private socket$: BehaviorSubject<Socket | null>,
+    private events$: Subject<Record<string, unknown>>
+  ) {}
 
   private connectHelper() {
     return new Promise<Socket>((resolve, reject) => {
