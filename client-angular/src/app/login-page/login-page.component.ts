@@ -45,6 +45,7 @@ export class LoginPageComponent {
       )
 
       this.identitySvc.setAccessToken(accessToken)
+      await this.identitySvc.loadUser()
 
       await this.router.navigateByUrl('/app')
     } catch (e) {

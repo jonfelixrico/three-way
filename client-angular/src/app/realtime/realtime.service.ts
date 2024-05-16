@@ -1,12 +1,16 @@
+import { EVENTS_SUBJECT, SOCKET_SUBJECT } from '@/realtime/realtime.constants'
 import { IdentityService } from '@/user/identity.service'
-import { Injectable } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { Socket, io } from 'socket.io-client'
 
 @Injectable()
 export class RealtimeService {
-  socket: Socket | null = null
-
-  constructor(private identitySvc: IdentityService) {}
+  constructor(
+    private identitySvc: IdentityService,
+    @Inject(SOCKET_SUBJECT) private socket$: BehaviorSubject<Socket | null>,
+    @Inject(EVENTS_SUBJECT) private events$: Subject<Record<string, unknown>>
+  ) {}
 
   private connectHelper() {
     return new Promise<Socket>((resolve, reject) => {
@@ -31,10 +35,38 @@ export class RealtimeService {
   }
 
   async connect() {
-    if (!this.socket) {
-      this.socket = await this.connectHelper()
+    if (this.socket) {
+      return
     }
 
-    return this.socket
+    const socket = await this.connectHelper()
+    this.socket$.next(socket)
+
+    socket.on('message', (arg) => {
+      this.events$.next(arg)
+    })
+
+    console.log('WS connected')
+
+    return socket
+  }
+
+  getEvents$<T>() {
+    return this.events$.asObservable() as Observable<T>
+  }
+
+  async disconnect() {
+    if (!this.socket) {
+      return
+    }
+
+    this.socket.disconnect()
+    this.socket.offAny()
+
+    this.socket$.next(null)
+  }
+
+  get socket() {
+    return this.socket$.value
   }
 }

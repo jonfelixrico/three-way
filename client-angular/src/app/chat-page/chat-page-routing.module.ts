@@ -1,7 +1,9 @@
-import { NgModule } from '@angular/core'
+import { NgModule, inject } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { ChatComponent } from './chat/chat.component'
 import { ChatLayoutComponent } from '@/chat-page/chat-layout/chat-layout.component'
+import { RealtimeService } from '@/realtime/realtime.service'
+import { RealtimeModule } from '@/realtime/realtime.module'
 
 const routes: Routes = [
   {
@@ -9,15 +11,24 @@ const routes: Routes = [
     component: ChatLayoutComponent,
     children: [
       {
-        path: '',
+        path: ':chatId',
         component: ChatComponent,
+      },
+    ],
+
+    // TODO check if there's a more appropriate way to do this
+    canActivate: [
+      async () => {
+        const realtime = inject(RealtimeService)
+        await realtime.connect()
+        return true
       },
     ],
   },
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes), RealtimeModule],
   exports: [RouterModule],
 })
 export class ChatPageRoutingModule {}

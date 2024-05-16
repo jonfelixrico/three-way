@@ -1,3 +1,4 @@
+import { RealtimeService } from '@/realtime/realtime.service'
 import { IdentityService } from '@/user/identity.service'
 import { Component } from '@angular/core'
 import { Router } from '@angular/router'
@@ -10,7 +11,8 @@ import { Router } from '@angular/router'
 export class ChatLayoutComponent {
   constructor(
     private identitySvc: IdentityService,
-    private router: Router
+    private router: Router,
+    private realtimeSvc: RealtimeService
   ) {}
 
   get username() {
@@ -21,5 +23,6 @@ export class ChatLayoutComponent {
     // TODO improve UX by adding a confirmation
     this.identitySvc.clearSession()
     this.router.navigateByUrl('/login')
+    this.realtimeSvc.disconnect()
   }
 }

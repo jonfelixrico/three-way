@@ -24,7 +24,7 @@ export class Seed1715702049970 implements MigrationInterface {
          * password is "p@ssw0rd"
          * We're starting at 2 because we already have seed-1 from Seed1715172194613
          */
-        `INSERT INTO "user"("id", "username", "encryptedPassword") VALUES ("${uuid}", "seed-${2 + i}", "$2y$10$hV89MATrcSZ92N86idD1re45zKz96Bqi6WFRku3jEMEuPhGo6KtjC")`
+        `INSERT INTO "user"("id", "username", "encryptedPassword") VALUES ("${uuid}", "seed-${2 + i}", "$2a$10$PXpjUXwTKUBcVbbUPxEjvuviHPGIm2wzMJum/Nxd9O8kJbIFd69sW")`
       )
     }
   }

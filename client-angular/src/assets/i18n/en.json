@@ -25,8 +25,13 @@
     "loginHint": "Already have an account? Log in"
   },
 
+  "chat": {
+    "chat": "Chat"
+  },
+
   "common": {
-    "genericError": "An unexpected error occurred. Please try again later."
+    "genericError": "An unexpected error occurred. Please try again later.",
+    "logOut": "Log out"
   },
 
   "validationError": {

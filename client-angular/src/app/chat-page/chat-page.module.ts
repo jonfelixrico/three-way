@@ -13,6 +13,7 @@ import { ChatLayoutComponent } from './chat-layout/chat-layout.component'
 import { ChatListComponent } from './chat-list/chat-list.component'
 import { DividerModule } from 'primeng/divider'
 import { ButtonModule } from 'primeng/button'
+import { TranslocoModule } from '@jsverse/transloco'
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ButtonModule } from 'primeng/button'
     RealtimeModule,
     DividerModule,
     ButtonModule,
+    TranslocoModule,
   ],
 })
 export class ChatPageModule {}

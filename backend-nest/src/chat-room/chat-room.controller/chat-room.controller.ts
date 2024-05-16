@@ -10,12 +10,14 @@ import {
 import { ChatRoomMessageService } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
 import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.service'
 import { UserId } from 'src/decorators/user-id.param-decorator'
+import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 
 @Controller('chat')
 export class ChatRoomController {
   constructor(
     private chatSvc: ChatRoomService,
-    private msgSvc: ChatRoomMessageService
+    private msgSvc: ChatRoomMessageService,
+    private dispatcher: WebsocketDispatcherService
   ) {}
 
   @Get(':id/message')
@@ -39,11 +41,27 @@ export class ChatRoomController {
       throw new HttpException('Not a member', HttpStatus.FORBIDDEN)
     }
 
-    return await this.msgSvc.sendMessage({
+    const sent = await this.msgSvc.sendMessage({
       chatId,
       content,
       senderId: userId,
     })
+
+    /*
+     * This is to reflect the chat message in real time to other chat members
+     * We're doing this asynchronously as to not delay the response to the client further
+     */
+    this.chatSvc.listMembers(chatId).then((members) => {
+      const ids = new Set(members.map((m) => m.id))
+      this.dispatcher.dispatch(
+        'MESSAGE_SENT',
+        sent,
+        // The sender is expected to be a member of the room, but we're not relaying back to them to not need a FE handling to ignore self-sent messages from the WS
+        (id) => id !== userId && ids.has(id)
+      )
+    })
+
+    return sent
   }
 
   @Post()
@@ -83,7 +101,7 @@ export class ChatRoomController {
 
   @Get()
   async getList(@UserId() userId: string) {
-    return await this.getList(userId)
+    return await this.chatSvc.listByUser(userId)
   }
 
   @Get(':id')

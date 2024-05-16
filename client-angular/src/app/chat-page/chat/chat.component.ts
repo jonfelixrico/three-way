@@ -1,5 +1,4 @@
-import { Component, Signal, afterNextRender } from '@angular/core'
-import { ChatMessage } from '@/chat-services/chat-rest-api.types'
+import { Component, Input, afterNextRender } from '@angular/core'
 import { IdentityService } from '@/user/identity.service'
 import { MessageService } from '@/chat-services/message.service'
 import { Select, Store } from '@ngxs/store'
@@ -15,36 +14,39 @@ import { RealtimeService } from '@/realtime/realtime.service'
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent {
-  readonly userId: string
-
   @Select() chat$!: Observable<ChatSliceModel>
 
-  messages: Signal<ChatMessage[]>
+  @Input() chatId!: string
+
+  private history$ = this.chat$.pipe(
+    map((state) => state.chatHistories[this.chatId])
+  )
+
+  messages = toSignal(
+    this.history$.pipe(map((history) => history?.messages ?? [])),
+    {
+      initialValue: [],
+    }
+  )
 
   content: string = ''
 
   constructor(
-    identitySvc: IdentityService,
+    private identitySvc: IdentityService,
     private messageSvc: MessageService,
     private store: Store,
     private realtime: RealtimeService
   ) {
-    this.userId = identitySvc.user!.id!
-    this.messages = toSignal(
-      this.chat$.pipe(map((chat) => chat.chats['global']?.messages ?? [])),
-      {
-        initialValue: [],
-      }
-    )
-
     afterNextRender(() => {
       this.loadMessages()
-      this.connectWs()
     })
   }
 
+  get userId() {
+    return this.identitySvc.user!.id
+  }
+
   async sendMessage() {
-    console.log(this.content)
     if (!this.content) {
       return
     }
@@ -52,23 +54,21 @@ export class ChatComponent {
     const content = this.content
     this.content = ''
 
-    const message = await this.messageSvc.sendMessage('global', content)
-    this.store.dispatch(new ChatActions.Add('global', [message]))
+    const message = await this.messageSvc.sendMessage(this.chatId, content)
+    this.store.dispatch(new ChatActions.AddMessages(this.chatId, [message]))
   }
 
   private async loadMessages() {
-    const messages = await this.messageSvc.getMessages('global')
-    this.store.dispatch(new ChatActions.Add('global', messages))
-  }
+    const alreadyLoaded = this.store.selectSnapshot(
+      ({ chat }: { chat: ChatSliceModel }) => !!chat.chatHistories[this.chatId]
+    )
+    if (alreadyLoaded) {
+      return
+    }
 
-  private async connectWs() {
-    const socket = await this.realtime.connect()
-    socket.on('message', (payload) => {
-      if (payload.MESSAGE_SENT) {
-        this.store.dispatch(
-          new ChatActions.Add('global', [payload.MESSAGE_SENT])
-        )
-      }
-    })
+    const messages = await this.messageSvc.getMessages(this.chatId)
+    this.store.dispatch(
+      new ChatActions.AddHistoricalMessages(this.chatId, messages)
+    )
   }
 }

@@ -3,16 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { instanceToPlain } from 'class-transformer'
 import { IChatRoomMessage } from 'src/chat-room/chat-room.types'
 import { ChatRoomMessage } from 'src/chat-room/entity/chat-room-message.entity'
-import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 import { Repository } from 'typeorm'
 
 @Injectable()
 export class ChatRoomMessageService {
   constructor(
     @InjectRepository(ChatRoomMessage)
-    private messageRepo: Repository<ChatRoomMessage>,
-
-    private dispatcher: WebsocketDispatcherService
+    private messageRepo: Repository<ChatRoomMessage>
   ) {}
 
   async sendMessage({
@@ -37,8 +34,6 @@ export class ChatRoomMessageService {
       timestamp: new Date(),
     })
     const sent = await this.messageRepo.save(model)
-
-    this.dispatcher.dispatch('MESSAGE_SENT', sent, (id) => id !== senderId)
 
     return instanceToPlain(sent) as IChatRoomMessage
   }
