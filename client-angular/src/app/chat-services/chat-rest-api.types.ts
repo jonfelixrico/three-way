@@ -3,6 +3,7 @@ export interface ChatMessage {
   id: string
   timestamp: Date
   senderId: string
+  chatRoomId: string
 }
 
 export interface Chat {
