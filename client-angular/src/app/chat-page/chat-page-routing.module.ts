@@ -16,6 +16,7 @@ const routes: Routes = [
       },
     ],
 
+    // TODO check if there's a more appropriate way to do this
     canActivate: [
       async () => {
         const realtime = inject(RealtimeService)
