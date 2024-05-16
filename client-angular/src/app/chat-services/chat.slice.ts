@@ -6,6 +6,7 @@ import { produce } from 'immer'
 
 interface ChatHistory {
   messages: ChatMessage[]
+  earliestTimestamp: Date
 }
 
 export interface ChatSliceModel {
@@ -34,16 +35,38 @@ export class ChatSlice {
   ) {
     ctx.setState(
       produce((draft) => {
-        let chat = draft.chatHistories[chatId]
-        if (!chat) {
-          chat = {
-            messages: [],
-          }
-
-          draft.chatHistories[chatId] = chat
+        const history = draft.chatHistories[chatId]
+        if (!history) {
+          return
         }
 
-        chat.messages.unshift(...messages)
+        history.messages.unshift(...messages)
+      })
+    )
+  }
+
+  @Action(ChatActions.AddHistoricalMessages)
+  addHistoricalMessages(
+    ctx: StateContext<ChatSliceModel>,
+    { messages, chatId }: ChatActions.AddHistoricalMessages
+  ) {
+    ctx.setState(
+      produce((draft) => {
+        let history = draft.chatHistories[chatId]
+        if (!history) {
+          history = {
+            messages: [],
+            earliestTimestamp: new Date(),
+          }
+        }
+
+        history.messages.push(...messages)
+        history.earliestTimestamp = new Date(
+          Math.min(
+            history.earliestTimestamp.getTime(),
+            ...messages.map((chat) => new Date(chat.timestamp).getTime())
+          )
+        )
       })
     )
   }
