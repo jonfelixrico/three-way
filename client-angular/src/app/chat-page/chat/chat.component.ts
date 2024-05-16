@@ -1,5 +1,4 @@
-import { Component, Signal, afterNextRender } from '@angular/core'
-import { ChatMessage } from '@/chat-services/chat-rest-api.types'
+import { Component, Input, afterNextRender } from '@angular/core'
 import { IdentityService } from '@/user/identity.service'
 import { MessageService } from '@/chat-services/message.service'
 import { Select, Store } from '@ngxs/store'
@@ -8,7 +7,6 @@ import { Observable, map } from 'rxjs'
 import { ChatSliceModel } from '@/chat-services/chat.slice'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { RealtimeService } from '@/realtime/realtime.service'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-chat',
@@ -18,7 +16,18 @@ import { ActivatedRoute } from '@angular/router'
 export class ChatComponent {
   @Select() chat$!: Observable<ChatSliceModel>
 
-  messages: Signal<ChatMessage[]>
+  @Input() chatId!: string
+
+  private history$ = this.chat$.pipe(
+    map((state) => state.chatHistories[this.chatId])
+  )
+
+  messages = toSignal(
+    this.history$.pipe(map((history) => history?.messages ?? [])),
+    {
+      initialValue: [],
+    }
+  )
 
   content: string = ''
 
@@ -26,26 +35,12 @@ export class ChatComponent {
     private identitySvc: IdentityService,
     private messageSvc: MessageService,
     private store: Store,
-    private realtime: RealtimeService,
-    private route: ActivatedRoute
+    private realtime: RealtimeService
   ) {
-    this.messages = toSignal(
-      this.chat$.pipe(
-        map((chat) => chat.chatHistories[this.chatId]?.messages ?? [])
-      ),
-      {
-        initialValue: [],
-      }
-    )
-
     afterNextRender(() => {
       this.loadMessages()
       this.connectWs()
     })
-  }
-
-  get chatId() {
-    return this.route.snapshot.paramMap.get('chatId')!
   }
 
   get userId() {
@@ -65,8 +60,17 @@ export class ChatComponent {
   }
 
   private async loadMessages() {
+    const alreadyLoaded = this.store.selectSnapshot(
+      ({ chat }: { chat: ChatSliceModel }) => !!chat.chatHistories[this.chatId]
+    )
+    if (alreadyLoaded) {
+      return
+    }
+
     const messages = await this.messageSvc.getMessages(this.chatId)
-    this.store.dispatch(new ChatActions.AddMessages(this.chatId, messages))
+    this.store.dispatch(
+      new ChatActions.AddHistoricalMessages(this.chatId, messages)
+    )
   }
 
   private async connectWs() {
