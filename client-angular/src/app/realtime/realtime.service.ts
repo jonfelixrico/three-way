@@ -44,6 +44,8 @@ export class RealtimeService {
       this.events$.next(arg)
     })
 
+    console.log('WS connected')
+
     return socket
   }
 
