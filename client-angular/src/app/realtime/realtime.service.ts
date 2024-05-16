@@ -4,7 +4,7 @@ import { Socket, io } from 'socket.io-client'
 
 @Injectable()
 export class RealtimeService {
-  socket: Socket | null = null
+  _socket: Socket | null = null
 
   constructor(private identitySvc: IdentityService) {}
 
@@ -31,10 +31,14 @@ export class RealtimeService {
   }
 
   async connect() {
-    if (!this.socket) {
-      this.socket = await this.connectHelper()
+    if (!this._socket) {
+      this._socket = await this.connectHelper()
     }
 
-    return this.socket
+    return this._socket
+  }
+
+  get socket() {
+    return this._socket
   }
 }
