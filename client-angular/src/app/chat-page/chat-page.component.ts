@@ -10,10 +10,10 @@ import { RealtimeService } from '@/realtime/realtime.service'
 
 @Component({
   selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
+  templateUrl: './chat-page.component.html',
+  styleUrl: './chat-page.component.scss',
 })
-export class ChatComponent {
+export class ChatPageComponent {
   @Select() chat$!: Observable<ChatSliceModel>
 
   @Input() chatId!: string

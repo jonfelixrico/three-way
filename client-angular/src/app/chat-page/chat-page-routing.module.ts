@@ -1,6 +1,6 @@
 import { NgModule, inject } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { ChatComponent } from './chat/chat.component'
+import { ChatPageComponent } from './chat-page.component'
 import { ChatLayoutComponent } from '@/chat-page/chat-layout/chat-layout.component'
 import { RealtimeService } from '@/realtime/realtime.service'
 import { RealtimeModule } from '@/realtime/realtime.module'
@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: ':chatId',
-        component: ChatComponent,
+        component: ChatPageComponent,
       },
     ],
 
