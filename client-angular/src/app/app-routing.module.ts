@@ -51,14 +51,6 @@ const routes: Routes = [
                 (m) => m.ChatRouteGroupModule
               ),
           },
-
-          // {
-          //   path: 'chat',
-          //   loadChildren: () =>
-          //     import('./chat-page/chat-page.module').then(
-          //       (m) => m.ChatPageModule
-          //     ),
-          // },
         ],
       },
     ],
