@@ -9,7 +9,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog'
 })
 export class CreateDialogContentComponent {
   form = new FormGroup({
-    name: new FormControl('name', {
+    name: new FormControl('', {
       validators: [Validators.required],
     }),
   })
