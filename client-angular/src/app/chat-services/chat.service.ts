@@ -19,4 +19,15 @@ export class ChatService {
       this.store.dispatch(new ChatActions.Set(chat))
     }
   }
+
+  async createChat({ name }: { name: string }) {
+    const chat = await firstValueFrom(
+      this.http.post<Chat>('/api/chat', {
+        name,
+      })
+    )
+    this.store.dispatch(new ChatActions.Set(chat))
+
+    return chat
+  }
 }
