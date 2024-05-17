@@ -9,19 +9,12 @@ import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { UserModule } from '@/user/user.module'
 import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
-import { ChatLayoutComponent } from './chat-layout/chat-layout.component'
-import { ChatListComponent } from './chat-list/chat-list.component'
 import { DividerModule } from 'primeng/divider'
 import { ButtonModule } from 'primeng/button'
 import { TranslocoModule } from '@jsverse/transloco'
 
 @NgModule({
-  declarations: [
-    ChatComponent,
-    ChatMessageComponent,
-    ChatLayoutComponent,
-    ChatListComponent,
-  ],
+  declarations: [ChatComponent, ChatMessageComponent],
   imports: [
     CommonModule,
     ChatPageRoutingModule,
