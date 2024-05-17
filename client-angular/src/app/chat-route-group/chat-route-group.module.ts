@@ -12,7 +12,8 @@ import { EmptyPageComponent } from './empty-page/empty-page.component'
 import { CreateDialogContentComponent } from './create-dialog-content/create-dialog-content.component'
 import { ReactiveFormsModule } from '@angular/forms'
 import { CreateChatService } from '@/chat-route-group/service.create-chat/create-chat.service'
-import { DynamicDialogModule } from 'primeng/dynamicdialog'
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
+import { InputTextModule } from 'primeng/inputtext'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog'
     ChatServicesModule,
     ReactiveFormsModule,
     DynamicDialogModule,
+    InputTextModule,
   ],
-  providers: [CreateChatService],
+  providers: [CreateChatService, DialogService],
 })
 export class ChatRouteGroupModule {}

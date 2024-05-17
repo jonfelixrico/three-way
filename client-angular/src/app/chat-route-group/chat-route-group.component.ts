@@ -1,3 +1,4 @@
+import { CreateChatService } from '@/chat-route-group/service.create-chat/create-chat.service'
 import { RealtimeService } from '@/realtime/realtime.service'
 import { IdentityService } from '@/user/identity.service'
 import { Component } from '@angular/core'
@@ -12,7 +13,8 @@ export class ChatRouteGroupComponent {
   constructor(
     private identitySvc: IdentityService,
     private router: Router,
-    private realtimeSvc: RealtimeService
+    private realtimeSvc: RealtimeService,
+    private createSvc: CreateChatService
   ) {}
 
   get username() {
@@ -24,5 +26,9 @@ export class ChatRouteGroupComponent {
     this.identitySvc.clearSession()
     this.router.navigateByUrl('/login')
     this.realtimeSvc.disconnect()
+  }
+
+  openCreateDialog() {
+    return this.createSvc.openCreateDialog()
   }
 }
