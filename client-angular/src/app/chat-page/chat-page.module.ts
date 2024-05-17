@@ -10,9 +10,10 @@ import { UserModule } from '@/user/user.module'
 import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { ButtonModule } from 'primeng/button'
+import { MenuButtonComponent } from './menu-button/menu-button.component'
 
 @NgModule({
-  declarations: [ChatPageComponent, ChatMessageComponent],
+  declarations: [ChatPageComponent, ChatMessageComponent, MenuButtonComponent],
   imports: [
     CommonModule,
     ChatPageRoutingModule,
