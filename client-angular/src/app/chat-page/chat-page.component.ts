@@ -18,9 +18,11 @@ export class ChatPageComponent {
 
   @Input() chatId!: string
 
-  private history$ = this.chat$.pipe(
+  private readonly history$ = this.chat$.pipe(
     map((state) => state.chatHistories[this.chatId])
   )
+
+  readonly data$ = this.chat$.pipe(map((state) => state.chats[this.chatId]))
 
   messages = toSignal(
     this.history$.pipe(map((history) => history?.messages ?? [])),
