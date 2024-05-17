@@ -9,12 +9,14 @@ import { ChatListComponent } from '@/chat-route-group/chat-list/chat-list.compon
 import { TranslocoModule } from '@jsverse/transloco'
 import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { EmptyPageComponent } from './empty-page/empty-page.component'
+import { CreateDialogContentComponent } from './create-dialog-content/create-dialog-content.component'
 
 @NgModule({
   declarations: [
     ChatRouteGroupComponent,
     ChatListComponent,
     EmptyPageComponent,
+    CreateDialogContentComponent,
   ],
   imports: [
     CommonModule,
