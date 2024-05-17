@@ -54,6 +54,13 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'chat-route-group',
+    loadChildren: () =>
+      import('./chat-route-group/chat-route-group.module').then(
+        (m) => m.ChatRouteGroupModule
+      ),
+  },
 ]
 
 @NgModule({
