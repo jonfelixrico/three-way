@@ -8,6 +8,13 @@ const routes: Routes = [
   {
     path: '',
     component: ChatRouteGroupComponent,
+    children: [
+      {
+        path: ':chatId',
+        loadChildren: () =>
+          import('@/chat-page/chat-page.module').then((m) => m.ChatPageModule),
+      },
+    ],
 
     // TODO check if there's a more appropriate way to do this
     canActivate: [
@@ -15,14 +22,6 @@ const routes: Routes = [
         const realtime = inject(RealtimeService)
         await realtime.connect()
         return true
-      },
-    ],
-
-    children: [
-      {
-        path: ':chatId',
-        loadChildren: () =>
-          import('@/chat-page/chat-page.module').then((m) => m.ChatPageModule),
       },
     ],
   },
