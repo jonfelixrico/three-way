@@ -9,6 +9,7 @@ import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { UserModule } from '@/user/user.module'
 import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
+import { ButtonModule } from 'primeng/button'
 
 @NgModule({
   declarations: [ChatPageComponent, ChatMessageComponent],
@@ -23,6 +24,7 @@ import { RealtimeModule } from '@/realtime/realtime.module'
     NgIf,
     NgClass,
     RealtimeModule,
+    ButtonModule,
   ],
 })
 export class ChatPageModule {}

@@ -1,6 +1,10 @@
 <div class="h-full flex flex-column p-card border-round-xl overflow-hidden">
-  <div class="shadow-1 p-3">
+  <div
+    class="shadow-1 p-3 flex flex-row justify-content-between align-items-center"
+  >
     <div class="text-xl font-medium">{{ (data$ | async)?.name }}</div>
+
+    <p-button icon="pi pi-ellipsis-v" rounded text severity="secondary" />
   </div>
   <!-- flex-column reverse is needed to make the scroll start at the end, and stick to the end if the user submits new messages -->
   <div class="col overflow-auto flex flex-column-reverse">
