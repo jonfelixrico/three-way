@@ -11,6 +11,8 @@ import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { EmptyPageComponent } from './empty-page/empty-page.component'
 import { CreateDialogContentComponent } from './create-dialog-content/create-dialog-content.component'
 import { ReactiveFormsModule } from '@angular/forms'
+import { CreateChatService } from '@/chat-route-group/service.create-chat/create-chat.service'
+import { DynamicDialogModule } from 'primeng/dynamicdialog'
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { ReactiveFormsModule } from '@angular/forms'
     TranslocoModule,
     ChatServicesModule,
     ReactiveFormsModule,
+    DynamicDialogModule,
   ],
+  providers: [CreateChatService],
 })
 export class ChatRouteGroupModule {}
