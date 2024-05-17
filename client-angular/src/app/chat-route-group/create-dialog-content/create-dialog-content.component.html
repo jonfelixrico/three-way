@@ -1,4 +1,6 @@
-<form [formGroup]="form" class="flex flex-column">
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-column">
+  <!-- TODO i18nize these -->
+
   <div>
     <label for="name">Name</label>
     <input type="text" pInputText formControlName="name" />
