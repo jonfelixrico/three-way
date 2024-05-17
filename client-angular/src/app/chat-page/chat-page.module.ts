@@ -9,9 +9,6 @@ import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { UserModule } from '@/user/user.module'
 import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
-import { DividerModule } from 'primeng/divider'
-import { ButtonModule } from 'primeng/button'
-import { TranslocoModule } from '@jsverse/transloco'
 
 @NgModule({
   declarations: [ChatComponent, ChatMessageComponent],
@@ -26,9 +23,6 @@ import { TranslocoModule } from '@jsverse/transloco'
     NgIf,
     NgClass,
     RealtimeModule,
-    DividerModule,
-    ButtonModule,
-    TranslocoModule,
   ],
 })
 export class ChatPageModule {}
