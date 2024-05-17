@@ -26,7 +26,8 @@
   },
 
   "chat": {
-    "chat": "Chat"
+    "chat": "Chat",
+    "emptyMessage": "Please select a chat"
   },
 
   "common": {

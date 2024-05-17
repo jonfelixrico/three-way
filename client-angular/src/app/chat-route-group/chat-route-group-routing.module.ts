@@ -3,12 +3,17 @@ import { RouterModule, Routes } from '@angular/router'
 import { ChatRouteGroupComponent } from './chat-route-group.component'
 import { RealtimeService } from '@/realtime/realtime.service'
 import { RealtimeModule } from '@/realtime/realtime.module'
+import { EmptyPageComponent } from '@/chat-route-group/empty-page/empty-page.component'
 
 const routes: Routes = [
   {
     path: '',
     component: ChatRouteGroupComponent,
     children: [
+      {
+        path: '',
+        component: EmptyPageComponent,
+      },
       {
         path: ':chatId',
         loadChildren: () =>

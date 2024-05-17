@@ -8,9 +8,14 @@ import { DividerModule } from 'primeng/divider'
 import { ChatListComponent } from '@/chat-route-group/chat-list/chat-list.component'
 import { TranslocoModule } from '@jsverse/transloco'
 import { ChatServicesModule } from '@/chat-services/chat-services.module'
+import { EmptyPageComponent } from './empty-page/empty-page.component'
 
 @NgModule({
-  declarations: [ChatRouteGroupComponent, ChatListComponent],
+  declarations: [
+    ChatRouteGroupComponent,
+    ChatListComponent,
+    EmptyPageComponent,
+  ],
   imports: [
     CommonModule,
     ChatRouteGroupRoutingModule,
