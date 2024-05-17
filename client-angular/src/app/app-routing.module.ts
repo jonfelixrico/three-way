@@ -43,23 +43,25 @@ const routes: Routes = [
             redirectTo: 'chat',
             pathMatch: 'full',
           },
+
           {
             path: 'chat',
             loadChildren: () =>
-              import('./chat-page/chat-page.module').then(
-                (m) => m.ChatPageModule
+              import('./chat-route-group/chat-route-group.module').then(
+                (m) => m.ChatRouteGroupModule
               ),
           },
+
+          // {
+          //   path: 'chat',
+          //   loadChildren: () =>
+          //     import('./chat-page/chat-page.module').then(
+          //       (m) => m.ChatPageModule
+          //     ),
+          // },
         ],
       },
     ],
-  },
-  {
-    path: 'chat-route-group',
-    loadChildren: () =>
-      import('./chat-route-group/chat-route-group.module').then(
-        (m) => m.ChatRouteGroupModule
-      ),
   },
 ]
 
