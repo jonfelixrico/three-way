@@ -66,7 +66,7 @@ export class ChatRoomController {
 
   @Post()
   async createChat(@UserId() userId: string, @Body('name') name: string) {
-    return this.chatSvc.create({
+    return await this.chatSvc.create({
       createdBy: userId,
       name,
     })
