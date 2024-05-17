@@ -17,7 +17,11 @@ export class CreateChatService {
     })
 
     ref.onClose.subscribe((chat: { name: string }) => {
-      // TODO do something about the chat
+      if (!chat) {
+        return
+      }
+
+      this.chatSvc.createChat(chat)
     })
   }
 }
