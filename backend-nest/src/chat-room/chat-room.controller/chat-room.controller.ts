@@ -47,29 +47,47 @@ export class ChatRoomController {
       senderId: userId,
     })
 
-    /*
-     * This is to reflect the chat message in real time to other chat members
-     * We're doing this asynchronously as to not delay the response to the client further
-     */
-    this.chatSvc.listMembers(chatId).then((members) => {
-      const ids = new Set(members.map((m) => m.id))
-      this.dispatcher.dispatch(
-        'MESSAGE_SENT',
-        sent,
-        // The sender is expected to be a member of the room, but we're not relaying back to them to not need a FE handling to ignore self-sent messages from the WS
-        (id) => id !== userId && ids.has(id)
-      )
-    })
+    // Intended to be ran asynchronously to not block responding
+    this.broadcastToRoomWs(
+      {
+        chatId,
+        senderId: userId,
+      },
+      'MESSAGE_SENT',
+      sent
+    )
 
     return sent
   }
 
   @Post()
   async createChat(@UserId() userId: string, @Body('name') name: string) {
-    return this.chatSvc.create({
+    return await this.chatSvc.create({
       createdBy: userId,
       name,
     })
+  }
+
+  private async broadcastToRoomWs(
+    {
+      chatId,
+      senderId,
+    }: {
+      chatId: string
+      senderId: string
+    },
+    eventName: string,
+    payload: unknown
+  ) {
+    const members = await this.chatSvc.listMembers(chatId)
+
+    const ids = new Set(members.map((m) => m.id))
+    this.dispatcher.dispatch(
+      eventName,
+      payload,
+      // The sender is expected to be a member of the room, but we're not relaying back to them to not need a FE handling to ignore self-sent messages from the WS
+      (id) => id !== senderId && ids.has(id)
+    )
   }
 
   @Post(':id/user')
@@ -88,6 +106,18 @@ export class ChatRoomController {
       userId: addedUserId,
       chatId,
     })
+
+    // Intended to be ran asynchronously to not block responding
+    this.broadcastToRoomWs(
+      {
+        chatId,
+        senderId: userId,
+      },
+      'CHAT_ADD_USER',
+      {
+        userId: addedUserId,
+      }
+    )
   }
 
   @Get(':id/user')
