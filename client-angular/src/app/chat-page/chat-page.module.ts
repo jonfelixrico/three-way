@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { ButtonModule } from 'primeng/button'
 import { MenuButtonComponent } from './menu-button/menu-button.component'
+import { MenuModule } from 'primeng/menu'
 
 @NgModule({
   declarations: [ChatPageComponent, ChatMessageComponent, MenuButtonComponent],
@@ -26,6 +27,7 @@ import { MenuButtonComponent } from './menu-button/menu-button.component'
     NgClass,
     RealtimeModule,
     ButtonModule,
+    MenuModule,
   ],
 })
 export class ChatPageModule {}
