@@ -10,6 +10,7 @@ import { TranslocoModule } from '@jsverse/transloco'
 import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { EmptyPageComponent } from './empty-page/empty-page.component'
 import { CreateDialogContentComponent } from './create-dialog-content/create-dialog-content.component'
+import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CreateDialogContentComponent } from './create-dialog-content/create-dia
     DividerModule,
     TranslocoModule,
     ChatServicesModule,
+    ReactiveFormsModule,
   ],
 })
 export class ChatRouteGroupModule {}
