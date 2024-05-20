@@ -12,6 +12,7 @@ import { RealtimeModule } from '@/realtime/realtime.module'
 import { ButtonModule } from 'primeng/button'
 import { MenuButtonComponent } from './menu-button/menu-button.component'
 import { MenuModule } from 'primeng/menu'
+import { AddUserService } from '@/chat-page/service.add-user/add-user.service'
 
 @NgModule({
   declarations: [ChatPageComponent, ChatMessageComponent, MenuButtonComponent],
@@ -29,5 +30,6 @@ import { MenuModule } from 'primeng/menu'
     ButtonModule,
     MenuModule,
   ],
+  providers: [AddUserService],
 })
 export class ChatPageModule {}
