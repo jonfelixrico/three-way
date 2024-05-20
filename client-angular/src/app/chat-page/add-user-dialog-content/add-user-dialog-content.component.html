@@ -4,11 +4,11 @@
   <input
     type="text"
     pInputText
-    [(ngModel)]="searchTerm"
+    [(ngModel)]="searchTerm$.value"
     placeholder="Username"
   />
 
-  @if (searchTerm.length === 0) {
+  @if (searchTerm$.value.length === 0) {
     <div class="col">
       <!-- TODO show toAdd list -->
     </div>
