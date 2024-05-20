@@ -21,12 +21,11 @@
       }
     </div>
   } @else if (searchResults.length === 0) {
-    <div class="col">
-      <!-- TODO show notice that there is no match -->
+    <div class="col flex flex-column justify-content-center align-items-center">
+      No Results
     </div>
   } @else {
     <div class="col">
-      <!-- TODO show search results -->
       @for (user of searchResults; track user.id) {
         <div class="flex flex-row align-items-center justify-content-center">
           <div>
