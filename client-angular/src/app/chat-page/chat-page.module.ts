@@ -7,7 +7,7 @@ import { ChatMessageComponent } from './chat-message/chat-message.component'
 import { InputTextModule } from 'primeng/inputtext'
 import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { UserModule } from '@/user/user.module'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { ButtonModule } from 'primeng/button'
 import { MenuButtonComponent } from './menu-button/menu-button.component'
@@ -35,6 +35,7 @@ import { AddUserDialogContentComponent } from './add-user-dialog-content/add-use
     RealtimeModule,
     ButtonModule,
     MenuModule,
+    ReactiveFormsModule,
   ],
   providers: [AddUserService],
 })
