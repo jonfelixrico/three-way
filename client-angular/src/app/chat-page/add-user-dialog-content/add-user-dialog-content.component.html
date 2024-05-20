@@ -4,11 +4,11 @@
   <input
     type="text"
     pInputText
-    [(ngModel)]="searchTerm$.value"
+    [(ngModel)]="searchTerm"
     placeholder="Username"
   />
 
-  @if (searchTerm$.value.length === 0) {
+  @if (searchTerm.length === 0) {
     <div class="col">
       @for (user of toAdd(); track user.id) {
         <div class="flex flex-row align-items-center justify-content-center">

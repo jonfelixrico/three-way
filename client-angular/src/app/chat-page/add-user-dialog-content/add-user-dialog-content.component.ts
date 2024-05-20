@@ -17,6 +17,13 @@ import { BehaviorSubject, Subscription, debounceTime, switchMap } from 'rxjs'
 })
 export class AddUserDialogContentComponent implements OnDestroy {
   searchTerm$ = new BehaviorSubject('')
+  get searchTerm() {
+    return this.searchTerm$.value
+  }
+  set searchTerm(value: string) {
+    this.searchTerm$.next(value)
+  }
+
   searchResults: User[] = []
   private searchSub: Subscription
 
