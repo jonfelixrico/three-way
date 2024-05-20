@@ -11,7 +11,7 @@
   @if (searchTerm.length === 0) {
     <div class="col">
       @for (user of toAdd(); track user.id) {
-        <div class="flex flex-row align-items-center justify-content-center">
+        <div class="flex flex-row align-items-center justify-content-between">
           <div>
             {{ user.username }}
           </div>
@@ -27,7 +27,7 @@
   } @else {
     <div class="col">
       @for (user of searchResults; track user.id) {
-        <div class="flex flex-row align-items-center justify-content-center">
+        <div class="flex flex-row align-items-center justify-content-between">
           <div>
             {{ user.username }}
           </div>
