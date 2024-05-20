@@ -1,6 +1,5 @@
 import { AddUserDialogContentComponent } from '@/chat-page/add-user-dialog-content/add-user-dialog-content.component'
 import { ChatService } from '@/chat-services/chat.service'
-import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { DialogService } from 'primeng/dynamicdialog'
 
@@ -8,8 +7,7 @@ import { DialogService } from 'primeng/dynamicdialog'
 export class AddUserService {
   constructor(
     private dialogSvc: DialogService,
-    private chatSvc: ChatService,
-    private http: HttpClient
+    private chatSvc: ChatService
   ) {}
 
   openDialog(chatId: string) {
