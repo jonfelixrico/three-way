@@ -23,9 +23,13 @@
               {{ user.username }}
             </div>
 
-            <p-button (click)="removeUser(user.id)" size="small"
-              >Remove</p-button
-            >
+            <p-button
+              (click)="removeUser(user.id)"
+              size="small"
+              icon="pi pi-times"
+              severity="danger"
+              rounded
+            />
           </div>
         }
       </div>
@@ -49,9 +53,9 @@
               [disabled]="alreadyAdded().has(user.id)"
               (click)="addUser(user)"
               size="small"
-            >
-              Add
-            </p-button>
+              icon="pi pi-plus"
+              rounded
+            />
           </div>
         }
       </div>
