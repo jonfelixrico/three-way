@@ -49,13 +49,22 @@
               {{ user.username }}
             </div>
 
-            <p-button
-              [disabled]="alreadyAdded().has(user.id)"
-              (click)="addUser(user)"
-              size="small"
-              icon="pi pi-plus"
-              rounded
-            />
+            @if (alreadyAdded().has(user.id)) {
+              <p-button
+                (click)="removeUser(user.id)"
+                size="small"
+                icon="pi pi-times"
+                severity="danger"
+                rounded
+              />
+            } @else {
+              <p-button
+                (click)="addUser(user)"
+                size="small"
+                icon="pi pi-plus"
+                rounded
+              />
+            }
           </div>
         }
       </div>
