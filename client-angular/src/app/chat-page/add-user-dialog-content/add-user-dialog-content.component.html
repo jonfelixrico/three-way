@@ -39,7 +39,12 @@
   }
 
   <div class="flex flex-row justify-content-end">
-    <button pButton type="submit" [disabled]="toAdd.length === 0">
+    <button
+      pButton
+      type="submit"
+      [disabled]="toAdd.length === 0"
+      (click)="submit()"
+    >
       Submit
     </button>
   </div>
