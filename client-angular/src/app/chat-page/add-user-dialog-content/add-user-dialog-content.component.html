@@ -10,7 +10,11 @@
 
   @if (searchTerm.length === 0) {
     <div class="col">
-      <!-- TODO show current lsit -->
+      <!-- TODO show toAdd list -->
+    </div>
+  } @else if (searchResults.length === 0) {
+    <div class="col">
+      <!-- TODO show notice that there is no match -->
     </div>
   } @else {
     <div class="col">
