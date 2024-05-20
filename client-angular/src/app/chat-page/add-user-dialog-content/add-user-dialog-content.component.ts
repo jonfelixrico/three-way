@@ -1,6 +1,12 @@
 import { UserService } from '@/user/user.service'
 import { User } from '@/user/user.types'
-import { Component, OnDestroy, Signal, computed, signal } from '@angular/core'
+import {
+  Component,
+  OnDestroy,
+  WritableSignal,
+  computed,
+  signal,
+} from '@angular/core'
 import { DynamicDialogRef } from 'primeng/dynamicdialog'
 import { BehaviorSubject, Subscription, debounceTime, switchMap } from 'rxjs'
 
@@ -14,7 +20,7 @@ export class AddUserDialogContentComponent implements OnDestroy {
   searchResults: User[] = []
   private searchSub: Subscription
 
-  toAdd: Signal<User[]> = signal([])
+  toAdd: WritableSignal<User[]> = signal([])
   alreadyAdded = computed(() => new Set(this.toAdd().map(({ id }) => id)))
 
   constructor(
@@ -37,5 +43,10 @@ export class AddUserDialogContentComponent implements OnDestroy {
 
   submit() {
     this.ref.close({ userIds: this.toAdd().map(({ id }) => id) })
+  }
+
+  removeUser(userId: string) {
+    const removed = this.toAdd().filter(({ id }) => id !== userId)
+    this.toAdd.set(removed)
   }
 }

@@ -10,7 +10,15 @@
 
   @if (searchTerm$.value.length === 0) {
     <div class="col">
-      <!-- TODO show toAdd list -->
+      @for (user of toAdd(); track user.id) {
+        <div class="flex flex-row align-items-center justify-content-center">
+          <div>
+            {{ user.username }}
+          </div>
+
+          <p-button (click)="removeUser(user.id)">Remove</p-button>
+        </div>
+      }
     </div>
   } @else if (searchResults.length === 0) {
     <div class="col">
