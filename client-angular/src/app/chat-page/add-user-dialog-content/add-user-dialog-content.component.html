@@ -9,37 +9,53 @@
   />
 
   @if (searchTerm.length === 0) {
-    <div class="col">
-      @for (user of toAdd(); track user.id) {
-        <div class="flex flex-row align-items-center justify-content-between">
-          <div>
-            {{ user.username }}
-          </div>
+    @if (toAdd().length === 0) {
+      <div
+        class="col flex flex-column justify-content-center align-items-center"
+      >
+        Add a user
+      </div>
+    } @else {
+      <div class="col flex flex-column row-gap-1">
+        @for (user of toAdd(); track user.id) {
+          <div class="flex flex-row align-items-center justify-content-between">
+            <div>
+              {{ user.username }}
+            </div>
 
-          <p-button (click)="removeUser(user.id)">Remove</p-button>
-        </div>
-      }
-    </div>
-  } @else if (searchResults.length === 0) {
-    <div class="col flex flex-column justify-content-center align-items-center">
-      No Results
-    </div>
+            <p-button (click)="removeUser(user.id)" size="small"
+              >Remove</p-button
+            >
+          </div>
+        }
+      </div>
+    }
   } @else {
-    <div class="col">
-      @for (user of searchResults; track user.id) {
-        <div class="flex flex-row align-items-center justify-content-between">
-          <div>
-            {{ user.username }}
-          </div>
+    @if (searchResults.length === 0) {
+      <div
+        class="col flex flex-column justify-content-center align-items-center"
+      >
+        No Results
+      </div>
+    } @else {
+      <div class="col flex flex-column row-gap-1">
+        @for (user of searchResults; track user.id) {
+          <div class="flex flex-row align-items-center justify-content-between">
+            <div>
+              {{ user.username }}
+            </div>
 
-          <p-button
-            [disabled]="alreadyAdded().has(user.id)"
-            (click)="addUser(user)"
-            >Add</p-button
-          >
-        </div>
-      }
-    </div>
+            <p-button
+              [disabled]="alreadyAdded().has(user.id)"
+              (click)="addUser(user)"
+              size="small"
+            >
+              Add
+            </p-button>
+          </div>
+        }
+      </div>
+    }
   }
 
   <div class="flex flex-row justify-content-end">
