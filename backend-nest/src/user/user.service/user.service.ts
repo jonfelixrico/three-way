@@ -85,7 +85,7 @@ export class UserService {
     return instanceToPlain(user) as IUser
   }
 
-  async findByUsername(username: string): Promise<IUser[]> {
+  async listByUsername(username: string): Promise<IUser[]> {
     const users = await this.userDb.find({
       where: {
         username: Like(`${username}%`),
