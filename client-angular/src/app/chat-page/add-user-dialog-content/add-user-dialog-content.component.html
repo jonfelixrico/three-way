@@ -1,10 +1,26 @@
 <div class="flex flex-column row-gap-3">
   <!-- TODO i18nize these -->
 
-  <div class="flex flex-column row-gap-1">
-    <label for="name">Username</label>
-    <input type="text" pInputText [(ngModel)]="search" />
-  </div>
+  <input
+    type="text"
+    pInputText
+    [(ngModel)]="searchTerm"
+    placeholder="Username"
+  />
 
-  <button pButton type="submit" class="justify-content-center">Submit</button>
+  @if (searchTerm.length === 0) {
+    <div class="col">
+      <!-- TODO show current lsit -->
+    </div>
+  } @else {
+    <div class="col">
+      <!-- TODO show search results -->
+    </div>
+  }
+
+  <div class="flex flex-row justify-content-end">
+    <button pButton type="submit" [disabled]="toAdd.length === 0">
+      Submit
+    </button>
+  </div>
 </div>

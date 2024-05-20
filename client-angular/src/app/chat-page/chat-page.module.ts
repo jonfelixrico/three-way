@@ -37,6 +37,7 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
     ButtonModule,
     MenuModule,
     DynamicDialogModule,
+    NgIf,
   ],
   providers: [AddUserService, DialogService],
 })

@@ -8,7 +8,8 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog'
   styleUrl: './add-user-dialog-content.component.scss',
 })
 export class AddUserDialogContentComponent {
-  search: string = ''
+  searchTerm: string = ''
+  searchResults: User[] = []
 
   toAdd: User[] = []
 
