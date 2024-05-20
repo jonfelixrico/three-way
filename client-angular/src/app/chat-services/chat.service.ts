@@ -30,4 +30,9 @@ export class ChatService {
 
     return chat
   }
+
+  async addUserToChat(chatId: string, data: { userId: string }) {
+    await firstValueFrom(this.http.post(`/api/chat/${chatId}/user`, data))
+    // TODO fetch new participants list
+  }
 }
