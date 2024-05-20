@@ -4,7 +4,7 @@
   >
     <div class="text-xl font-medium">{{ (data$ | async)?.name }}</div>
 
-    <app-menu-button />
+    <app-menu-button [chatId]="chatId" />
   </div>
   <!-- flex-column reverse is needed to make the scroll start at the end, and stick to the end if the user submits new messages -->
   <div class="col overflow-auto flex flex-column-reverse">
