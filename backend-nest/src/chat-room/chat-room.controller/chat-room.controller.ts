@@ -91,9 +91,9 @@ export class ChatRoomController {
   }
 
   @Post(':id/user')
-  async addUserToChat(
+  async addUsersToChat(
     @UserId() userId: string,
-    @Body('userId') addedUserId: string,
+    @Body('userIds') addedUserIds: string[],
     @Param('id') chatId: string
   ) {
     const rights = await this.chatSvc.getMemberPermissions(chatId, userId)
@@ -102,8 +102,8 @@ export class ChatRoomController {
       throw new HttpException('Not part of the room', HttpStatus.FORBIDDEN)
     }
 
-    await this.chatSvc.addMember({
-      userId: addedUserId,
+    await this.chatSvc.addMembers({
+      userIds: addedUserIds,
       chatId,
     })
 
@@ -115,7 +115,7 @@ export class ChatRoomController {
       },
       'CHAT_ADD_USER',
       {
-        userId: addedUserId,
+        userIds: addedUserIds,
       }
     )
   }
