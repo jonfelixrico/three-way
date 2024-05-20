@@ -7,7 +7,7 @@ import { ChatMessageComponent } from './chat-message/chat-message.component'
 import { InputTextModule } from 'primeng/inputtext'
 import { ChatServicesModule } from '@/chat-services/chat-services.module'
 import { UserModule } from '@/user/user.module'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { ButtonModule } from 'primeng/button'
 import { MenuButtonComponent } from './menu-button/menu-button.component'
@@ -36,7 +36,6 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
     RealtimeModule,
     ButtonModule,
     MenuModule,
-    ReactiveFormsModule,
     DynamicDialogModule,
   ],
   providers: [AddUserService, DialogService],

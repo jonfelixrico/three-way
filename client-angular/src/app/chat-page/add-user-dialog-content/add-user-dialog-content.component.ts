@@ -1,5 +1,5 @@
+import { User } from '@/user/user.types'
 import { Component } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { DynamicDialogRef } from 'primeng/dynamicdialog'
 
 @Component({
@@ -8,19 +8,13 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog'
   styleUrl: './add-user-dialog-content.component.scss',
 })
 export class AddUserDialogContentComponent {
-  form = new FormGroup({
-    username: new FormControl('', {
-      validators: [Validators.required],
-    }),
-  })
+  search: string = ''
+
+  toAdd: User[] = []
 
   constructor(private ref: DynamicDialogRef) {}
 
   submit() {
-    if (!this.form.valid) {
-      return
-    }
-
-    this.ref.close(this.form.value)
+    this.ref.close({ userIds: this.toAdd.map(({ id }) => id) })
   }
 }
