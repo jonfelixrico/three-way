@@ -14,6 +14,7 @@ import { MenuButtonComponent } from './menu-button/menu-button.component'
 import { MenuModule } from 'primeng/menu'
 import { AddUserService } from '@/chat-page/service.add-user/add-user.service'
 import { AddUserDialogContentComponent } from './add-user-dialog-content/add-user-dialog-content.component'
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AddUserDialogContentComponent } from './add-user-dialog-content/add-use
     ButtonModule,
     MenuModule,
     ReactiveFormsModule,
+    DynamicDialogModule,
   ],
-  providers: [AddUserService],
+  providers: [AddUserService, DialogService],
 })
 export class ChatPageModule {}
