@@ -53,7 +53,10 @@ export class AddUserDialogContentComponent implements OnDestroy {
   }
 
   removeUser(userId: string) {
-    const removed = this.toAdd().filter(({ id }) => id !== userId)
-    this.toAdd.set(removed)
+    this.toAdd.update((userList) => userList.filter(({ id }) => id !== userId))
+  }
+
+  addUser(user: User) {
+    this.toAdd.update((userList) => [...userList, user])
   }
 }

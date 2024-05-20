@@ -32,7 +32,11 @@
             {{ user.username }}
           </div>
 
-          <p-button [disabled]="alreadyAdded().has(user.id)">Add</p-button>
+          <p-button
+            [disabled]="alreadyAdded().has(user.id)"
+            (click)="addUser(user)"
+            >Add</p-button
+          >
         </div>
       }
     </div>
