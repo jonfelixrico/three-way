@@ -19,6 +19,15 @@
   } @else {
     <div class="col">
       <!-- TODO show search results -->
+      @for (user of searchResults; track user.id) {
+        <div class="flex flex-row align-items-center justify-content-center">
+          <div>
+            {{ user.username }}
+          </div>
+
+          <p-button [disabled]="alreadyAdded().has(user.id)">Add</p-button>
+        </div>
+      }
     </div>
   }
 

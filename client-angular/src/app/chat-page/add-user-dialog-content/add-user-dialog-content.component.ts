@@ -1,5 +1,5 @@
 import { User } from '@/user/user.types'
-import { Component } from '@angular/core'
+import { Component, Signal, computed, signal } from '@angular/core'
 import { DynamicDialogRef } from 'primeng/dynamicdialog'
 
 @Component({
@@ -11,11 +11,12 @@ export class AddUserDialogContentComponent {
   searchTerm: string = ''
   searchResults: User[] = []
 
-  toAdd: User[] = []
+  toAdd: Signal<User[]> = signal([])
+  alreadyAdded = computed(() => new Set(this.toAdd().map(({ id }) => id)))
 
   constructor(private ref: DynamicDialogRef) {}
 
   submit() {
-    this.ref.close({ userIds: this.toAdd.map(({ id }) => id) })
+    this.ref.close({ userIds: this.toAdd().map(({ id }) => id) })
   }
 }
