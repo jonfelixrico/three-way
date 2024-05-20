@@ -13,9 +13,15 @@ import { ButtonModule } from 'primeng/button'
 import { MenuButtonComponent } from './menu-button/menu-button.component'
 import { MenuModule } from 'primeng/menu'
 import { AddUserService } from '@/chat-page/service.add-user/add-user.service'
+import { AddUserDialogContentComponent } from './add-user-dialog-content/add-user-dialog-content.component'
 
 @NgModule({
-  declarations: [ChatPageComponent, ChatMessageComponent, MenuButtonComponent],
+  declarations: [
+    ChatPageComponent,
+    ChatMessageComponent,
+    MenuButtonComponent,
+    AddUserDialogContentComponent,
+  ],
   imports: [
     CommonModule,
     ChatPageRoutingModule,
