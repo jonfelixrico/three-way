@@ -15,6 +15,7 @@ import { MenuModule } from 'primeng/menu'
 import { AddUserService } from '@/chat-page/service.add-user/add-user.service'
 import { AddUserDialogContentComponent } from './add-user-dialog-content/add-user-dialog-content.component'
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
+import { AddUserSearchListComponent } from './add-user-search-list/add-user-search-list.component'
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
     ChatMessageComponent,
     MenuButtonComponent,
     AddUserDialogContentComponent,
+    AddUserSearchListComponent,
   ],
   imports: [
     CommonModule,

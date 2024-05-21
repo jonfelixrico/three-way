@@ -1,0 +1,19 @@
+@for (user of listContent; track user.id) {
+  <div class="flex flex-row align-items-center justify-content-between">
+    <div>
+      {{ user.username }}
+    </div>
+
+    @if (addedIds.has(user.id)) {
+      <p-button
+        (click)="remove(user.id)"
+        size="small"
+        icon="pi pi-times"
+        severity="danger"
+        rounded
+      />
+    } @else {
+      <p-button (click)="add(user)" size="small" icon="pi pi-plus" rounded />
+    }
+  </div>
+}

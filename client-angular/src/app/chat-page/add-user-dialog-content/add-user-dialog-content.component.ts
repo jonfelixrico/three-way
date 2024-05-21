@@ -1,14 +1,9 @@
 import { UserService } from '@/user/user.service'
 import { User } from '@/user/user.types'
-import {
-  Component,
-  OnDestroy,
-  WritableSignal,
-  computed,
-  signal,
-} from '@angular/core'
+import { Component, OnDestroy, WritableSignal, signal } from '@angular/core'
+import { toObservable } from '@angular/core/rxjs-interop'
 import { DynamicDialogRef } from 'primeng/dynamicdialog'
-import { BehaviorSubject, Subscription, debounceTime, switchMap } from 'rxjs'
+import { Subscription, debounceTime, switchMap } from 'rxjs'
 
 @Component({
   selector: 'app-add-user-dialog-content',
@@ -16,25 +11,18 @@ import { BehaviorSubject, Subscription, debounceTime, switchMap } from 'rxjs'
   styleUrl: './add-user-dialog-content.component.scss',
 })
 export class AddUserDialogContentComponent implements OnDestroy {
-  searchTerm$ = new BehaviorSubject('')
-  get searchTerm() {
-    return this.searchTerm$.value
-  }
-  set searchTerm(value: string) {
-    this.searchTerm$.next(value)
-  }
+  searchTerm: WritableSignal<string> = signal('')
 
   searchResults: User[] = []
   private searchSub: Subscription
 
   toAdd: WritableSignal<User[]> = signal([])
-  alreadyAdded = computed(() => new Set(this.toAdd().map(({ id }) => id)))
 
   constructor(
     private ref: DynamicDialogRef,
     userSvc: UserService
   ) {
-    this.searchSub = this.searchTerm$
+    this.searchSub = toObservable(this.searchTerm)
       .pipe(
         debounceTime(500),
         switchMap((username) => userSvc.listByUsername$(username))
@@ -54,9 +42,5 @@ export class AddUserDialogContentComponent implements OnDestroy {
 
   removeUser(userId: string) {
     this.toAdd.update((userList) => userList.filter(({ id }) => id !== userId))
-  }
-
-  addUser(user: User) {
-    this.toAdd.update((userList) => [...userList, user])
   }
 }
