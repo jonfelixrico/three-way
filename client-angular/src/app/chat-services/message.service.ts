@@ -5,7 +5,6 @@ import { filter, firstValueFrom, map } from 'rxjs'
 import { RealtimeService } from '@/realtime/realtime.service'
 import { Store } from '@ngxs/store'
 import { ChatActions } from '@/chat-services/chat.actions'
-import { ChatSliceModel } from '@/chat-services/chat.slice'
 
 @Injectable()
 export class MessageService {
