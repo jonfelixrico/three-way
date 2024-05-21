@@ -1,5 +1,6 @@
 import { Chat } from '@/chat-services/chat-rest-api.types'
 import { ChatActions } from '@/chat-services/chat.actions'
+import { ChatSliceModel } from '@/chat-services/chat.slice'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Store } from '@ngxs/store'
@@ -11,6 +12,12 @@ export class ChatService {
     private http: HttpClient,
     private store: Store
   ) {}
+
+  private get chatSlice() {
+    return this.store.selectSnapshot(
+      (state: { chat: ChatSliceModel }) => state.chat
+    )
+  }
 
   async loadListIntoState() {
     const chats = await firstValueFrom(
@@ -45,6 +52,10 @@ export class ChatService {
   }
 
   async loadChatIntoState(chatId: string) {
+    if (this.chatSlice.chats['chatId']?.status === 'HYDRATED') {
+      return
+    }
+
     const chat = await firstValueFrom(
       this.http.get<Chat>(`/api/chat/${chatId}`)
     )

@@ -5,6 +5,7 @@ import { filter, firstValueFrom, map } from 'rxjs'
 import { RealtimeService } from '@/realtime/realtime.service'
 import { Store } from '@ngxs/store'
 import { ChatActions } from '@/chat-services/chat.actions'
+import { ChatSliceModel } from '@/chat-services/chat.slice'
 
 @Injectable()
 export class MessageService {
@@ -28,8 +29,14 @@ export class MessageService {
       })
   }
 
+  get chatSlice() {
+    return this.store.selectSnapshot(
+      (state: { chat: ChatSliceModel }) => state.chat
+    )
+  }
+
   async loadMessagesToState(chatId: string) {
-    if (history) {
+    if (this.chatSlice.chatHistories[chatId]) {
       return
     }
 
