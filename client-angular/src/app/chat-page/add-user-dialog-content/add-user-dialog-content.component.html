@@ -4,6 +4,7 @@
     pInputText
     [(ngModel)]="searchTerm"
     [placeholder]="t('chat.addUserDialog.placeholder')"
+    autocomplete="off"
   />
 
   @if (searchTerm().length === 0) {
