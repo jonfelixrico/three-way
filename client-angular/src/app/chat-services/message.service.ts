@@ -5,13 +5,14 @@ import { filter, firstValueFrom, map } from 'rxjs'
 import { RealtimeService } from '@/realtime/realtime.service'
 import { Store } from '@ngxs/store'
 import { ChatActions } from '@/chat-services/chat.actions'
+import { ChatSliceModel } from '@/chat-services/chat.slice'
 
 @Injectable()
 export class MessageService {
   constructor(
     private http: HttpClient,
     realtimeSvc: RealtimeService,
-    store: Store
+    private store: Store
   ) {
     realtimeSvc
       .getEvents$<{
@@ -28,10 +29,20 @@ export class MessageService {
       })
   }
 
-  async getMessages(chatId: string) {
-    return await firstValueFrom(
+  async loadMessagesToState(chatId: string) {
+    const history = this.store.selectSnapshot(
+      (state: { chat: ChatSliceModel }) => state.chat.chatHistories?.[chatId]
+    )
+
+    if (history) {
+      return
+    }
+
+    const messages = await firstValueFrom(
       this.http.get<ChatMessage[]>(`/api/chat/${chatId}/message`)
     )
+
+    this.store.dispatch(new ChatActions.AddHistoricalMessages(chatId, messages))
   }
 
   async sendMessage(chatId: string, content: string): Promise<ChatMessage> {
