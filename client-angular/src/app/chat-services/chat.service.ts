@@ -58,8 +58,8 @@ export class ChatService {
     }>
   ) {
     if (
-      options?.force &&
-      this.chatSlice.chats['chatId']?.status === 'HYDRATED'
+      this.chatSlice.chats[chatId]?.status === 'HYDRATED' &&
+      !options?.force
     ) {
       return
     }
