@@ -6,36 +6,34 @@
     [placeholder]="t('chat.addUserDialog.placeholder')"
   />
 
-  <div class="col overflow-auto">
-    @if (searchTerm().length === 0) {
-      @if (addedUsers().length === 0) {
-        <div
-          class="h-full w-full flex flex-column justify-content-center align-items-center"
-        >
-          {{ t('chat.addUserDialog.emptyAddedHint') }}
-        </div>
-      } @else {
-        <app-added-user-list
-          class="h-full w-full flex flex-column row-gap-1"
-          [(addedUsers)]="addedUsers"
-        />
-      }
+  @if (searchTerm().length === 0) {
+    @if (addedUsers().length === 0) {
+      <div
+        class="col flex flex-column justify-content-center align-items-center"
+      >
+        {{ t('chat.addUserDialog.emptyAddedHint') }}
+      </div>
     } @else {
-      @if (searchResults.length === 0) {
-        <div
-          class="h-full w-full flex flex-column justify-content-center align-items-center"
-        >
-          {{ t('chat.addUserDialog.emptySearchResultsHint') }}
-        </div>
-      } @else {
-        <app-add-user-search-list
-          [(addedUsers)]="addedUsers"
-          [listContent]="searchResults"
-          class="h-full w-full flex flex-column row-gap-1"
-        />
-      }
+      <app-added-user-list
+        class="col flex flex-column row-gap-1 overflow-auto"
+        [(addedUsers)]="addedUsers"
+      />
     }
-  </div>
+  } @else {
+    @if (searchResults.length === 0) {
+      <div
+        class="col flex flex-column justify-content-center align-items-center"
+      >
+        {{ t('chat.addUserDialog.emptySearchResultsHint') }}
+      </div>
+    } @else {
+      <app-add-user-search-list
+        [(addedUsers)]="addedUsers"
+        [listContent]="searchResults"
+        class="col flex flex-column row-gap-1 overflow-auto"
+      />
+    }
+  }
 
   <div class="flex flex-row justify-content-end">
     <button
