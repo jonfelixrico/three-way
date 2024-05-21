@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { User } from 'src/user/user.entity'
-import { Repository } from 'typeorm'
+import { Like, Repository } from 'typeorm'
 import { hash, compare } from 'bcrypt'
 import { IUser } from 'src/user/user.types'
 import { instanceToPlain } from 'class-transformer'
@@ -83,5 +83,15 @@ export class UserService {
     })
 
     return instanceToPlain(user) as IUser
+  }
+
+  async listByUsername(username: string): Promise<IUser[]> {
+    const users = await this.userDb.find({
+      where: {
+        username: Like(`${username}%`),
+      },
+    })
+
+    return users.map((user) => instanceToPlain(user) as IUser)
   }
 }

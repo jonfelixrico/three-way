@@ -104,27 +104,30 @@ export class ChatRoomService {
     return instanceToPlain(newChat) as IChatRoom
   }
 
-  async addMember({
-    userId,
+  @Transactional()
+  async addMembers({
     chatId,
+    userIds,
   }: {
-    userId: string
     chatId: string
+    userIds: string[]
   }): Promise<void> {
-    if (await this.checkUserMembership(chatId, userId)) {
-      throw new Error('User is already a member')
+    for (const userId of userIds) {
+      if (await this.checkUserMembership(chatId, userId)) {
+        throw new Error('User is already a member')
+      }
+
+      await this.memberRepo.save({
+        chat: {
+          id: chatId,
+        },
+
+        user: {
+          id: userId,
+        },
+
+        isOwner: false,
+      })
     }
-
-    await this.memberRepo.save({
-      chat: {
-        id: chatId,
-      },
-
-      user: {
-        id: userId,
-      },
-
-      isOwner: false,
-    })
   }
 }

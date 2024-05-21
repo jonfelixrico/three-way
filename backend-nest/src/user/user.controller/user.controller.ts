@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
 } from '@nestjs/common'
 import { UserId } from 'src/decorators/user-id.param-decorator'
 import { CredentialsReqDto, UserRespDto } from 'src/user/user.dtos'
@@ -43,5 +44,10 @@ export class UserController {
     }
 
     return user
+  }
+
+  @Get()
+  async list(@Query('username') username: string) {
+    return await this.svc.listByUsername(username)
   }
 }

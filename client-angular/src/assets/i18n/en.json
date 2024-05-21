@@ -26,12 +26,32 @@
   },
 
   "chat": {
-    "chat": "Chat"
+    "chat": "Chat",
+    "emptyMessage": "Please select a chat",
+
+    "menu": {
+      "addUser": "Add User"
+    },
+
+    "addUserDialog": {
+      "header": "Add User",
+
+      "emptyAddedHint": "Add a user",
+      "emptySearchResultsHint": "No results",
+
+      "placeholder": "Type a username..."
+    },
+
+    "createChatDialog": {
+      "header": "Create Chat",
+      "nameFieldLabel": "Name"
+    }
   },
 
   "common": {
     "genericError": "An unexpected error occurred. Please try again later.",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "submit": "Submit"
   },
 
   "validationError": {

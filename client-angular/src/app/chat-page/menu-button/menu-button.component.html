@@ -1,0 +1,9 @@
+<p-menu #menu popup [model]="items" />
+
+<p-button
+  icon="pi pi-ellipsis-v"
+  rounded
+  text
+  severity="secondary"
+  (onClick)="menu.toggle($event)"
+/>

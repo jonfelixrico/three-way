@@ -10,17 +10,19 @@ import { RealtimeService } from '@/realtime/realtime.service'
 
 @Component({
   selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
+  templateUrl: './chat-page.component.html',
+  styleUrl: './chat-page.component.scss',
 })
-export class ChatComponent {
+export class ChatPageComponent {
   @Select() chat$!: Observable<ChatSliceModel>
 
   @Input() chatId!: string
 
-  private history$ = this.chat$.pipe(
+  private readonly history$ = this.chat$.pipe(
     map((state) => state.chatHistories[this.chatId])
   )
+
+  readonly data$ = this.chat$.pipe(map((state) => state.chats[this.chatId]))
 
   messages = toSignal(
     this.history$.pipe(map((history) => history?.messages ?? [])),
