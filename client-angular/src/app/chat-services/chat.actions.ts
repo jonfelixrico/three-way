@@ -1,4 +1,4 @@
-import { Chat, ChatMessage } from './chat-rest-api.types'
+import { ChatMessage, SliceChat } from './chat-rest-api.types'
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ChatActions {
@@ -22,6 +22,6 @@ export namespace ChatActions {
   export class Set {
     static readonly type = '[Chat] Set Chat'
 
-    constructor(public chat: Chat) {}
+    constructor(public chat: SliceChat) {}
   }
 }

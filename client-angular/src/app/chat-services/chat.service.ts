@@ -13,10 +13,18 @@ export class ChatService {
   ) {}
 
   async loadListIntoState() {
-    const chats = await firstValueFrom(this.http.get<Chat[]>('/api/chat'))
+    const chats = await firstValueFrom(
+      this.http.get<Omit<Chat, 'members'>[]>('/api/chat')
+    )
 
     for (const chat of chats) {
-      this.store.dispatch(new ChatActions.Set(chat))
+      this.store.dispatch(
+        new ChatActions.Set({
+          ...chat,
+          members: [],
+          status: 'PARTIAL',
+        })
+      )
     }
   }
 
@@ -26,13 +34,31 @@ export class ChatService {
         name,
       })
     )
-    this.store.dispatch(new ChatActions.Set(chat))
+    this.store.dispatch(
+      new ChatActions.Set({
+        ...chat,
+        status: 'HYDRATED',
+      })
+    )
 
     return chat
   }
 
+  async loadChatIntoState(chatId: string) {
+    const chat = await firstValueFrom(
+      this.http.get<Chat>(`/api/chat/${chatId}`)
+    )
+
+    this.store.dispatch(
+      new ChatActions.Set({
+        ...chat,
+        status: 'HYDRATED',
+      })
+    )
+  }
+
   async addUserToChat(chatId: string, data: { userIds: string[] }) {
     await firstValueFrom(this.http.post(`/api/chat/${chatId}/user`, data))
-    // TODO fetch new participants list
+    await this.loadChatIntoState(chatId)
   }
 }
