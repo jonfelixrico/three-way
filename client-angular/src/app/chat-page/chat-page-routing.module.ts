@@ -2,6 +2,7 @@ import { NgModule, inject } from '@angular/core'
 import {
   ActivatedRouteSnapshot,
   GuardResult,
+  Router,
   RouterModule,
   Routes,
 } from '@angular/router'
@@ -17,13 +18,14 @@ const routes: Routes = [
       async (route: ActivatedRouteSnapshot): Promise<GuardResult> => {
         const chatSvc = inject(ChatService)
         const messageSvc = inject(MessageService)
+        const router = inject(Router)
 
         const chatId = route.paramMap.get('chatId')!
 
         const foundChat = await chatSvc.loadChatIntoState(chatId)
         if (!foundChat) {
           console.log('Chat %s does not exist', chatId)
-          return false
+          return router.navigateByUrl('/app/chat')
         }
 
         await messageSvc.loadMessagesToState(chatId)
