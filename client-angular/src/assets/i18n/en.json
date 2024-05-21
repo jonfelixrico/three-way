@@ -40,6 +40,11 @@
       "emptySearchResultsHint": "No results",
 
       "placeholder": "Type a username..."
+    },
+
+    "createChatDialog": {
+      "header": "Create Chat",
+      "nameFieldLabel": "Name"
     }
   },
 

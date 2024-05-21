@@ -12,7 +12,6 @@ export class AddUserService {
 
   openDialog(chatId: string) {
     const ref = this.dialogSvc.open(AddUserDialogContentComponent, {
-      // TODO i18nize this
       header: 'Add User',
       height: '70vh',
       width: '50vw',
