@@ -8,6 +8,10 @@ import {
   Post,
 } from '@nestjs/common'
 import { ChatRoomMessageService } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
+import {
+  ChatRoomDto,
+  PartialChatRoomDto,
+} from 'src/chat-room/chat-room.controller/chat-room.dtos'
 import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.service'
 import { UserId } from 'src/decorators/user-id.param-decorator'
 import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
@@ -61,11 +65,19 @@ export class ChatRoomController {
   }
 
   @Post()
-  async createChat(@UserId() userId: string, @Body('name') name: string) {
-    return await this.chatSvc.create({
+  async createChat(
+    @UserId() userId: string,
+    @Body('name') name: string
+  ): Promise<ChatRoomDto> {
+    const chat = await this.chatSvc.create({
       createdBy: userId,
       name,
     })
+
+    return {
+      ...chat,
+      members: await this.chatSvc.listMembers(chat.id),
+    }
   }
 
   private async broadcastToRoomWs(
@@ -130,16 +142,23 @@ export class ChatRoomController {
   }
 
   @Get()
-  async getList(@UserId() userId: string) {
+  async getList(@UserId() userId: string): Promise<PartialChatRoomDto[]> {
     return await this.chatSvc.listByUser(userId)
   }
 
   @Get(':id')
-  async getChat(@UserId() userId: string, @Param('id') chatId: string) {
+  async getChat(
+    @UserId() userId: string,
+    @Param('id') chatId: string
+  ): Promise<ChatRoomDto> {
     if (!(await this.chatSvc.checkUserMembership(chatId, userId))) {
       throw new HttpException('Not part of the room', HttpStatus.FORBIDDEN)
     }
 
-    return await this.chatSvc.getById(chatId)
+    const chat = await this.chatSvc.getById(chatId)
+    return {
+      ...chat,
+      members: await this.chatSvc.listMembers(chatId),
+    }
   }
 }
