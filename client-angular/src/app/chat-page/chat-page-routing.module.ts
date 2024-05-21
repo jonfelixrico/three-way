@@ -20,10 +20,13 @@ const routes: Routes = [
 
         const chatId = route.paramMap.get('chatId')!
 
-        await Promise.all([
-          chatSvc.loadChatIntoState(chatId),
-          messageSvc.loadMessagesToState(chatId),
-        ])
+        const foundChat = await chatSvc.loadChatIntoState(chatId)
+        if (!foundChat) {
+          console.log('Chat %s does not exist', chatId)
+          return false
+        }
+
+        await messageSvc.loadMessagesToState(chatId)
 
         return true
       },

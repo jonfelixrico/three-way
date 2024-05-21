@@ -1,10 +1,14 @@
 import { Chat } from '@/chat-services/chat-rest-api.types'
 import { ChatActions } from '@/chat-services/chat.actions'
 import { ChatSliceModel } from '@/chat-services/chat.slice'
-import { HttpClient } from '@angular/common/http'
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpStatusCode,
+} from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Store } from '@ngxs/store'
-import { firstValueFrom } from 'rxjs'
+import { catchError, firstValueFrom, of, throwError } from 'rxjs'
 
 @Injectable()
 export class ChatService {
@@ -61,12 +65,27 @@ export class ChatService {
       this.chatSlice.chats[chatId]?.status === 'HYDRATED' &&
       !options?.force
     ) {
-      return
+      return true
     }
 
     const chat = await firstValueFrom(
-      this.http.get<Chat>(`/api/chat/${chatId}`)
+      this.http.get<Chat>(`/api/chat/${chatId}`).pipe(
+        catchError((err: unknown) => {
+          if (
+            err instanceof HttpErrorResponse &&
+            err.status === HttpStatusCode.Forbidden
+          ) {
+            return of(null)
+          }
+
+          return throwError(() => err)
+        })
+      )
     )
+
+    if (!chat) {
+      return false
+    }
 
     this.store.dispatch(
       new ChatActions.Set({
@@ -74,6 +93,8 @@ export class ChatService {
         status: 'HYDRATED',
       })
     )
+
+    return true
   }
 
   async addUserToChat(chatId: string, data: { userIds: string[] }) {
