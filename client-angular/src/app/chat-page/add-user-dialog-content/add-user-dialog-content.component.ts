@@ -16,7 +16,7 @@ export class AddUserDialogContentComponent implements OnDestroy {
   searchResults: User[] = []
   private searchSub: Subscription
 
-  toAdd: WritableSignal<User[]> = signal([])
+  addedUsers: WritableSignal<User[]> = signal([])
 
   constructor(
     private ref: DynamicDialogRef,
@@ -37,10 +37,6 @@ export class AddUserDialogContentComponent implements OnDestroy {
   }
 
   submit() {
-    this.ref.close({ userIds: this.toAdd().map(({ id }) => id) })
-  }
-
-  removeUser(userId: string) {
-    this.toAdd.update((userList) => userList.filter(({ id }) => id !== userId))
+    this.ref.close({ userIds: this.addedUsers().map(({ id }) => id) })
   }
 }

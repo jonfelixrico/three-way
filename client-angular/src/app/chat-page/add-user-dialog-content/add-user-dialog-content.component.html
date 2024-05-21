@@ -9,30 +9,17 @@
   />
 
   @if (searchTerm().length === 0) {
-    @if (toAdd().length === 0) {
+    @if (addedUsers().length === 0) {
       <div
         class="col flex flex-column justify-content-center align-items-center"
       >
         Add a user
       </div>
     } @else {
-      <div class="col flex flex-column row-gap-1 overflow-auto">
-        @for (user of toAdd(); track user.id) {
-          <div class="flex flex-row align-items-center justify-content-between">
-            <div>
-              {{ user.username }}
-            </div>
-
-            <p-button
-              (click)="removeUser(user.id)"
-              size="small"
-              icon="pi pi-times"
-              severity="danger"
-              rounded
-            />
-          </div>
-        }
-      </div>
+      <app-added-user-list
+        class="col flex flex-column row-gap-1 overflow-auto"
+        [(addedUsers)]="addedUsers"
+      />
     }
   } @else {
     @if (searchResults.length === 0) {
@@ -45,7 +32,7 @@
       <!-- TODO externalize -->
 
       <app-add-user-search-list
-        [(addedUsers)]="toAdd"
+        [(addedUsers)]="addedUsers"
         [listContent]="searchResults"
         class="col flex flex-column row-gap-1 overflow-auto"
       />
@@ -56,7 +43,7 @@
     <button
       pButton
       type="submit"
-      [disabled]="toAdd().length === 0"
+      [disabled]="addedUsers().length === 0"
       (click)="submit()"
     >
       Submit
