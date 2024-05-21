@@ -1,6 +1,5 @@
 import { Observable, map } from 'rxjs'
-import { ChatService } from '@/chat-services/chat.service'
-import { Component, afterNextRender } from '@angular/core'
+import { Component } from '@angular/core'
 import { Select } from '@ngxs/store'
 import { ChatSliceModel } from '@/chat-services/chat.slice'
 
@@ -14,11 +13,5 @@ export class ChatListComponent {
 
   get chatList$() {
     return this.chat$.pipe(map(({ chats }) => Object.values(chats)))
-  }
-
-  constructor(chatSvc: ChatService) {
-    afterNextRender(() => {
-      chatSvc.loadListIntoState()
-    })
   }
 }
