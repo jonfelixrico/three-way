@@ -1,11 +1,9 @@
-<div class="flex flex-column row-gap-3 h-full">
-  <!-- TODO i18nize these -->
-
+<div class="flex flex-column row-gap-3 h-full" *transloco="let t">
   <input
     type="text"
     pInputText
     [(ngModel)]="searchTerm"
-    placeholder="Username"
+    [placeholder]="t('chat.addUserDialog.placeholder')"
   />
 
   @if (searchTerm().length === 0) {
@@ -13,7 +11,7 @@
       <div
         class="col flex flex-column justify-content-center align-items-center"
       >
-        Add a user
+        {{ t('chat.addUserDialog.emptyAddedHint') }}
       </div>
     } @else {
       <app-added-user-list
@@ -26,11 +24,9 @@
       <div
         class="col flex flex-column justify-content-center align-items-center"
       >
-        No Results
+        {{ t('chat.addUserDialog.emptySearchResultsHint') }}
       </div>
     } @else {
-      <!-- TODO externalize -->
-
       <app-add-user-search-list
         [(addedUsers)]="addedUsers"
         [listContent]="searchResults"
@@ -46,7 +42,7 @@
       [disabled]="addedUsers().length === 0"
       (click)="submit()"
     >
-      Submit
+      {{ t('common.submit') }}
     </button>
   </div>
 </div>

@@ -17,6 +17,7 @@ import { AddUserDialogContentComponent } from './add-user-dialog-content/add-use
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
 import { AddUserSearchListComponent } from './add-user-search-list/add-user-search-list.component'
 import { AddedUserListComponent } from './added-user-list/added-user-list.component'
+import { TranslocoModule } from '@jsverse/transloco'
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AddedUserListComponent } from './added-user-list/added-user-list.compon
     MenuModule,
     DynamicDialogModule,
     NgIf,
+    TranslocoModule,
   ],
   providers: [AddUserService, DialogService],
 })
