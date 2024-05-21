@@ -30,10 +30,6 @@ export class MessageService {
   }
 
   async loadMessagesToState(chatId: string) {
-    const history = this.store.selectSnapshot(
-      (state: { chat: ChatSliceModel }) => state.chat.chatHistories?.[chatId]
-    )
-
     if (history) {
       return
     }
