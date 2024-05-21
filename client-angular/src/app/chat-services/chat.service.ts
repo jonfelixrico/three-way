@@ -51,8 +51,16 @@ export class ChatService {
     return chat
   }
 
-  async loadChatIntoState(chatId: string) {
-    if (this.chatSlice.chats['chatId']?.status === 'HYDRATED') {
+  async loadChatIntoState(
+    chatId: string,
+    options?: Partial<{
+      force?: boolean
+    }>
+  ) {
+    if (
+      options?.force &&
+      this.chatSlice.chats['chatId']?.status === 'HYDRATED'
+    ) {
       return
     }
 
@@ -70,6 +78,8 @@ export class ChatService {
 
   async addUserToChat(chatId: string, data: { userIds: string[] }) {
     await firstValueFrom(this.http.post(`/api/chat/${chatId}/user`, data))
-    await this.loadChatIntoState(chatId)
+    await this.loadChatIntoState(chatId, {
+      force: true,
+    })
   }
 }
