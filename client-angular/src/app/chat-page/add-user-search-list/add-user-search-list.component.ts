@@ -15,6 +15,9 @@ export class AddUserSearchListComponent {
   @Input({ required: true })
   addedUsers!: User[]
 
+  @Input({ required: true })
+  existingMemberIds!: Set<string>
+
   @Output()
   addedUsersChange = new EventEmitter<User[]>()
 

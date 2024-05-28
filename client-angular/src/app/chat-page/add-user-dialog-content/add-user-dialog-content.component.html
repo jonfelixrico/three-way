@@ -31,6 +31,7 @@
       <app-add-user-search-list
         [(addedUsers)]="addedUsers"
         [listContent]="searchResults"
+        [existingMemberIds]="existingMemberIds()"
         class="col flex flex-column row-gap-1 overflow-auto"
       />
     }

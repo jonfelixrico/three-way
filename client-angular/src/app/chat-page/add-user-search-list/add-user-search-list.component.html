@@ -12,6 +12,8 @@
         severity="danger"
         rounded
       />
+    } @else if (existingMemberIds.has(user.id)) {
+      <!-- already a member, so shouldn't be selectable -->
     } @else {
       <p-button (click)="add(user)" size="small" icon="pi pi-plus" rounded />
     }
