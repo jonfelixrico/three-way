@@ -20,7 +20,11 @@ export class AddUserService {
       },
     })
 
-    ref.onClose.subscribe(async (data: { userIds: string[] }) => {
+    ref.onClose.subscribe(async (data?: { userIds: string[] }) => {
+      if (!data?.userIds?.length) {
+        return
+      }
+
       this.chatSvc.addUserToChat(chatId, data)
     })
   }
