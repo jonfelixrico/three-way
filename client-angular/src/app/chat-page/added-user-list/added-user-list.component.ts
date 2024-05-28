@@ -8,14 +8,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 })
 export class AddedUserListComponent {
   @Input({ required: true })
-  usersToAdd!: User[]
+  addedUsers!: User[]
 
   @Output()
-  usersToAddChange = new EventEmitter<User[]>()
+  addedUsersChange = new EventEmitter<User[]>()
 
   remove(toRemoveId: string) {
-    this.usersToAddChange.emit(
-      this.usersToAdd.filter((user) => user.id !== toRemoveId)
+    this.addedUsersChange.emit(
+      this.addedUsers.filter((user) => user.id !== toRemoveId)
     )
   }
 }
