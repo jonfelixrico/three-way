@@ -1,9 +1,17 @@
+import { ChatSliceModel } from '@/chat-services/chat.slice'
 import { UserService } from '@/user/user.service'
 import { User } from '@/user/user.types'
-import { Component, OnDestroy, WritableSignal, signal } from '@angular/core'
-import { toObservable } from '@angular/core/rxjs-interop'
-import { DynamicDialogRef } from 'primeng/dynamicdialog'
-import { Subscription, debounceTime, switchMap } from 'rxjs'
+import {
+  Component,
+  OnDestroy,
+  WritableSignal,
+  computed,
+  signal,
+} from '@angular/core'
+import { toObservable, toSignal } from '@angular/core/rxjs-interop'
+import { Select } from '@ngxs/store'
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog'
+import { Observable, Subscription, debounceTime, switchMap } from 'rxjs'
 
 @Component({
   selector: 'app-add-user-dialog-content',
@@ -20,6 +28,7 @@ export class AddUserDialogContentComponent implements OnDestroy {
 
   constructor(
     private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
     userSvc: UserService
   ) {
     this.searchSub = toObservable(this.searchTerm)
