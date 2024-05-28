@@ -13,22 +13,22 @@ export class AddUserSearchListComponent {
   listContent!: User[]
 
   @Input({ required: true })
-  addedUsers!: User[]
+  usersToAdd!: User[]
 
   @Output()
-  addedUsersChange = new EventEmitter<User[]>()
+  usersToAddChange = new EventEmitter<User[]>()
 
   get addedIds() {
-    return new Set<string>(this.addedUsers.map(({ id }) => id))
+    return new Set<string>(this.usersToAdd.map(({ id }) => id))
   }
 
   add(addedUser: User) {
-    this.addedUsersChange.emit([...this.addedUsers, addedUser])
+    this.usersToAddChange.emit([...this.usersToAdd, addedUser])
   }
 
   remove(toRemoveId: string) {
-    this.addedUsersChange.emit(
-      this.addedUsers.filter((added) => added.id !== toRemoveId)
+    this.usersToAddChange.emit(
+      this.usersToAdd.filter((added) => added.id !== toRemoveId)
     )
   }
 }
