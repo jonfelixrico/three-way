@@ -43,6 +43,16 @@ export class AddUserDialogContentComponent implements OnDestroy {
       })
   }
 
+  private get chatId() {
+    return this.config.data!.chatId
+  }
+
+  @Select() private chat$!: Observable<ChatSliceModel>
+  private chat = toSignal(this.chat$, { requireSync: true })
+  existingMembers = computed(
+    () => new Set(this.chat().chats[this.chatId].members)
+  )
+
   ngOnDestroy(): void {
     this.searchSub.unsubscribe()
   }
