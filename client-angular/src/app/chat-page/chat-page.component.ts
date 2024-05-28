@@ -1,12 +1,11 @@
-import { Component, Input, afterNextRender } from '@angular/core'
+import { Component, computed, input } from '@angular/core'
 import { IdentityService } from '@/user/identity.service'
 import { MessageService } from '@/chat-services/message.service'
 import { Select, Store } from '@ngxs/store'
 import { ChatActions } from '@/chat-services/chat.actions'
-import { Observable, map } from 'rxjs'
+import { Observable } from 'rxjs'
 import { ChatSliceModel } from '@/chat-services/chat.slice'
 import { toSignal } from '@angular/core/rxjs-interop'
-import { RealtimeService } from '@/realtime/realtime.service'
 
 @Component({
   selector: 'app-chat',
@@ -15,20 +14,15 @@ import { RealtimeService } from '@/realtime/realtime.service'
 })
 export class ChatPageComponent {
   @Select() chat$!: Observable<ChatSliceModel>
+  private chatSlice = toSignal(this.chat$, {
+    requireSync: true,
+  })
 
-  @Input() chatId!: string
+  chatId = input('')
 
-  private readonly history$ = this.chat$.pipe(
-    map((state) => state.chatHistories[this.chatId])
-  )
-
-  readonly data$ = this.chat$.pipe(map((state) => state.chats[this.chatId]))
-
-  messages = toSignal(
-    this.history$.pipe(map((history) => history?.messages ?? [])),
-    {
-      initialValue: [],
-    }
+  chatRoom = computed(() => this.chatSlice().chats[this.chatId()])
+  messages = computed(
+    () => this.chatSlice().chatHistories[this.chatId()]?.messages ?? []
   )
 
   content: string = ''
@@ -36,13 +30,8 @@ export class ChatPageComponent {
   constructor(
     private identitySvc: IdentityService,
     private messageSvc: MessageService,
-    private store: Store,
-    private realtime: RealtimeService
-  ) {
-    afterNextRender(() => {
-      this.loadMessages()
-    })
-  }
+    private store: Store
+  ) {}
 
   get userId() {
     return this.identitySvc.user!.id
@@ -56,21 +45,7 @@ export class ChatPageComponent {
     const content = this.content
     this.content = ''
 
-    const message = await this.messageSvc.sendMessage(this.chatId, content)
-    this.store.dispatch(new ChatActions.AddMessages(this.chatId, [message]))
-  }
-
-  private async loadMessages() {
-    const alreadyLoaded = this.store.selectSnapshot(
-      ({ chat }: { chat: ChatSliceModel }) => !!chat.chatHistories[this.chatId]
-    )
-    if (alreadyLoaded) {
-      return
-    }
-
-    const messages = await this.messageSvc.getMessages(this.chatId)
-    this.store.dispatch(
-      new ChatActions.AddHistoricalMessages(this.chatId, messages)
-    )
+    const message = await this.messageSvc.sendMessage(this.chatId(), content)
+    this.store.dispatch(new ChatActions.AddMessages(this.chatId(), [message]))
   }
 }

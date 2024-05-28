@@ -15,9 +15,16 @@ export class AddUserService {
       header: 'Add User',
       height: '70vh',
       width: '50vw',
+      data: {
+        chatId,
+      },
     })
 
-    ref.onClose.subscribe(async (data: { userIds: string[] }) => {
+    ref.onClose.subscribe(async (data?: { userIds: string[] }) => {
+      if (!data?.userIds?.length) {
+        return
+      }
+
       this.chatSvc.addUserToChat(chatId, data)
     })
   }

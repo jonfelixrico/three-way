@@ -9,9 +9,15 @@ export interface ChatMessage {
 export interface Chat {
   id: string
   name: string
+
+  members: ChatMember[]
 }
 
 export interface ChatMember {
   id: string
   name: string
+}
+
+export type SliceChat = Chat & {
+  status: 'HYDRATED' | 'PARTIAL'
 }

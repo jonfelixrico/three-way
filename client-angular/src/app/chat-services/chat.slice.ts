@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { State, Action, StateContext } from '@ngxs/store'
-import { Chat, ChatMessage } from './chat-rest-api.types'
+import { ChatMessage, SliceChat } from './chat-rest-api.types'
 import { ChatActions } from './chat.actions'
 import { produce } from 'immer'
 
@@ -15,7 +15,7 @@ export interface ChatSliceModel {
   }
 
   chats: {
-    [chatId: string]: Chat
+    [chatId: string]: SliceChat
   }
 }
 

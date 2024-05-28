@@ -4,6 +4,7 @@ import { ChatRouteGroupComponent } from './chat-route-group.component'
 import { RealtimeService } from '@/realtime/realtime.service'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { EmptyPageComponent } from '@/chat-route-group/empty-page/empty-page.component'
+import { ChatService } from '@/chat-services/chat.service'
 
 const routes: Routes = [
   {
@@ -25,7 +26,9 @@ const routes: Routes = [
     canActivate: [
       async () => {
         const realtime = inject(RealtimeService)
-        await realtime.connect()
+        const chatSvc = inject(ChatService)
+
+        await Promise.all([chatSvc.loadListIntoState(), realtime.connect()])
         return true
       },
     ],

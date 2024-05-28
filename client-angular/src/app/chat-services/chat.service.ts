@@ -1,9 +1,14 @@
 import { Chat } from '@/chat-services/chat-rest-api.types'
 import { ChatActions } from '@/chat-services/chat.actions'
-import { HttpClient } from '@angular/common/http'
+import { ChatSliceModel } from '@/chat-services/chat.slice'
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpStatusCode,
+} from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Store } from '@ngxs/store'
-import { firstValueFrom } from 'rxjs'
+import { catchError, firstValueFrom, of, throwError } from 'rxjs'
 
 @Injectable()
 export class ChatService {
@@ -12,11 +17,25 @@ export class ChatService {
     private store: Store
   ) {}
 
+  private get chatSlice() {
+    return this.store.selectSnapshot(
+      (state: { chat: ChatSliceModel }) => state.chat
+    )
+  }
+
   async loadListIntoState() {
-    const chats = await firstValueFrom(this.http.get<Chat[]>('/api/chat'))
+    const chats = await firstValueFrom(
+      this.http.get<Omit<Chat, 'members'>[]>('/api/chat')
+    )
 
     for (const chat of chats) {
-      this.store.dispatch(new ChatActions.Set(chat))
+      this.store.dispatch(
+        new ChatActions.Set({
+          ...chat,
+          members: [],
+          status: 'PARTIAL',
+        })
+      )
     }
   }
 
@@ -26,13 +45,62 @@ export class ChatService {
         name,
       })
     )
-    this.store.dispatch(new ChatActions.Set(chat))
+    this.store.dispatch(
+      new ChatActions.Set({
+        ...chat,
+        status: 'HYDRATED',
+      })
+    )
 
     return chat
   }
 
+  async loadChatIntoState(
+    chatId: string,
+    options?: Partial<{
+      force?: boolean
+    }>
+  ) {
+    if (
+      this.chatSlice.chats[chatId]?.status === 'HYDRATED' &&
+      !options?.force
+    ) {
+      return true
+    }
+
+    const chat = await firstValueFrom(
+      this.http.get<Chat>(`/api/chat/${chatId}`).pipe(
+        catchError((err: unknown) => {
+          if (
+            err instanceof HttpErrorResponse &&
+            err.status === HttpStatusCode.Forbidden
+          ) {
+            return of(null)
+          }
+
+          return throwError(() => err)
+        })
+      )
+    )
+
+    if (!chat) {
+      return false
+    }
+
+    this.store.dispatch(
+      new ChatActions.Set({
+        ...chat,
+        status: 'HYDRATED',
+      })
+    )
+
+    return true
+  }
+
   async addUserToChat(chatId: string, data: { userIds: string[] }) {
     await firstValueFrom(this.http.post(`/api/chat/${chatId}/user`, data))
-    // TODO fetch new participants list
+    await this.loadChatIntoState(chatId, {
+      force: true,
+    })
   }
 }
