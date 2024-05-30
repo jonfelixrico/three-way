@@ -5,9 +5,22 @@ import { filter, map } from 'rxjs'
 
 @Injectable()
 export class ChatWsListenerService {
-  constructor(chatSvc: ChatService, realtimeSvc: RealtimeService) {
+  constructor(
+    private chatSvc: ChatService,
+    private realtimeSvc: RealtimeService
+  ) {}
+
+  private hasStarted = false
+
+  start() {
+    if (this.hasStarted) {
+      return
+    }
+
+    console.debug('Started listening for chat WS events')
+
     // No need to unsubscribe on destroy since we don't expect this service to be destroyed once loaded.
-    realtimeSvc
+    this.realtimeSvc
       .getEvents$<{
         CHAT_USER_ADDED?: {
           chatRoomId: string
@@ -18,10 +31,12 @@ export class ChatWsListenerService {
         map((value) => value.CHAT_USER_ADDED!)
       )
       .subscribe(async ({ chatRoomId }) => {
-        await chatSvc.loadChatIntoState(chatRoomId, {
+        await this.chatSvc.loadChatIntoState(chatRoomId, {
           force: true,
         })
         console.log('Loaded %s data because of CHAT_USER_ADDED', chatRoomId)
       })
+
+    this.hasStarted = true
   }
 }

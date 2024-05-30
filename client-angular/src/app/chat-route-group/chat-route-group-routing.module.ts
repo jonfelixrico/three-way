@@ -5,6 +5,7 @@ import { RealtimeService } from '@/realtime/realtime.service'
 import { RealtimeModule } from '@/realtime/realtime.module'
 import { EmptyPageComponent } from '@/chat-route-group/empty-page/empty-page.component'
 import { ChatService } from '@/chat-services/chat.service'
+import { ChatWsListenerService } from '@/chat-route-group/chat-ws-listener.service'
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
 
     // TODO check if there's a more appropriate way to do this
     canActivate: [
+      () => {
+        inject(ChatWsListenerService).start()
+        return true
+      },
+
       async () => {
         const realtime = inject(RealtimeService)
         const chatSvc = inject(ChatService)
