@@ -27,7 +27,7 @@ export class ChatWsListenerService {
         }
       }>()
       .pipe(
-        filter((e) => !!e),
+        filter((value) => !!value.CHAT_USER_ADDED),
         map((value) => value.CHAT_USER_ADDED!)
       )
       .subscribe(async ({ chatRoomId }) => {
