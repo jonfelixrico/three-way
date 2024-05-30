@@ -125,7 +125,7 @@ export class ChatRoomController {
         chatId,
         senderId: userId,
       },
-      'CHAT_ADD_USER',
+      'CHAT_USER_ADDED',
       {
         userIds: addedUserIds,
         chatRoomId: chatId,

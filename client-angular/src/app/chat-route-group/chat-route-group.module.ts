@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { CreateChatService } from '@/chat-route-group/service.create-chat/create-chat.service'
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
 import { InputTextModule } from 'primeng/inputtext'
+import { ChatWsListenerService } from '@/chat-route-group/chat-ws-listener.service'
 
 @NgModule({
   declarations: [
@@ -33,6 +34,6 @@ import { InputTextModule } from 'primeng/inputtext'
     DynamicDialogModule,
     InputTextModule,
   ],
-  providers: [CreateChatService, DialogService],
+  providers: [CreateChatService, DialogService, ChatWsListenerService],
 })
 export class ChatRouteGroupModule {}
