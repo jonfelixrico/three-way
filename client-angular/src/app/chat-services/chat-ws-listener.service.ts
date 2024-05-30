@@ -6,8 +6,7 @@ import { filter, map } from 'rxjs'
 @Injectable()
 export class ChatWsListenerService {
   constructor(chatSvc: ChatService, realtimeSvc: RealtimeService) {
-    // No need for an unsubscribe listener since we expect this service to be a singleton
-    // once the module has been loaded
+    // No need to unsubscribe on destroy since we don't expect this service to be destroyed once loaded.
     realtimeSvc
       .getEvents$<{
         CHAT_USER_ADDED?: {
