@@ -1,0 +1,50 @@
+<div class="flex flex-column row-gap-3 h-full" *transloco="let t">
+  <input
+    type="text"
+    pInputText
+    [(ngModel)]="searchTerm"
+    [placeholder]="t('chat.addUserDialog.placeholder')"
+    autocomplete="off"
+  />
+
+  @if (searchTerm().length === 0) {
+    @if (usersToAdd().length === 0) {
+      <div
+        class="col flex flex-column justify-content-center align-items-center"
+      >
+        {{ t('chat.addUserDialog.emptyAddedHint') }}
+      </div>
+    } @else {
+      <app-added-user-list
+        class="col flex flex-column row-gap-1 overflow-auto"
+        [(usersToAdd)]="usersToAdd"
+      />
+    }
+  } @else {
+    @if (searchResults.length === 0) {
+      <div
+        class="col flex flex-column justify-content-center align-items-center"
+      >
+        {{ t('chat.addUserDialog.emptySearchResultsHint') }}
+      </div>
+    } @else {
+      <app-add-user-search-list
+        [(usersToAdd)]="usersToAdd"
+        [listContent]="searchResults"
+        [existingMemberIds]="existingMemberIds()"
+        class="col flex flex-column row-gap-1 overflow-auto"
+      />
+    }
+  }
+
+  <div class="flex flex-row justify-content-end">
+    <button
+      pButton
+      type="submit"
+      [disabled]="usersToAdd().length === 0"
+      (click)="submit()"
+    >
+      {{ t('common.submit') }}
+    </button>
+  </div>
+</div>

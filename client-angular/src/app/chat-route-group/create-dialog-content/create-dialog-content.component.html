@@ -1,0 +1,15 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  class="flex flex-column row-gap-3"
+  *transloco="let t"
+>
+  <div class="flex flex-column row-gap-1">
+    <label for="name">{{ t('chat.createChatDialog.nameFieldLabel') }}</label>
+    <input type="text" pInputText formControlName="name" />
+  </div>
+
+  <button pButton type="submit" class="justify-content-center">
+    {{ t('common.submit') }}
+  </button>
+</form>

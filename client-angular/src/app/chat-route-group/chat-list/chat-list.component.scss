@@ -1,0 +1,12 @@
+@import 'primeflex/primeflex.scss';
+
+.item-color {
+  &:hover {
+    @include styleclass('surface-100');
+  }
+
+  &.active,
+  &.active:hover {
+    @include styleclass('surface-200');
+  }
+}

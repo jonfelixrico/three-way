@@ -10,3 +10,10 @@ export interface IChatRoomMessage {
   timestamp: Date
   senderId: string
 }
+
+export interface IChatRoomMember {
+  chatId: string
+  userId: string
+
+  isOwner: boolean
+}

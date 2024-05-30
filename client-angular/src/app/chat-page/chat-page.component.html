@@ -1,0 +1,43 @@
+<div class="h-full flex flex-column p-card border-round-xl overflow-hidden">
+  <div
+    class="shadow-1 p-3 flex flex-row justify-content-between align-items-center"
+  >
+    <div class="text-xl font-medium">{{ chatRoom().name }}</div>
+
+    <app-menu-button [chatId]="chatId()" />
+  </div>
+  <!-- flex-column reverse is needed to make the scroll start at the end, and stick to the end if the user submits new messages -->
+  <div class="col overflow-auto flex flex-column-reverse">
+    @for (
+      message of messages();
+      track message.id;
+      let index = $index, first = $first, last = $last
+    ) {
+      <!--
+          Since the list is reversed, the logically previous item is the physically the next item, hence,
+          isFIrstInSequence checks for the last or the next message
+        -->
+      <app-chat-message
+        [message]="message"
+        [isSender]="message.senderId === userId"
+        [isFirstInChat]="last"
+        [isFirstInSequence]="
+          last || messages()[index + 1].senderId !== message.senderId
+        "
+        [isLastInSequence]="
+          first || messages()[index - 1].senderId !== message.senderId
+        "
+      />
+    }
+  </div>
+
+  <div class="col-fixed flex flex-row gap-2">
+    <input
+      type="text"
+      pInputText
+      class="col"
+      [(ngModel)]="content"
+      (keydown.enter)="sendMessage()"
+    />
+  </div>
+</div>
