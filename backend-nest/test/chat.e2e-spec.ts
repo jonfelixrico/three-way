@@ -4,14 +4,17 @@ import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { MockGuard } from 'test/mock-guard'
-import { initializeTransactionalContext } from 'typeorm-transactional'
 import { uuidList } from 'src/datasource/migrations/1715702049970-seed'
+import { initializeTransactionalContext } from 'typeorm-transactional'
 
 describe('chat', () => {
+  beforeAll(() => {
+    initializeTransactionalContext()
+  })
+
   let app: INestApplication
 
   beforeEach(async () => {
-    initializeTransactionalContext()
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
