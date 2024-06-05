@@ -86,14 +86,12 @@ describe('chat', () => {
 
     const { id } = newChatResponse.body
 
-    for (const userId of uuidList) {
-      await request(app.getHttpServer())
-        .post(`/chat/${id}/user`)
-        .send({
-          userId,
-        })
-        .expect(201)
-    }
+    await request(app.getHttpServer())
+      .post(`/chat/${id}/user`)
+      .send({
+        userIds: uuidList,
+      })
+      .expect(201)
 
     const userListResponse = await request(app.getHttpServer())
       .get(`/chat/${id}/user`)
