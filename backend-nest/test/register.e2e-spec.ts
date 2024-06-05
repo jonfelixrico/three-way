@@ -26,6 +26,7 @@ describe('register', () => {
       .send(credentials)
       .expect(201)
 
+    // log in to test that the user exists
     const response = await request(app.getHttpServer())
       .post('/auth')
       .send(credentials)
