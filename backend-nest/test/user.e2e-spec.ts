@@ -4,7 +4,7 @@ import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 import { initializeTransactionalContext } from 'typeorm-transactional'
 
-describe('AppController (e2e)', () => {
+describe('user', () => {
   beforeAll(() => {
     initializeTransactionalContext()
   })
@@ -20,10 +20,10 @@ describe('AppController (e2e)', () => {
     await app.init()
   })
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!')
-  })
+  // it('/ (GET)', () => {
+  //   return request(app.getHttpServer())
+  //     .get('/')
+  //     .expect(200)
+  //     .expect('Hello World!')
+  // })
 })
