@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 
-describe('AppController (e2e)', () => {
+describe('register', () => {
   let app: INestApplication
 
   beforeEach(async () => {
@@ -15,10 +15,26 @@ describe('AppController (e2e)', () => {
     await app.init()
   })
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
+  test('register user', async () => {
+    const credentials = {
+      username: `Username ${Date.now()}`,
+      password: 'p@ssw0rd',
+    }
+
+    await request(app.getHttpServer())
+      .post('/register')
+      .send(credentials)
+      .expect(201)
+
+    const response = await request(app.getHttpServer())
+      .post('/auth')
+      .send(credentials)
       .expect(200)
-      .expect('Hello World!')
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        accessToken: expect.stringMatching(/.*/),
+      })
+    )
   })
 })
