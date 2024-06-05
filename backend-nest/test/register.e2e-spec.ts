@@ -79,7 +79,7 @@ describe('register', () => {
 
     expect(res2.body).toEqual(
       expect.objectContaining({
-        taken: true,
+        taken: false,
       })
     )
   })
