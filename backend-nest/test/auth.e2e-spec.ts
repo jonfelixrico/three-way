@@ -24,4 +24,14 @@ describe('login', () => {
       })
       .expect(200)
   })
+
+  test('incorrect credentials', async () => {
+    await request(app.getHttpServer())
+      .post('/auth')
+      .send({
+        username: 'seed-1',
+        password: 'WRONG PASSWORD!',
+      })
+      .expect('401')
+  })
 })
