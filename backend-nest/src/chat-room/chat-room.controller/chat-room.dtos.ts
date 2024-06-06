@@ -1,11 +1,14 @@
+import { IPreviewMessage } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
 import { IChatRoom, IChatRoomMessage } from 'src/chat-room/chat-room.types'
 import { IUser } from 'src/user/user.types'
 
-class ChatRoomMessagePreviewDto {
-  message: IChatRoomMessage
-  sender: {
-    name: string
-  }
+class ChatRoomMessagePreviewDto implements IPreviewMessage {
+  id: string
+  chatRoomId: string
+  content: string
+  timestamp: Date
+  senderId: string
+  senderName: string
 }
 
 export class ChatRoomDto implements IChatRoom {
