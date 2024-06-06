@@ -184,6 +184,9 @@ export class ChatRoomController {
       {
         ...chat,
         members: await this.chatSvc.listMembers(chatId),
+        previewMessage: await this.msgSvc.getPreviewMessage({
+          chatId: chat.id,
+        }),
       },
       {
         excludeExtraneousValues: true,
