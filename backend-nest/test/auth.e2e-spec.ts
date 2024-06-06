@@ -1,14 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { INestApplication } from '@nestjs/common'
+import { HttpStatus, INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 import { initializeTransactionalContext } from 'typeorm-transactional'
 
-describe('user - public', () => {
+describe('auth', () => {
+  beforeAll(() => {
+    initializeTransactionalContext()
+  })
+
   let app: INestApplication
 
   beforeEach(async () => {
-    initializeTransactionalContext()
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile()
@@ -17,36 +20,23 @@ describe('user - public', () => {
     await app.init()
   })
 
-  test('Register + login', async () => {
-    const credentials = {
-      username: `Username ${Date.now()}`,
-      password: 'p@ssw0rd',
-    }
-
-    await request(app.getHttpServer())
-      .post('/register')
-      .send(credentials)
-      .expect(201)
-
-    const response = await request(app.getHttpServer())
-      .post('/auth')
-      .send(credentials)
-      .expect(200)
-
-    expect(response.body).toEqual(
-      expect.objectContaining({
-        accessToken: expect.stringMatching(/.*/),
-      })
-    )
-  })
-
-  test('Login', async () => {
+  test('correct credentials', async () => {
     await request(app.getHttpServer())
       .post('/auth')
       .send({
         username: 'seed-1',
         password: 'p@ssw0rd',
       })
-      .expect(200)
+      .expect(HttpStatus.OK)
+  })
+
+  test('incorrect credentials', async () => {
+    await request(app.getHttpServer())
+      .post('/auth')
+      .send({
+        username: 'seed-1',
+        password: 'WRONG PASSWORD!',
+      })
+      .expect(HttpStatus.UNAUTHORIZED)
   })
 })
