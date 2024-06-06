@@ -4,6 +4,10 @@ import { IChatRoomMessage } from 'src/chat-room/chat-room.types'
 import { ChatRoomMessage } from 'src/chat-room/entity/chat-room-message.entity'
 import { Repository } from 'typeorm'
 
+export type IPreviewMessage = IChatRoomMessage & {
+  senderName: string
+}
+
 @Injectable()
 export class ChatRoomMessageService {
   constructor(
@@ -46,5 +50,31 @@ export class ChatRoomMessageService {
         timestamp: 'DESC',
       },
     })
+  }
+
+  async getPreviewMessage({
+    chatId,
+  }: {
+    chatId: string
+  }): Promise<IPreviewMessage | null> {
+    const message = await this.messageRepo.findOne({
+      where: {
+        chatRoomId: chatId,
+      },
+      order: {
+        timestamp: 'DESC',
+      },
+    })
+
+    if (!message) {
+      return null
+    }
+
+    const sender = await message.sender
+
+    return {
+      ...message,
+      senderName: sender.username,
+    }
   }
 }
