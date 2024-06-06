@@ -7,7 +7,11 @@ import {
   Param,
   Post,
 } from '@nestjs/common'
-import { ChatRoomMessageService } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
+import { plainToInstance } from 'class-transformer'
+import {
+  ChatRoomMessageService,
+  IPreviewMessage,
+} from 'src/chat-room/chat-room-message.service/chat-room-message.service'
 import {
   ChatRoomDto,
   PartialChatRoomDto,
@@ -77,6 +81,9 @@ export class ChatRoomController {
     return {
       ...chat,
       members: await this.chatSvc.listMembers(chat.id),
+      previewMessage: await this.msgSvc.getPreviewMessage({
+        chatId: chat.id,
+      }),
     }
   }
 
@@ -144,7 +151,21 @@ export class ChatRoomController {
 
   @Get()
   async getList(@UserId() userId: string): Promise<PartialChatRoomDto[]> {
-    return await this.chatSvc.listByUser(userId)
+    const rawChats = await this.chatSvc.listByUser(userId)
+
+    const previewMessages: IPreviewMessage[] = []
+    for (const chat of rawChats) {
+      previewMessages.push(
+        await this.msgSvc.getPreviewMessage({ chatId: chat.id })
+      )
+    }
+
+    return rawChats.map((chat) =>
+      plainToInstance(PartialChatRoomDto, {
+        ...chat,
+        previewMessage: previewMessages[chat.id] ?? null,
+      })
+    )
   }
 
   @Get(':id')
@@ -157,9 +178,16 @@ export class ChatRoomController {
     }
 
     const chat = await this.chatSvc.getById(chatId)
-    return {
-      ...chat,
-      members: await this.chatSvc.listMembers(chatId),
-    }
+
+    return plainToInstance(
+      ChatRoomDto,
+      {
+        ...chat,
+        members: await this.chatSvc.listMembers(chatId),
+      },
+      {
+        excludeExtraneousValues: true,
+      }
+    )
   }
 }
