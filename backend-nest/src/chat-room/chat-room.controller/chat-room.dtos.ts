@@ -50,11 +50,19 @@ export class PartialChatRoomDto implements IChatRoom {
   previewMessage: ChatRoomMessagePreviewDto | null
 }
 
+class UserDto {
+  @Expose()
+  id: string
+
+  @Expose()
+  username: string
+}
+
 export class ChatRoomMessagesDto {
+  @Expose()
   messages: IChatRoomMessage[]
 
-  users: {
-    id: string
-    name: string
-  }[]
+  @Expose()
+  @Type(() => UserDto)
+  users: UserDto[]
 }

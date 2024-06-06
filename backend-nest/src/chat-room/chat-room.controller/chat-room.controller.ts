@@ -14,10 +14,13 @@ import {
 } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
 import {
   ChatRoomDto,
+  ChatRoomMessagesDto,
   PartialChatRoomDto,
 } from 'src/chat-room/chat-room.controller/chat-room.dtos'
 import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.service'
 import { UserId } from 'src/decorators/user-id.param-decorator'
+import { UserService } from 'src/user/user.service/user.service'
+import { IUser } from 'src/user/user.types'
 import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 
 @Controller('chat')
@@ -25,18 +28,39 @@ export class ChatRoomController {
   constructor(
     private chatSvc: ChatRoomService,
     private msgSvc: ChatRoomMessageService,
-    private dispatcher: WebsocketDispatcherService
+    private dispatcher: WebsocketDispatcherService,
+    private userSvc: UserService
   ) {}
 
   @Get(':id/message')
-  async getMessages(@Param('id') chatId: string, @UserId() userId: string) {
+  async getMessages(
+    @Param('id') chatId: string,
+    @UserId() userId: string
+  ): Promise<ChatRoomMessagesDto> {
     if (!(await this.chatSvc.checkUserMembership(chatId, userId))) {
       throw new HttpException('Not a member', HttpStatus.FORBIDDEN)
     }
 
-    return await this.msgSvc.getMessages({
+    const messages = await this.msgSvc.getMessages({
       chatId,
     })
+
+    const uniqueIds = new Set(messages.map((m) => m.senderId))
+    const users: IUser[] = []
+    for (const id of uniqueIds) {
+      users.push(await this.userSvc.getById(id))
+    }
+
+    return plainToInstance(
+      ChatRoomMessagesDto,
+      {
+        messages,
+        users,
+      } as ChatRoomMessagesDto,
+      {
+        excludeExtraneousValues: true,
+      }
+    )
   }
 
   @Post(':id/message')
