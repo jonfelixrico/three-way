@@ -23,3 +23,12 @@ export class PartialChatRoomDto implements IChatRoom {
 
   previewMessage: ChatRoomMessagePreviewDto | null
 }
+
+export class ChatRoomMessagesDto {
+  messages: IChatRoomMessage[]
+
+  users: {
+    id: string
+    name: string
+  }[]
+}
