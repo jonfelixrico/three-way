@@ -8,6 +8,7 @@ import { Seed1715702049970 } from 'src/datasource/migrations/1715702049970-seed'
 import { initializeTransactionalContext } from 'typeorm-transactional'
 import { Seed1718191393819 } from 'src/datasource/migrations/1718191393819-seed'
 import { range } from 'lodash'
+import { Seed1718196626285 } from 'src/datasource/migrations/1718196626285-seed'
 
 describe('chat', () => {
   beforeAll(() => {
@@ -89,27 +90,28 @@ describe('chat', () => {
     )
   })
 
-  test('Room creation + adding of users', async () => {
-    const newChatResponse = await request(app.getHttpServer())
-      .post('/chat')
-      .send({
-        name: `Test chat ${Date.now()}`,
-      })
-      .expect(201)
-
-    const { id } = newChatResponse.body
+  test('Add user', async () => {
+    const CHAT_ID = Seed1718196626285.SEED_ROOM_IDS[0]
 
     await request(app.getHttpServer())
-      .post(`/chat/${id}/user`)
+      .post(`/chat/${CHAT_ID}/user`)
       .send({
         userIds: Seed1715702049970.SEED_USER_IDS,
       })
       .expect(201)
 
     const userListResponse = await request(app.getHttpServer())
-      .get(`/chat/${id}/user`)
+      .get(`/chat/${CHAT_ID}/user`)
       .expect(200)
 
-    expect(userListResponse.body).toHaveLength(10)
+    expect(userListResponse.body).toEqual(
+      expect.arrayContaining(
+        Seed1715702049970.SEED_USER_IDS.map((id) =>
+          expect.objectContaining({
+            id,
+          })
+        )
+      )
+    )
   })
 })
