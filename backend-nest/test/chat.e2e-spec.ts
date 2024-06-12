@@ -9,6 +9,7 @@ import { initializeTransactionalContext } from 'typeorm-transactional'
 import { Seed1718191393819 } from 'src/datasource/migrations/1718191393819-seed'
 import { range } from 'lodash'
 import { Seed1718196626285 } from 'src/datasource/migrations/1718196626285-seed'
+import { Seed1715172194613 } from 'src/datasource/migrations/1715172194613-seed'
 
 describe('chat', () => {
   beforeAll(() => {
@@ -47,16 +48,24 @@ describe('chat', () => {
   })
 
   test('Create room', async () => {
+    const name = `Test chat ${Date.now()}`
+
     const newChatResponse = await request(app.getHttpServer())
       .post('/chat')
       .send({
-        name: `Test chat ${Date.now()}`,
+        name,
       })
       .expect(201)
 
     expect(newChatResponse.body).toEqual(
       expect.objectContaining({
         id: expect.stringMatching(/.+/),
+        name,
+        members: expect.arrayContaining([
+          expect.objectContaining({
+            id: Seed1715172194613.SEED_1_ID,
+          }),
+        ]),
       })
     )
   })
