@@ -1,11 +1,13 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   HttpException,
   HttpStatus,
   Param,
   Post,
+  UseInterceptors,
 } from '@nestjs/common'
 import {
   ChatRoomMessageService,
@@ -13,6 +15,7 @@ import {
 } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
 import {
   ChatRoomDto,
+  ChatRoomMessageDto,
   ChatRoomMessagesDto,
   PartialChatRoomDto,
 } from 'src/chat-room/chat-room.controller/chat-room.dtos'
@@ -24,6 +27,7 @@ import { toInstance } from 'src/utils/class-transformer.utils'
 import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 
 @Controller('chat')
+@UseInterceptors(ClassSerializerInterceptor)
 export class ChatRoomController {
   constructor(
     private chatSvc: ChatRoomService,
@@ -89,7 +93,9 @@ export class ChatRoomController {
       sent
     )
 
-    return sent
+    return toInstance(ChatRoomMessageDto, sent, {
+      excludeExtraneousValues: true,
+    })
   }
 
   @Post()
