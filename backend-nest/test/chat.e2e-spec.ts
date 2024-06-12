@@ -4,7 +4,7 @@ import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { MockGuard } from 'test/mock-guard'
-import { uuidList } from 'src/datasource/migrations/1715702049970-seed'
+import { Seed1715702049970 } from 'src/datasource/migrations/1715702049970-seed'
 import { initializeTransactionalContext } from 'typeorm-transactional'
 import { Seed1718191393819 } from 'src/datasource/migrations/1718191393819-seed'
 
@@ -91,7 +91,7 @@ describe('chat', () => {
     await request(app.getHttpServer())
       .post(`/chat/${id}/user`)
       .send({
-        userIds: uuidList,
+        userIds: Seed1715702049970.SEED_USER_IDS,
       })
       .expect(201)
 
