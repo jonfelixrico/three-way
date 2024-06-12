@@ -73,7 +73,7 @@ describe('chat', () => {
       .get(`/chat/${id}/message`)
       .expect(200)
 
-    expect(messagesResp.body).toHaveLength(10)
+    expect(messagesResp.body.messages).toHaveLength(10)
   })
 
   test('Room creation + adding of users', async () => {
