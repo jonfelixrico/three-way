@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { INestApplication } from '@nestjs/common'
+import { HttpStatus, INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
@@ -96,6 +96,31 @@ describe('chat', () => {
           })
         )
       )
+    )
+  })
+
+  test('Get chat -- preview message', async () => {
+    const CHAT_ID = Seed1718191393819.SEED_ROOM_IDS[0]
+
+    const content = `Preview message ${Date.now()}`
+    await request(app.getHttpServer())
+      .post(`/chat/${CHAT_ID}/message`)
+      .send({
+        content,
+      })
+      .expect(HttpStatus.CREATED)
+
+    const chatResp = await request(app.getHttpServer())
+      .get(`/chat/${CHAT_ID}`)
+      .expect(HttpStatus.OK)
+
+    expect(chatResp.body).toEqual(
+      expect.objectContaining({
+        previewMessage: expect.objectContaining({
+          content,
+          senderName: 'seed-1',
+        }),
+      })
     )
   })
 
