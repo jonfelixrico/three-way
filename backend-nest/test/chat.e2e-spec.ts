@@ -35,7 +35,7 @@ describe('chat', () => {
     await request(app.getHttpServer()).get('/chat/does-not-exist').expect(403)
   })
 
-  test('Find chat -- existing', async () => {
+  test('Find chat', async () => {
     const response = await request(app.getHttpServer())
       .get(`/chat/${Seed1718191393819.SEED_ROOM_IDS[0]}`)
       .expect(200)
