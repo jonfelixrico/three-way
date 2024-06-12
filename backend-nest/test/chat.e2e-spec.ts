@@ -97,6 +97,15 @@ describe('chat', () => {
         )
       )
     )
+
+    expect(messagesResp.body.users).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: Seed1715172194613.SEED_1_ID,
+          username: 'seed-1',
+        }),
+      ])
+    )
   })
 
   test('Get chat -- preview message', async () => {
