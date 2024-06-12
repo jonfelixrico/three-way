@@ -4,7 +4,6 @@ import {
   Column,
   Entity,
   Index,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
@@ -15,7 +14,7 @@ export class ChatRoomMessage implements IChatRoomMessage {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @JoinColumn()
+  @Column()
   chatRoomId: string
 
   @ManyToOne(() => ChatRoom)
@@ -32,6 +31,6 @@ export class ChatRoomMessage implements IChatRoomMessage {
   @ManyToOne(() => User)
   sender: Promise<User>
 
-  @JoinColumn()
+  @Column()
   senderId: string
 }
