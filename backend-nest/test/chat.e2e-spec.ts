@@ -7,6 +7,7 @@ import { MockGuard } from 'test/mock-guard'
 import { Seed1715702049970 } from 'src/datasource/migrations/1715702049970-seed'
 import { initializeTransactionalContext } from 'typeorm-transactional'
 import { Seed1718191393819 } from 'src/datasource/migrations/1718191393819-seed'
+import { range } from 'lodash'
 
 describe('chat', () => {
   beforeAll(() => {
@@ -41,6 +42,50 @@ describe('chat', () => {
       expect.objectContaining({
         name: 'seed-room-0',
       })
+    )
+  })
+
+  test('Create room', async () => {
+    const newChatResponse = await request(app.getHttpServer())
+      .post('/chat')
+      .send({
+        name: `Test chat ${Date.now()}`,
+      })
+      .expect(201)
+
+    expect(newChatResponse.body).toEqual(
+      expect.objectContaining({
+        id: expect.stringMatching(/.+/),
+      })
+    )
+  })
+
+  test('Send message', async () => {
+    const now = Date.now()
+    const messagesToSend = range(1, 10).map((no) => `Test message ${now} ${no}`)
+    const ROOM_ID = Seed1718191393819.SEED_ROOM_IDS[0]
+
+    for (const message of messagesToSend) {
+      await request(app.getHttpServer())
+        .post(`/chat/${ROOM_ID}/message`)
+        .send({
+          content: message,
+        })
+        .expect(201)
+    }
+
+    const messagesResp = await request(app.getHttpServer())
+      .get(`/chat/${ROOM_ID}/message`)
+      .expect(200)
+
+    expect(messagesResp.body.messages).toEqual(
+      expect.arrayContaining(
+        messagesToSend.map((message) =>
+          expect.objectContaining({
+            content: message,
+          })
+        )
+      )
     )
   })
 
