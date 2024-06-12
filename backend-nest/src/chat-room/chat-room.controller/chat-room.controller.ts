@@ -7,7 +7,6 @@ import {
   Param,
   Post,
 } from '@nestjs/common'
-import { plainToInstance } from 'class-transformer'
 import {
   ChatRoomMessageService,
   IPreviewMessage,
@@ -21,6 +20,7 @@ import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.servi
 import { UserId } from 'src/decorators/user-id.param-decorator'
 import { UserService } from 'src/user/user.service/user.service'
 import { IUser } from 'src/user/user.types'
+import { toInstance } from 'src/utils/class-transformer.utils'
 import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 
 @Controller('chat')
@@ -51,12 +51,12 @@ export class ChatRoomController {
       users.push(await this.userSvc.getById(id))
     }
 
-    return plainToInstance(
+    return toInstance(
       ChatRoomMessagesDto,
       {
         messages,
         users,
-      } as ChatRoomMessagesDto,
+      },
       {
         excludeExtraneousValues: true,
       }
@@ -185,7 +185,7 @@ export class ChatRoomController {
     }
 
     return rawChats.map((chat) =>
-      plainToInstance(PartialChatRoomDto, {
+      toInstance(PartialChatRoomDto, {
         ...chat,
         previewMessage: previewMessages[chat.id] ?? null,
       })
@@ -203,7 +203,7 @@ export class ChatRoomController {
 
     const chat = await this.chatSvc.getById(chatId)
 
-    return plainToInstance(
+    return toInstance(
       ChatRoomDto,
       {
         ...chat,
