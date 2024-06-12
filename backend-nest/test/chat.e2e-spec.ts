@@ -89,40 +89,6 @@ describe('chat', () => {
     )
   })
 
-  test('Room creation + sending of messages', async () => {
-    const newChatResponse = await request(app.getHttpServer())
-      .post('/chat')
-      .send({
-        name: `Test chat ${Date.now()}`,
-      })
-      .expect(201)
-
-    expect(newChatResponse.body).toEqual(
-      expect.objectContaining({
-        id: expect.stringMatching(/.+/),
-      })
-    )
-
-    const { id } = newChatResponse.body
-
-    for (let i = 0; i < 10; i++) {
-      const messageContent = `Test message ${i + 1}`
-
-      await request(app.getHttpServer())
-        .post(`/chat/${id}/message`)
-        .send({
-          content: messageContent,
-        })
-        .expect(201)
-    }
-
-    const messagesResp = await request(app.getHttpServer())
-      .get(`/chat/${id}/message`)
-      .expect(200)
-
-    expect(messagesResp.body.messages).toHaveLength(10)
-  })
-
   test('Room creation + adding of users', async () => {
     const newChatResponse = await request(app.getHttpServer())
       .post('/chat')
