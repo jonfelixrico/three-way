@@ -108,13 +108,19 @@ export class ChatRoomController {
       name,
     })
 
-    return {
-      ...chat,
-      members: await this.chatSvc.listMembers(chat.id),
-      previewMessage: await this.msgSvc.getPreviewMessage({
-        chatId: chat.id,
-      }),
-    }
+    return toInstance(
+      ChatRoomDto,
+      {
+        ...chat,
+        members: await this.chatSvc.listMembers(chat.id),
+        previewMessage: await this.msgSvc.getPreviewMessage({
+          chatId: chat.id,
+        }),
+      },
+      {
+        excludeExtraneousValues: true,
+      }
+    )
   }
 
   private async broadcastToRoomWs(
