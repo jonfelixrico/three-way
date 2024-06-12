@@ -27,7 +27,11 @@ describe('chat', () => {
     await app.init()
   })
 
-  test('Checking of chat existence', async () => {
+  test('Find chat -- non-existent', async () => {
+    await request(app.getHttpServer()).get('/chat/does-not-exist').expect(403)
+  })
+
+  test('Find chat -- existing', async () => {
     const response = await request(app.getHttpServer())
       // This chat is from Seed1715698245510
       .get('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16')
@@ -38,8 +42,6 @@ describe('chat', () => {
         name: 'Seed room 1',
       })
     )
-
-    await request(app.getHttpServer()).get('/chat/does-not-exist').expect(403)
   })
 
   test('Room creation + sending of messages', async () => {
