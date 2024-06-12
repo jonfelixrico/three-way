@@ -8,12 +8,14 @@ import { WebsocketModule } from 'src/websocket/websocket.module'
 import { ChatRoomMessageService } from './chat-room-message.service/chat-room-message.service'
 import { ChatRoomMember } from 'src/chat-room/entity/chat-room-member.entity'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { UserModule } from 'src/user/user.module'
 
 @Module({
   imports: [
     DatasourceModule,
     WebsocketModule,
     TypeOrmModule.forFeature([ChatRoom, ChatRoomMessage, ChatRoomMember]),
+    UserModule,
   ],
   providers: [ChatRoomService, ChatRoomMessageService],
   controllers: [ChatRoomController],

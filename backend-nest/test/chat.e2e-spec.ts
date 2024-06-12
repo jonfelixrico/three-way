@@ -1,11 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { INestApplication } from '@nestjs/common'
+import { HttpStatus, INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { MockGuard } from 'test/mock-guard'
-import { uuidList } from 'src/datasource/migrations/1715702049970-seed'
+import { Seed1715702049970 } from 'src/datasource/migrations/1715702049970-seed'
 import { initializeTransactionalContext } from 'typeorm-transactional'
+import { Seed1718191393819 } from 'src/datasource/migrations/1718191393819-seed'
+import { range } from 'lodash'
+import { Seed1718196626285 } from 'src/datasource/migrations/1718196626285-seed'
+import { Seed1715172194613 } from 'src/datasource/migrations/1715172194613-seed'
 
 describe('chat', () => {
   beforeAll(() => {
@@ -27,76 +31,130 @@ describe('chat', () => {
     await app.init()
   })
 
-  test('Checking of chat existence', async () => {
+  test('Find chat -- non-existent', async () => {
+    await request(app.getHttpServer()).get('/chat/does-not-exist').expect(403)
+  })
+
+  test('Find chat', async () => {
     const response = await request(app.getHttpServer())
-      // This chat is from Seed1715698245510
-      .get('/chat/aab316fe-f3a4-4dc7-a220-44c3a5b24a16')
+      .get(`/chat/${Seed1718191393819.SEED_ROOM_IDS[0]}`)
       .expect(200)
 
     expect(response.body).toEqual(
       expect.objectContaining({
-        name: 'Seed room 1',
+        name: 'seed-room-0',
       })
     )
-
-    await request(app.getHttpServer()).get('/chat/does-not-exist').expect(403)
   })
 
-  test('Room creation + sending of messages', async () => {
+  test('Create room', async () => {
+    const name = `Test chat ${Date.now()}`
+
     const newChatResponse = await request(app.getHttpServer())
       .post('/chat')
       .send({
-        name: `Test chat ${Date.now()}`,
+        name,
       })
       .expect(201)
 
     expect(newChatResponse.body).toEqual(
       expect.objectContaining({
         id: expect.stringMatching(/.+/),
+        name,
+        members: expect.arrayContaining([
+          expect.objectContaining({
+            id: Seed1715172194613.SEED_1_ID,
+          }),
+        ]),
       })
     )
+  })
 
-    const { id } = newChatResponse.body
+  test('Send message', async () => {
+    const now = Date.now()
+    const messagesToSend = range(1, 10).map((no) => `Test message ${now} ${no}`)
+    const ROOM_ID = Seed1718191393819.SEED_ROOM_IDS[0]
 
-    for (let i = 0; i < 10; i++) {
-      const messageContent = `Test message ${i + 1}`
-
+    for (const message of messagesToSend) {
       await request(app.getHttpServer())
-        .post(`/chat/${id}/message`)
+        .post(`/chat/${ROOM_ID}/message`)
         .send({
-          content: messageContent,
+          content: message,
         })
         .expect(201)
     }
 
     const messagesResp = await request(app.getHttpServer())
-      .get(`/chat/${id}/message`)
+      .get(`/chat/${ROOM_ID}/message`)
       .expect(200)
 
-    expect(messagesResp.body).toHaveLength(10)
+    expect(messagesResp.body.messages).toEqual(
+      expect.arrayContaining(
+        messagesToSend.map((message) =>
+          expect.objectContaining({
+            content: message,
+          })
+        )
+      )
+    )
+
+    expect(messagesResp.body.users).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: Seed1715172194613.SEED_1_ID,
+          username: 'seed-1',
+        }),
+      ])
+    )
   })
 
-  test('Room creation + adding of users', async () => {
-    const newChatResponse = await request(app.getHttpServer())
-      .post('/chat')
-      .send({
-        name: `Test chat ${Date.now()}`,
-      })
-      .expect(201)
+  test('Get chat -- preview message', async () => {
+    const CHAT_ID = Seed1718191393819.SEED_ROOM_IDS[0]
 
-    const { id } = newChatResponse.body
+    const content = `Preview message ${Date.now()}`
+    await request(app.getHttpServer())
+      .post(`/chat/${CHAT_ID}/message`)
+      .send({
+        content,
+      })
+      .expect(HttpStatus.CREATED)
+
+    const chatResp = await request(app.getHttpServer())
+      .get(`/chat/${CHAT_ID}`)
+      .expect(HttpStatus.OK)
+
+    expect(chatResp.body).toEqual(
+      expect.objectContaining({
+        previewMessage: expect.objectContaining({
+          content,
+          senderName: 'seed-1',
+        }),
+      })
+    )
+  })
+
+  test('Add user', async () => {
+    const CHAT_ID = Seed1718196626285.SEED_ROOM_IDS[0]
 
     await request(app.getHttpServer())
-      .post(`/chat/${id}/user`)
+      .post(`/chat/${CHAT_ID}/user`)
       .send({
-        userIds: uuidList,
+        userIds: Seed1715702049970.SEED_USER_IDS,
       })
       .expect(201)
 
     const userListResponse = await request(app.getHttpServer())
-      .get(`/chat/${id}/user`)
+      .get(`/chat/${CHAT_ID}/user`)
       .expect(200)
 
-    expect(userListResponse.body).toHaveLength(10)
+    expect(userListResponse.body).toEqual(
+      expect.arrayContaining(
+        Seed1715702049970.SEED_USER_IDS.map((id) =>
+          expect.objectContaining({
+            id,
+          })
+        )
+      )
+    )
   })
 })

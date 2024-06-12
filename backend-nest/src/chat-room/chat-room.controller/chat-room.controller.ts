@@ -1,37 +1,63 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   HttpException,
   HttpStatus,
   Param,
   Post,
+  UseInterceptors,
 } from '@nestjs/common'
-import { ChatRoomMessageService } from 'src/chat-room/chat-room-message.service/chat-room-message.service'
+import {
+  ChatRoomMessageService,
+  IPreviewMessage,
+} from 'src/chat-room/chat-room-message.service/chat-room-message.service'
 import {
   ChatRoomDto,
+  ChatRoomMessageDto,
+  ChatRoomMessagesDto,
   PartialChatRoomDto,
 } from 'src/chat-room/chat-room.controller/chat-room.dtos'
 import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.service'
 import { UserId } from 'src/decorators/user-id.param-decorator'
+import { UserService } from 'src/user/user.service/user.service'
+import { IUser } from 'src/user/user.types'
+import { toInstanceStrict } from 'src/utils/class-transformer.utils'
 import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 
 @Controller('chat')
+@UseInterceptors(ClassSerializerInterceptor)
 export class ChatRoomController {
   constructor(
     private chatSvc: ChatRoomService,
     private msgSvc: ChatRoomMessageService,
-    private dispatcher: WebsocketDispatcherService
+    private dispatcher: WebsocketDispatcherService,
+    private userSvc: UserService
   ) {}
 
   @Get(':id/message')
-  async getMessages(@Param('id') chatId: string, @UserId() userId: string) {
+  async getMessages(
+    @Param('id') chatId: string,
+    @UserId() userId: string
+  ): Promise<ChatRoomMessagesDto> {
     if (!(await this.chatSvc.checkUserMembership(chatId, userId))) {
       throw new HttpException('Not a member', HttpStatus.FORBIDDEN)
     }
 
-    return await this.msgSvc.getMessages({
+    const messages = await this.msgSvc.getMessages({
       chatId,
+    })
+
+    const uniqueIds = new Set(messages.map((m) => m.senderId))
+    const users: IUser[] = []
+    for (const id of uniqueIds) {
+      users.push(await this.userSvc.getById(id))
+    }
+
+    return toInstanceStrict(ChatRoomMessagesDto, {
+      messages,
+      users,
     })
   }
 
@@ -61,7 +87,7 @@ export class ChatRoomController {
       sent
     )
 
-    return sent
+    return toInstanceStrict(ChatRoomMessageDto, sent)
   }
 
   @Post()
@@ -74,10 +100,13 @@ export class ChatRoomController {
       name,
     })
 
-    return {
+    return toInstanceStrict(ChatRoomDto, {
       ...chat,
       members: await this.chatSvc.listMembers(chat.id),
-    }
+      previewMessage: await this.msgSvc.getPreviewMessage({
+        chatId: chat.id,
+      }),
+    })
   }
 
   private async broadcastToRoomWs(
@@ -144,7 +173,21 @@ export class ChatRoomController {
 
   @Get()
   async getList(@UserId() userId: string): Promise<PartialChatRoomDto[]> {
-    return await this.chatSvc.listByUser(userId)
+    const rawChats = await this.chatSvc.listByUser(userId)
+
+    const previewMessages: IPreviewMessage[] = []
+    for (const chat of rawChats) {
+      previewMessages.push(
+        await this.msgSvc.getPreviewMessage({ chatId: chat.id })
+      )
+    }
+
+    return rawChats.map((chat) =>
+      toInstanceStrict(PartialChatRoomDto, {
+        ...chat,
+        previewMessage: previewMessages[chat.id] ?? null,
+      })
+    )
   }
 
   @Get(':id')
@@ -157,9 +200,13 @@ export class ChatRoomController {
     }
 
     const chat = await this.chatSvc.getById(chatId)
-    return {
+
+    return toInstanceStrict(ChatRoomDto, {
       ...chat,
       members: await this.chatSvc.listMembers(chatId),
-    }
+      previewMessage: await this.msgSvc.getPreviewMessage({
+        chatId: chat.id,
+      }),
+    })
   }
 }
