@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class Seed1715698245510 implements MigrationInterface {
+  name = '[seed] add seed room 1'
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `INSERT INTO "chat_room"("id", "name") VALUES ("aab316fe-f3a4-4dc7-a220-44c3a5b24a16", "Seed room 1")`
