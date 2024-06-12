@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export const SEED_ROOM_IDS = `
+const SEED_ROOM_IDS = `
 3568b9d8-95c3-4310-a6a0-93d1d672a70f
 0e1c64c6-4c7f-42bc-a672-88b58bce529b
 2599d071-f6c6-406a-882a-fbef0cd5f155
@@ -20,6 +20,8 @@ fa7eede1-6c3a-47a1-b9a3-01d8106ccee0
  * Create 10 chat rooms for testing purposes
  */
 export class Seed1718191393819 implements MigrationInterface {
+  static SEED_ROOM_IDS = SEED_ROOM_IDS
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     for (let i = 0; i < SEED_ROOM_IDS.length; i++) {
       await queryRunner.query(

@@ -6,7 +6,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { MockGuard } from 'test/mock-guard'
 import { uuidList } from 'src/datasource/migrations/1715702049970-seed'
 import { initializeTransactionalContext } from 'typeorm-transactional'
-import { SEED_ROOM_IDS } from 'src/datasource/migrations/1718191393819-seed'
+import { Seed1718191393819 } from 'src/datasource/migrations/1718191393819-seed'
 
 describe('chat', () => {
   beforeAll(() => {
@@ -34,8 +34,7 @@ describe('chat', () => {
 
   test('Find chat -- existing', async () => {
     const response = await request(app.getHttpServer())
-      // This chat is from Seed1715698245510
-      .get(`/chat/${SEED_ROOM_IDS[0]}`)
+      .get(`/chat/${Seed1718191393819.SEED_ROOM_IDS[0]}`)
       .expect(200)
 
     expect(response.body).toEqual(
