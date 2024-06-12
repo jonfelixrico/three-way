@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
 export class Seed1715172194613 implements MigrationInterface {
-  name = '[seed] add user seed-1'
+  name = 'Seed1715172194613'
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(

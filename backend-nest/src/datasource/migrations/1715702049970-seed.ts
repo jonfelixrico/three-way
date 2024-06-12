@@ -15,8 +15,6 @@ d958c60e-9f7a-40da-8b5a-162939098edf
   .filter(Boolean)
 
 export class Seed1715702049970 implements MigrationInterface {
-  name = '[seed] add more seed-* users 2-10'
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     for (let i = 0; i < uuidList.length; i++) {
       const uuid = uuidList[i]
