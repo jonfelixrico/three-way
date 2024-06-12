@@ -23,7 +23,7 @@ import { ChatRoomService } from 'src/chat-room/chat-room.service/chat-room.servi
 import { UserId } from 'src/decorators/user-id.param-decorator'
 import { UserService } from 'src/user/user.service/user.service'
 import { IUser } from 'src/user/user.types'
-import { toInstance } from 'src/utils/class-transformer.utils'
+import { toInstanceStrict } from 'src/utils/class-transformer.utils'
 import { WebsocketDispatcherService } from 'src/websocket/websocket-dispatcher/websocket-dispatcher.service'
 
 @Controller('chat')
@@ -55,16 +55,10 @@ export class ChatRoomController {
       users.push(await this.userSvc.getById(id))
     }
 
-    return toInstance(
-      ChatRoomMessagesDto,
-      {
-        messages,
-        users,
-      },
-      {
-        excludeExtraneousValues: true,
-      }
-    )
+    return toInstanceStrict(ChatRoomMessagesDto, {
+      messages,
+      users,
+    })
   }
 
   @Post(':id/message')
@@ -93,9 +87,7 @@ export class ChatRoomController {
       sent
     )
 
-    return toInstance(ChatRoomMessageDto, sent, {
-      excludeExtraneousValues: true,
-    })
+    return toInstanceStrict(ChatRoomMessageDto, sent)
   }
 
   @Post()
@@ -108,19 +100,13 @@ export class ChatRoomController {
       name,
     })
 
-    return toInstance(
-      ChatRoomDto,
-      {
-        ...chat,
-        members: await this.chatSvc.listMembers(chat.id),
-        previewMessage: await this.msgSvc.getPreviewMessage({
-          chatId: chat.id,
-        }),
-      },
-      {
-        excludeExtraneousValues: true,
-      }
-    )
+    return toInstanceStrict(ChatRoomDto, {
+      ...chat,
+      members: await this.chatSvc.listMembers(chat.id),
+      previewMessage: await this.msgSvc.getPreviewMessage({
+        chatId: chat.id,
+      }),
+    })
   }
 
   private async broadcastToRoomWs(
@@ -197,7 +183,7 @@ export class ChatRoomController {
     }
 
     return rawChats.map((chat) =>
-      toInstance(PartialChatRoomDto, {
+      toInstanceStrict(PartialChatRoomDto, {
         ...chat,
         previewMessage: previewMessages[chat.id] ?? null,
       })
@@ -215,18 +201,12 @@ export class ChatRoomController {
 
     const chat = await this.chatSvc.getById(chatId)
 
-    return toInstance(
-      ChatRoomDto,
-      {
-        ...chat,
-        members: await this.chatSvc.listMembers(chatId),
-        previewMessage: await this.msgSvc.getPreviewMessage({
-          chatId: chat.id,
-        }),
-      },
-      {
-        excludeExtraneousValues: true,
-      }
-    )
+    return toInstanceStrict(ChatRoomDto, {
+      ...chat,
+      members: await this.chatSvc.listMembers(chatId),
+      previewMessage: await this.msgSvc.getPreviewMessage({
+        chatId: chat.id,
+      }),
+    })
   }
 }
