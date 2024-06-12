@@ -58,9 +58,27 @@ class UserDto {
   username: string
 }
 
+export class ChatRoomMessageDto implements IChatRoomMessage {
+  @Expose()
+  id: string
+
+  @Expose()
+  chatRoomId: string
+
+  @Expose()
+  content: string
+
+  @Expose()
+  timestamp: Date
+
+  @Expose()
+  senderId: string
+}
+
 export class ChatRoomMessagesDto {
   @Expose()
-  messages: IChatRoomMessage[]
+  @Type(() => ChatRoomMessageDto)
+  messages: ChatRoomMessageDto[]
 
   @Expose()
   @Type(() => UserDto)
