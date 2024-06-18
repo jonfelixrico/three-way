@@ -164,6 +164,10 @@ describe('chat', () => {
     await request(app.getHttpServer())
       .post(`/chat/${CHAT_ID}/user`)
       .send({
+        /*
+         * This is seed-2
+         * seed-1 to seed-10 are already added to the room specified above
+         */
         userIds: [Seed1715702049970.SEED_USER_IDS[0]],
       })
       .expect(HttpStatus.INTERNAL_SERVER_ERROR)
